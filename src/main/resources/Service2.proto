@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "Service2";
+option java_outer_classname = "CameraControlsImpl";
+
+service Service2 {
+  rpc cameraAdjustment(stream CameraAdjustmentRequest) returns (stream CameraAdjustmentResponse) {}
+
+  rpc motionDetected(MotionDetectedRequest) returns (Empty) {}
+
+  rpc cameraAutomation(stream CameraAutomationRequest) returns (stream CameraAutomationResponse) {}
+}
+
+message CameraAdjustmentRequest {
+  string cameraID = 1;
+
+  string cameraDirection = 2;
+
+  bool cameraBeingControlled = 3;
+}
+
+message CameraAdjustmentResponse {
+  string cameraPosition = 1;
+}
+
+message MotionDetectedRequest {
+  bool motionedDetected = 1;
+}
+
+message Empty {
+
+}
+
+message CameraAutomationRequest {
+  string cameraID = 1;
+
+  bool motionDetected = 2;
+
+  bool cameraBeingControlled = 3;
+
+  string locationOfMovement = 4;
+
+  string cameraPosition = 5;
+}
+
+message CameraAutomationResponse {
+  string cameraDirection = 1;
+}

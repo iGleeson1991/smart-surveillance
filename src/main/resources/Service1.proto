@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "Service1";
+option java_outer_classname = "DoorControlsImpl";
+
+service Service1 {
+  //Sends the user's Security Badge and returns a message after validation
+  rpc scanSecurityBadge(ScanSecurityBadgeRequest) returns (ScanSecurityBadgeResponse) {}
+
+  //Sends the user's input Security Code and returns a message after validation
+  rpc securityCodeEntry(SecurityCodeEntryRequest) returns (SecurityCodeEntryResponse) {}
+
+  //Sends the user's request for an intercom call and returns an acceptance/rejection message
+  rpc intercomCall(IntercomCallRequest) returns (IntercomCallResponse) {}
+
+  //Sends a streamed message to the server when the user has the communication button held
+  rpc oneWayCommunication(stream OneWayCommunicationRequest) returns (Empty) {}
+}
+
+message ScanSecurityBadgeRequest {
+  string doorID = 1;
+
+  string badgeID = 2;
+}
+
+message ScanSecurityBadgeResponse {
+  bool valid = 1;
+}
+
+message SecurityCodeEntryRequest {
+  string doorID = 1;
+
+  string securityCode = 2;
+}
+
+message SecurityCodeEntryResponse {
+  bool valid = 1;
+}
+
+message IntercomCallRequest {
+  bool callRequest = 1;
+}
+
+message IntercomCallResponse {
+  bool callAnswered = 1;
+}
+
+message OneWayCommunicationRequest {
+  bool buttonHeld = 1;
+}
+
+message Empty {
+
+}
