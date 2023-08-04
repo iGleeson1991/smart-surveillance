@@ -97,6 +97,7 @@ public class Service2Server extends Service2ImplBase {
     }
 
     //Remote Methods
+    // TODO: 04/08/2023 Finish remote methods
 
     public void cameraAdjustment() {
 

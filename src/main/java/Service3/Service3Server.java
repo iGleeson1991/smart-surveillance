@@ -97,6 +97,7 @@ public class Service3Server extends Service3ImplBase {
     }
 
     //Remote Methods
+    // TODO: 04/08/2023 Finish remote methods
 
     public void manualAlarm() {
 

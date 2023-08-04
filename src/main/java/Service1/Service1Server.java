@@ -97,6 +97,7 @@ public class Service1Server extends Service1ImplBase {
     }
 
     //Remote Methods
+    // TODO: 04/08/2023 Finish remote methods
 
     public void scanSecurityBadge() {
 
