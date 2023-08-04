@@ -15,7 +15,13 @@ service Service2 {
 message CameraAdjustmentRequest {
   string cameraID = 1;
 
-  string cameraDirection = 2;
+  enum CameraDirection {
+    UP = 0;
+    DOWN = 1;
+    LEFT = 2;
+    RIGHT = 3;
+  }
+  CameraDirection cameraDirection = 2;
 
   bool cameraBeingControlled = 3;
 }

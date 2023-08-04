@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private CameraAdjustmentRequest() {
     cameraID_ = "";
-    cameraDirection_ = "";
+    cameraDirection_ = 0;
     cameraBeingControlled_ = false;
   }
 
@@ -51,10 +51,10 @@ private static final long serialVersionUID = 0L;
             cameraID_ = s;
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
+            int rawValue = input.readEnum();
 
-            cameraDirection_ = s;
+            cameraDirection_ = rawValue;
             break;
           }
           case 24: {
@@ -94,6 +94,122 @@ private static final long serialVersionUID = 0L;
             Service2.CameraAdjustmentRequest.class, Service2.CameraAdjustmentRequest.Builder.class);
   }
 
+  /**
+   * Protobuf enum {@code CameraAdjustmentRequest.CameraDirection}
+   */
+  public enum CameraDirection
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>UP = 0;</code>
+     */
+    UP(0),
+    /**
+     * <code>DOWN = 1;</code>
+     */
+    DOWN(1),
+    /**
+     * <code>LEFT = 2;</code>
+     */
+    LEFT(2),
+    /**
+     * <code>RIGHT = 3;</code>
+     */
+    RIGHT(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>UP = 0;</code>
+     */
+    public static final int UP_VALUE = 0;
+    /**
+     * <code>DOWN = 1;</code>
+     */
+    public static final int DOWN_VALUE = 1;
+    /**
+     * <code>LEFT = 2;</code>
+     */
+    public static final int LEFT_VALUE = 2;
+    /**
+     * <code>RIGHT = 3;</code>
+     */
+    public static final int RIGHT_VALUE = 3;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static CameraDirection valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static CameraDirection forNumber(int value) {
+      switch (value) {
+        case 0: return UP;
+        case 1: return DOWN;
+        case 2: return LEFT;
+        case 3: return RIGHT;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<CameraDirection>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        CameraDirection> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<CameraDirection>() {
+            public CameraDirection findValueByNumber(int number) {
+              return CameraDirection.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return Service2.CameraAdjustmentRequest.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final CameraDirection[] VALUES = values();
+
+    public static CameraDirection valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private CameraDirection(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:CameraAdjustmentRequest.CameraDirection)
+  }
+
   public static final int CAMERAID_FIELD_NUMBER = 1;
   private volatile java.lang.Object cameraID_;
   /**
@@ -129,37 +245,20 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int CAMERADIRECTION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object cameraDirection_;
+  private int cameraDirection_;
   /**
-   * <code>string cameraDirection = 2;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
    */
-  public java.lang.String getCameraDirection() {
-    java.lang.Object ref = cameraDirection_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      cameraDirection_ = s;
-      return s;
-    }
+  public int getCameraDirectionValue() {
+    return cameraDirection_;
   }
   /**
-   * <code>string cameraDirection = 2;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
    */
-  public com.google.protobuf.ByteString
-      getCameraDirectionBytes() {
-    java.lang.Object ref = cameraDirection_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      cameraDirection_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public Service2.CameraAdjustmentRequest.CameraDirection getCameraDirection() {
+    @SuppressWarnings("deprecation")
+    Service2.CameraAdjustmentRequest.CameraDirection result = Service2.CameraAdjustmentRequest.CameraDirection.valueOf(cameraDirection_);
+    return result == null ? Service2.CameraAdjustmentRequest.CameraDirection.UNRECOGNIZED : result;
   }
 
   public static final int CAMERABEINGCONTROLLED_FIELD_NUMBER = 3;
@@ -188,8 +287,8 @@ private static final long serialVersionUID = 0L;
     if (!getCameraIDBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cameraID_);
     }
-    if (!getCameraDirectionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cameraDirection_);
+    if (cameraDirection_ != Service2.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
+      output.writeEnum(2, cameraDirection_);
     }
     if (cameraBeingControlled_ != false) {
       output.writeBool(3, cameraBeingControlled_);
@@ -206,8 +305,9 @@ private static final long serialVersionUID = 0L;
     if (!getCameraIDBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cameraID_);
     }
-    if (!getCameraDirectionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cameraDirection_);
+    if (cameraDirection_ != Service2.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(2, cameraDirection_);
     }
     if (cameraBeingControlled_ != false) {
       size += com.google.protobuf.CodedOutputStream
@@ -231,8 +331,7 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getCameraID()
         .equals(other.getCameraID());
-    result = result && getCameraDirection()
-        .equals(other.getCameraDirection());
+    result = result && cameraDirection_ == other.cameraDirection_;
     result = result && (getCameraBeingControlled()
         == other.getCameraBeingControlled());
     result = result && unknownFields.equals(other.unknownFields);
@@ -249,7 +348,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + CAMERAID_FIELD_NUMBER;
     hash = (53 * hash) + getCameraID().hashCode();
     hash = (37 * hash) + CAMERADIRECTION_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraDirection().hashCode();
+    hash = (53 * hash) + cameraDirection_;
     hash = (37 * hash) + CAMERABEINGCONTROLLED_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getCameraBeingControlled());
@@ -388,7 +487,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       cameraID_ = "";
 
-      cameraDirection_ = "";
+      cameraDirection_ = 0;
 
       cameraBeingControlled_ = false;
 
@@ -473,9 +572,8 @@ private static final long serialVersionUID = 0L;
         cameraID_ = other.cameraID_;
         onChanged();
       }
-      if (!other.getCameraDirection().isEmpty()) {
-        cameraDirection_ = other.cameraDirection_;
-        onChanged();
+      if (other.cameraDirection_ != 0) {
+        setCameraDirectionValue(other.getCameraDirectionValue());
       }
       if (other.getCameraBeingControlled() != false) {
         setCameraBeingControlled(other.getCameraBeingControlled());
@@ -578,71 +676,47 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object cameraDirection_ = "";
+    private int cameraDirection_ = 0;
     /**
-     * <code>string cameraDirection = 2;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
      */
-    public java.lang.String getCameraDirection() {
-      java.lang.Object ref = cameraDirection_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cameraDirection_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getCameraDirectionValue() {
+      return cameraDirection_;
     }
     /**
-     * <code>string cameraDirection = 2;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getCameraDirectionBytes() {
-      java.lang.Object ref = cameraDirection_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cameraDirection_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string cameraDirection = 2;</code>
-     */
-    public Builder setCameraDirection(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setCameraDirectionValue(int value) {
       cameraDirection_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraDirection = 2;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
+     */
+    public Service2.CameraAdjustmentRequest.CameraDirection getCameraDirection() {
+      @SuppressWarnings("deprecation")
+      Service2.CameraAdjustmentRequest.CameraDirection result = Service2.CameraAdjustmentRequest.CameraDirection.valueOf(cameraDirection_);
+      return result == null ? Service2.CameraAdjustmentRequest.CameraDirection.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
+     */
+    public Builder setCameraDirection(Service2.CameraAdjustmentRequest.CameraDirection value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      cameraDirection_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
      */
     public Builder clearCameraDirection() {
       
-      cameraDirection_ = getDefaultInstance().getCameraDirection();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cameraDirection = 2;</code>
-     */
-    public Builder setCameraDirectionBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      cameraDirection_ = value;
+      cameraDirection_ = 0;
       onChanged();
       return this;
     }

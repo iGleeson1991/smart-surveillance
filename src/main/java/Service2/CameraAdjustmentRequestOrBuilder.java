@@ -18,14 +18,13 @@ public interface CameraAdjustmentRequestOrBuilder extends
       getCameraIDBytes();
 
   /**
-   * <code>string cameraDirection = 2;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
    */
-  java.lang.String getCameraDirection();
+  int getCameraDirectionValue();
   /**
-   * <code>string cameraDirection = 2;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 2;</code>
    */
-  com.google.protobuf.ByteString
-      getCameraDirectionBytes();
+  Service2.CameraAdjustmentRequest.CameraDirection getCameraDirection();
 
   /**
    * <code>bool cameraBeingControlled = 3;</code>
