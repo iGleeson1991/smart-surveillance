@@ -1,6 +1,6 @@
-package Service2;
+package AlarmController;
 
-import Service2.Service2Grpc.Service2ImplBase;
+import AlarmController.Service3Grpc.Service3ImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -13,24 +13,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class Service2Server extends Service2ImplBase {
+public class Service3Server extends Service3ImplBase {
     public static void main(String[] args) {
-        //Creates a new "Service2Server" object called "service2Server"
-        Service2Server service2Server = new Service2Server();
-        String propertiesFileName = "Service2.properties";
+        //Creates a new "Service3Server" object called "service3Server"
+        Service3Server service3Server = new Service3Server();
+        String propertiesFileName = "Service3.properties";
         //Creates a new "Properties" object
-        Properties properties = service2Server.getProperties(propertiesFileName);
-        service2Server.registerService(properties);
+        Properties properties = service3Server.getProperties(propertiesFileName);
+        service3Server.registerService(properties);
         int port = Integer.parseInt(properties.getProperty("service_port"));
 
         try {
             //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
-            Server server2 = ServerBuilder.forPort(port).addService(service2Server).build().start();
+            Server server3 = ServerBuilder.forPort(port).addService(service3Server).build().start();
             //Prints the new server's info to the console
-            System.out.println("Server 2 Started: Door Controller. Listening on Port " + port);
+            System.out.println("Server 3 Started: Door Controller. Listening on Port " + port);
 
             //Waits for the server to terminate
-            server2.awaitTermination();
+            server3.awaitTermination();
 
             //Catches any IO or Interrupted Exceptions and prints them to the console
         } catch (IOException | InterruptedException e) {
@@ -99,15 +99,15 @@ public class Service2Server extends Service2ImplBase {
     //Remote Methods
     // TODO: 04/08/2023 Finish remote methods
 
-    public void cameraAdjustment() {
+    public void manualAlarm() {
 
     }
 
-    public void motionDetected() {
+    public void fireSuppression() {
 
     }
 
-    public void cameraAutomation() {
+    public void emergencyServicesCall() {
 
     }
 }

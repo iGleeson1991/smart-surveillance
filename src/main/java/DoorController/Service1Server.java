@@ -1,6 +1,6 @@
-package Service3;
+package DoorController;
 
-import Service3.Service3Grpc.Service3ImplBase;
+import DoorController.Service1Grpc.Service1ImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -13,26 +13,26 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class Service3Server extends Service3ImplBase {
+public class Service1Server extends Service1ImplBase {
     public static void main(String[] args) {
-        //Creates a new "Service3Server" object called "service3Server"
-        Service3Server service3Server = new Service3Server();
-        String propertiesFileName = "Service3.properties";
+        //Creates a new "Service1Server" object called "service1Server"
+        Service1Server service1Server = new Service1Server();
+        String propertiesFileName = "Service1.properties";
         //Creates a new "Properties" object
-        Properties properties = service3Server.getProperties(propertiesFileName);
-        service3Server.registerService(properties);
+        Properties properties = service1Server.getProperties(propertiesFileName);
+        service1Server.registerService(properties);
         int port = Integer.parseInt(properties.getProperty("service_port"));
 
         try {
             //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
-            Server server3 = ServerBuilder.forPort(port).addService(service3Server).build().start();
+            Server server1 = ServerBuilder.forPort(port).addService(service1Server).build().start();
             //Prints the new server's info to the console
-            System.out.println("Server 3 Started: Door Controller. Listening on Port " + port);
+            System.out.println("\nServer 1 Started: Door Controller. Listening on Port " + port);
 
             //Waits for the server to terminate
-            server3.awaitTermination();
+            server1.awaitTermination();
 
-            //Catches any IO or Interrupted Exceptions and prints them to the console
+        //Catches any IO or Interrupted Exceptions and prints them to the console
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -51,13 +51,13 @@ public class Service3Server extends Service3ImplBase {
             properties = new Properties(); //Makes "properties" equal to an empty property list
             properties.load(input); //Loads the properties files from "input"
             //Prints the data from the properties file
-            System.out.println("---- " + properties.getProperty("service_name") + " Properties ----");
+            System.out.println("\n---- " + properties.getProperty("service_name") + " Properties ----");
             System.out.println("Service Type: " + properties.getProperty("service_type"));
             System.out.println("Service Name: " + properties.getProperty("service_name"));
             System.out.println("Service Description: " + properties.getProperty("service_desc"));
             System.out.println("Service Port: " + properties.getProperty("service_port"));
 
-            //Catches any IO Exceptions and prints them to the console
+        //Catches any IO Exceptions and prints them to the console
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
             ioe.printStackTrace();
@@ -84,12 +84,12 @@ public class Service3Server extends Service3ImplBase {
             jmdns.registerService(serviceInfo);
 
             //Prints a message to the console with the details of the service being registered
-            System.out.println("Registering Service:\nService Type: " + service_type + "\nService Name: " + service_name + "\nService Description: " + service_desc + "\nService Port: " + service_port);
+            System.out.println("\nRegistering Service:\nService Type: " + service_type + "\nService Name: " + service_name + "\nService Description: " + service_desc + "\nService Port: " + service_port);
 
             //Pause instruction
             Thread.sleep(500);
 
-            //Catches any IO or Interrupted Exceptions and prints them to the console
+        //Catches any IO or Interrupted Exceptions and prints them to the console
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -99,15 +99,20 @@ public class Service3Server extends Service3ImplBase {
     //Remote Methods
     // TODO: 04/08/2023 Finish remote methods
 
-    public void manualAlarm() {
+    public void scanSecurityBadge() {
 
     }
 
-    public void fireSuppression() {
+    public void securityCodeEntry() {
 
     }
 
-    public void emergencyServicesCall() {
+    public void intercomCall() {
+
+    }
+
+    public void oneWayCommunication() {
 
     }
 }
+

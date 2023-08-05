@@ -1,7 +1,7 @@
-syntax = "proto3";
+ syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "Service1";
+option java_package = "DoorController";
 option java_outer_classname = "DoorControlsImpl";
 
 service Service1 {
@@ -15,7 +15,7 @@ service Service1 {
   rpc intercomCall(IntercomCallRequest) returns (IntercomCallResponse) {}
 
   //Sends a streamed message to the server when the user has the communication button held
-  rpc oneWayCommunication(stream OneWayCommunicationRequest) returns (Empty) {}
+  rpc oneWayCommunication(stream OneWayCommunicationRequest) returns (OneWayCommunicationResponse) {}
 }
 
 message ScanSecurityBadgeRequest {
@@ -25,7 +25,7 @@ message ScanSecurityBadgeRequest {
 }
 
 message ScanSecurityBadgeResponse {
-  bool valid = 1;
+  string valid = 1;
 }
 
 message SecurityCodeEntryRequest {
@@ -35,11 +35,11 @@ message SecurityCodeEntryRequest {
 }
 
 message SecurityCodeEntryResponse {
-  bool valid = 1;
+  string valid = 1;
 }
 
 message IntercomCallRequest {
-  bool callRequest = 1;
+  string callRequest = 1;
 }
 
 message IntercomCallResponse {
@@ -50,6 +50,6 @@ message OneWayCommunicationRequest {
   bool buttonHeld = 1;
 }
 
-message Empty {
-
+message OneWayCommunicationResponse {
+  string channelStatus = 1;
 }

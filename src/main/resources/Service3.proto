@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "Service3";
+option java_package = "AlarmController";
 option java_outer_classname = "AlarmControlsImpl";
 
 service Service3 {
@@ -15,7 +15,7 @@ service Service3 {
 message ManualAlarmRequest {
   string alarmID = 1;
 
-  bool alarmTriggered = 2;
+  string alarmTriggered = 2;
 }
 
 message ManualAlarmResponse {
@@ -27,17 +27,19 @@ message ManualAlarmResponse {
 message FireSuppressionRequest {
   string sensorID = 1;
 
-  bool hazardDetected = 2;
+  string typeOfHazard = 2;
 }
 
 message FireSuppressionResponse {
   string activateEmergencyLighting = 1;
 
   string activateEmergencySirens = 2;
+
+  string activateFireSuppression = 3;
 }
 
 message EmergencyServicesCallRequest {
-  bool alarmTriggered = 1;
+  string alarmTriggered = 1;
 }
 
 message EmergencyServicesCallResponse {
