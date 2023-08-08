@@ -17,7 +17,8 @@ private static final long serialVersionUID = 0L;
   }
   private CameraAdjustmentRequest() {
     cameraID_ = "";
-    cameraPosition_ = "";
+    cameraPositionX_ = 0;
+    cameraPositionY_ = 0;
     cameraDirection_ = 0;
   }
 
@@ -51,13 +52,17 @@ private static final long serialVersionUID = 0L;
             cameraID_ = s;
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
 
-            cameraPosition_ = s;
+            cameraPositionX_ = input.readInt32();
             break;
           }
           case 24: {
+
+            cameraPositionY_ = input.readInt32();
+            break;
+          }
+          case 32: {
             int rawValue = input.readEnum();
 
             cameraDirection_ = rawValue;
@@ -245,50 +250,34 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int CAMERAPOSITION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object cameraPosition_;
+  public static final int CAMERAPOSITIONX_FIELD_NUMBER = 2;
+  private int cameraPositionX_;
   /**
-   * <code>string cameraPosition = 2;</code>
+   * <code>int32 cameraPositionX = 2;</code>
    */
-  public java.lang.String getCameraPosition() {
-    java.lang.Object ref = cameraPosition_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      cameraPosition_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string cameraPosition = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getCameraPositionBytes() {
-    java.lang.Object ref = cameraPosition_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      cameraPosition_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getCameraPositionX() {
+    return cameraPositionX_;
   }
 
-  public static final int CAMERADIRECTION_FIELD_NUMBER = 3;
+  public static final int CAMERAPOSITIONY_FIELD_NUMBER = 3;
+  private int cameraPositionY_;
+  /**
+   * <code>int32 cameraPositionY = 3;</code>
+   */
+  public int getCameraPositionY() {
+    return cameraPositionY_;
+  }
+
+  public static final int CAMERADIRECTION_FIELD_NUMBER = 4;
   private int cameraDirection_;
   /**
-   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
    */
   public int getCameraDirectionValue() {
     return cameraDirection_;
   }
   /**
-   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+   * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
    */
   public CameraController.CameraAdjustmentRequest.CameraDirection getCameraDirection() {
     @SuppressWarnings("deprecation")
@@ -313,11 +302,14 @@ private static final long serialVersionUID = 0L;
     if (!getCameraIDBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cameraID_);
     }
-    if (!getCameraPositionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cameraPosition_);
+    if (cameraPositionX_ != 0) {
+      output.writeInt32(2, cameraPositionX_);
+    }
+    if (cameraPositionY_ != 0) {
+      output.writeInt32(3, cameraPositionY_);
     }
     if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
-      output.writeEnum(3, cameraDirection_);
+      output.writeEnum(4, cameraDirection_);
     }
     unknownFields.writeTo(output);
   }
@@ -331,12 +323,17 @@ private static final long serialVersionUID = 0L;
     if (!getCameraIDBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cameraID_);
     }
-    if (!getCameraPositionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cameraPosition_);
+    if (cameraPositionX_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, cameraPositionX_);
+    }
+    if (cameraPositionY_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(3, cameraPositionY_);
     }
     if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(3, cameraDirection_);
+        .computeEnumSize(4, cameraDirection_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -356,8 +353,10 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getCameraID()
         .equals(other.getCameraID());
-    result = result && getCameraPosition()
-        .equals(other.getCameraPosition());
+    result = result && (getCameraPositionX()
+        == other.getCameraPositionX());
+    result = result && (getCameraPositionY()
+        == other.getCameraPositionY());
     result = result && cameraDirection_ == other.cameraDirection_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -372,8 +371,10 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + CAMERAID_FIELD_NUMBER;
     hash = (53 * hash) + getCameraID().hashCode();
-    hash = (37 * hash) + CAMERAPOSITION_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraPosition().hashCode();
+    hash = (37 * hash) + CAMERAPOSITIONX_FIELD_NUMBER;
+    hash = (53 * hash) + getCameraPositionX();
+    hash = (37 * hash) + CAMERAPOSITIONY_FIELD_NUMBER;
+    hash = (53 * hash) + getCameraPositionY();
     hash = (37 * hash) + CAMERADIRECTION_FIELD_NUMBER;
     hash = (53 * hash) + cameraDirection_;
     hash = (29 * hash) + unknownFields.hashCode();
@@ -511,7 +512,9 @@ private static final long serialVersionUID = 0L;
       super.clear();
       cameraID_ = "";
 
-      cameraPosition_ = "";
+      cameraPositionX_ = 0;
+
+      cameraPositionY_ = 0;
 
       cameraDirection_ = 0;
 
@@ -542,7 +545,8 @@ private static final long serialVersionUID = 0L;
     public CameraController.CameraAdjustmentRequest buildPartial() {
       CameraController.CameraAdjustmentRequest result = new CameraController.CameraAdjustmentRequest(this);
       result.cameraID_ = cameraID_;
-      result.cameraPosition_ = cameraPosition_;
+      result.cameraPositionX_ = cameraPositionX_;
+      result.cameraPositionY_ = cameraPositionY_;
       result.cameraDirection_ = cameraDirection_;
       onBuilt();
       return result;
@@ -596,9 +600,11 @@ private static final long serialVersionUID = 0L;
         cameraID_ = other.cameraID_;
         onChanged();
       }
-      if (!other.getCameraPosition().isEmpty()) {
-        cameraPosition_ = other.cameraPosition_;
-        onChanged();
+      if (other.getCameraPositionX() != 0) {
+        setCameraPositionX(other.getCameraPositionX());
+      }
+      if (other.getCameraPositionY() != 0) {
+        setCameraPositionY(other.getCameraPositionY());
       }
       if (other.cameraDirection_ != 0) {
         setCameraDirectionValue(other.getCameraDirectionValue());
@@ -701,84 +707,67 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object cameraPosition_ = "";
+    private int cameraPositionX_ ;
     /**
-     * <code>string cameraPosition = 2;</code>
+     * <code>int32 cameraPositionX = 2;</code>
      */
-    public java.lang.String getCameraPosition() {
-      java.lang.Object ref = cameraPosition_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cameraPosition_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getCameraPositionX() {
+      return cameraPositionX_;
     }
     /**
-     * <code>string cameraPosition = 2;</code>
+     * <code>int32 cameraPositionX = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getCameraPositionBytes() {
-      java.lang.Object ref = cameraPosition_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cameraPosition_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string cameraPosition = 2;</code>
-     */
-    public Builder setCameraPosition(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      cameraPosition_ = value;
+    public Builder setCameraPositionX(int value) {
+      
+      cameraPositionX_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraPosition = 2;</code>
+     * <code>int32 cameraPositionX = 2;</code>
      */
-    public Builder clearCameraPosition() {
+    public Builder clearCameraPositionX() {
       
-      cameraPosition_ = getDefaultInstance().getCameraPosition();
+      cameraPositionX_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int cameraPositionY_ ;
+    /**
+     * <code>int32 cameraPositionY = 3;</code>
+     */
+    public int getCameraPositionY() {
+      return cameraPositionY_;
+    }
+    /**
+     * <code>int32 cameraPositionY = 3;</code>
+     */
+    public Builder setCameraPositionY(int value) {
+      
+      cameraPositionY_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraPosition = 2;</code>
+     * <code>int32 cameraPositionY = 3;</code>
      */
-    public Builder setCameraPositionBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public Builder clearCameraPositionY() {
       
-      cameraPosition_ = value;
+      cameraPositionY_ = 0;
       onChanged();
       return this;
     }
 
     private int cameraDirection_ = 0;
     /**
-     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
      */
     public int getCameraDirectionValue() {
       return cameraDirection_;
     }
     /**
-     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
      */
     public Builder setCameraDirectionValue(int value) {
       cameraDirection_ = value;
@@ -786,7 +775,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
      */
     public CameraController.CameraAdjustmentRequest.CameraDirection getCameraDirection() {
       @SuppressWarnings("deprecation")
@@ -794,7 +783,7 @@ private static final long serialVersionUID = 0L;
       return result == null ? CameraController.CameraAdjustmentRequest.CameraDirection.UNRECOGNIZED : result;
     }
     /**
-     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
      */
     public Builder setCameraDirection(CameraController.CameraAdjustmentRequest.CameraDirection value) {
       if (value == null) {
@@ -806,7 +795,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 3;</code>
+     * <code>.CameraAdjustmentRequest.CameraDirection cameraDirection = 4;</code>
      */
     public Builder clearCameraDirection() {
       

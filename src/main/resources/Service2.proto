@@ -18,7 +18,9 @@ service Service2 {
 message CameraAdjustmentRequest {
   string cameraID = 1;
 
-  string cameraPosition = 2;
+  int32 cameraPositionX = 2;
+
+  int32 cameraPositionY = 3;
 
   enum CameraDirection {
     UP = 0;
@@ -26,7 +28,7 @@ message CameraAdjustmentRequest {
     LEFT = 2;
     RIGHT = 3;
   }
-  CameraDirection cameraDirection = 3;
+  CameraDirection cameraDirection = 4;
 }
 
 message CameraAdjustmentResponse {
