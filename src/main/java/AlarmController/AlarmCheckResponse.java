@@ -4,19 +4,19 @@
 package AlarmController;
 
 /**
- * Protobuf type {@code FireSuppressionRequest}
+ * Protobuf type {@code AlarmCheckResponse}
  */
-public  final class FireSuppressionRequest extends
+public  final class AlarmCheckResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:FireSuppressionRequest)
-    FireSuppressionRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:AlarmCheckResponse)
+    AlarmCheckResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use FireSuppressionRequest.newBuilder() to construct.
-  private FireSuppressionRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use AlarmCheckResponse.newBuilder() to construct.
+  private AlarmCheckResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private FireSuppressionRequest() {
-    sensorID_ = "";
+  private AlarmCheckResponse() {
+    alarmInfo_ = "";
   }
 
   @java.lang.Override
@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private FireSuppressionRequest(
+  private AlarmCheckResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -46,7 +46,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            sensorID_ = s;
+            alarmInfo_ = s;
             break;
           }
           default: {
@@ -70,45 +70,45 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return AlarmController.AlarmControlsImpl.internal_static_FireSuppressionRequest_descriptor;
+    return AlarmController.AlarmControlsImpl.internal_static_AlarmCheckResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return AlarmController.AlarmControlsImpl.internal_static_FireSuppressionRequest_fieldAccessorTable
+    return AlarmController.AlarmControlsImpl.internal_static_AlarmCheckResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            AlarmController.FireSuppressionRequest.class, AlarmController.FireSuppressionRequest.Builder.class);
+            AlarmController.AlarmCheckResponse.class, AlarmController.AlarmCheckResponse.Builder.class);
   }
 
-  public static final int SENSORID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object sensorID_;
+  public static final int ALARMINFO_FIELD_NUMBER = 1;
+  private volatile java.lang.Object alarmInfo_;
   /**
-   * <code>string sensorID = 1;</code>
+   * <code>string alarmInfo = 1;</code>
    */
-  public java.lang.String getSensorID() {
-    java.lang.Object ref = sensorID_;
+  public java.lang.String getAlarmInfo() {
+    java.lang.Object ref = alarmInfo_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      sensorID_ = s;
+      alarmInfo_ = s;
       return s;
     }
   }
   /**
-   * <code>string sensorID = 1;</code>
+   * <code>string alarmInfo = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getSensorIDBytes() {
-    java.lang.Object ref = sensorID_;
+      getAlarmInfoBytes() {
+    java.lang.Object ref = alarmInfo_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      sensorID_ = b;
+      alarmInfo_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -129,8 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getSensorIDBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sensorID_);
+    if (!getAlarmInfoBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, alarmInfo_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getSensorIDBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sensorID_);
+    if (!getAlarmInfoBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, alarmInfo_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -154,14 +154,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof AlarmController.FireSuppressionRequest)) {
+    if (!(obj instanceof AlarmController.AlarmCheckResponse)) {
       return super.equals(obj);
     }
-    AlarmController.FireSuppressionRequest other = (AlarmController.FireSuppressionRequest) obj;
+    AlarmController.AlarmCheckResponse other = (AlarmController.AlarmCheckResponse) obj;
 
     boolean result = true;
-    result = result && getSensorID()
-        .equals(other.getSensorID());
+    result = result && getAlarmInfo()
+        .equals(other.getAlarmInfo());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,76 +173,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SENSORID_FIELD_NUMBER;
-    hash = (53 * hash) + getSensorID().hashCode();
+    hash = (37 * hash) + ALARMINFO_FIELD_NUMBER;
+    hash = (53 * hash) + getAlarmInfo().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(byte[] data)
+  public static AlarmController.AlarmCheckResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(java.io.InputStream input)
+  public static AlarmController.AlarmCheckResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static AlarmController.FireSuppressionRequest parseDelimitedFrom(java.io.InputStream input)
+  public static AlarmController.AlarmCheckResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static AlarmController.FireSuppressionRequest parseDelimitedFrom(
+  public static AlarmController.AlarmCheckResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static AlarmController.FireSuppressionRequest parseFrom(
+  public static AlarmController.AlarmCheckResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -255,7 +255,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(AlarmController.FireSuppressionRequest prototype) {
+  public static Builder newBuilder(AlarmController.AlarmCheckResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -271,26 +271,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code FireSuppressionRequest}
+   * Protobuf type {@code AlarmCheckResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:FireSuppressionRequest)
-      AlarmController.FireSuppressionRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:AlarmCheckResponse)
+      AlarmController.AlarmCheckResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return AlarmController.AlarmControlsImpl.internal_static_FireSuppressionRequest_descriptor;
+      return AlarmController.AlarmControlsImpl.internal_static_AlarmCheckResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return AlarmController.AlarmControlsImpl.internal_static_FireSuppressionRequest_fieldAccessorTable
+      return AlarmController.AlarmControlsImpl.internal_static_AlarmCheckResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              AlarmController.FireSuppressionRequest.class, AlarmController.FireSuppressionRequest.Builder.class);
+              AlarmController.AlarmCheckResponse.class, AlarmController.AlarmCheckResponse.Builder.class);
     }
 
-    // Construct using AlarmController.FireSuppressionRequest.newBuilder()
+    // Construct using AlarmController.AlarmCheckResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -308,7 +308,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      sensorID_ = "";
+      alarmInfo_ = "";
 
       return this;
     }
@@ -316,17 +316,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return AlarmController.AlarmControlsImpl.internal_static_FireSuppressionRequest_descriptor;
+      return AlarmController.AlarmControlsImpl.internal_static_AlarmCheckResponse_descriptor;
     }
 
     @java.lang.Override
-    public AlarmController.FireSuppressionRequest getDefaultInstanceForType() {
-      return AlarmController.FireSuppressionRequest.getDefaultInstance();
+    public AlarmController.AlarmCheckResponse getDefaultInstanceForType() {
+      return AlarmController.AlarmCheckResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public AlarmController.FireSuppressionRequest build() {
-      AlarmController.FireSuppressionRequest result = buildPartial();
+    public AlarmController.AlarmCheckResponse build() {
+      AlarmController.AlarmCheckResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -334,9 +334,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public AlarmController.FireSuppressionRequest buildPartial() {
-      AlarmController.FireSuppressionRequest result = new AlarmController.FireSuppressionRequest(this);
-      result.sensorID_ = sensorID_;
+    public AlarmController.AlarmCheckResponse buildPartial() {
+      AlarmController.AlarmCheckResponse result = new AlarmController.AlarmCheckResponse(this);
+      result.alarmInfo_ = alarmInfo_;
       onBuilt();
       return result;
     }
@@ -375,18 +375,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof AlarmController.FireSuppressionRequest) {
-        return mergeFrom((AlarmController.FireSuppressionRequest)other);
+      if (other instanceof AlarmController.AlarmCheckResponse) {
+        return mergeFrom((AlarmController.AlarmCheckResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(AlarmController.FireSuppressionRequest other) {
-      if (other == AlarmController.FireSuppressionRequest.getDefaultInstance()) return this;
-      if (!other.getSensorID().isEmpty()) {
-        sensorID_ = other.sensorID_;
+    public Builder mergeFrom(AlarmController.AlarmCheckResponse other) {
+      if (other == AlarmController.AlarmCheckResponse.getDefaultInstance()) return this;
+      if (!other.getAlarmInfo().isEmpty()) {
+        alarmInfo_ = other.alarmInfo_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -404,11 +404,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      AlarmController.FireSuppressionRequest parsedMessage = null;
+      AlarmController.AlarmCheckResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (AlarmController.FireSuppressionRequest) e.getUnfinishedMessage();
+        parsedMessage = (AlarmController.AlarmCheckResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -418,71 +418,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object sensorID_ = "";
+    private java.lang.Object alarmInfo_ = "";
     /**
-     * <code>string sensorID = 1;</code>
+     * <code>string alarmInfo = 1;</code>
      */
-    public java.lang.String getSensorID() {
-      java.lang.Object ref = sensorID_;
+    public java.lang.String getAlarmInfo() {
+      java.lang.Object ref = alarmInfo_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        sensorID_ = s;
+        alarmInfo_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string sensorID = 1;</code>
+     * <code>string alarmInfo = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getSensorIDBytes() {
-      java.lang.Object ref = sensorID_;
+        getAlarmInfoBytes() {
+      java.lang.Object ref = alarmInfo_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        sensorID_ = b;
+        alarmInfo_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string sensorID = 1;</code>
+     * <code>string alarmInfo = 1;</code>
      */
-    public Builder setSensorID(
+    public Builder setAlarmInfo(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      sensorID_ = value;
+      alarmInfo_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string sensorID = 1;</code>
+     * <code>string alarmInfo = 1;</code>
      */
-    public Builder clearSensorID() {
+    public Builder clearAlarmInfo() {
       
-      sensorID_ = getDefaultInstance().getSensorID();
+      alarmInfo_ = getDefaultInstance().getAlarmInfo();
       onChanged();
       return this;
     }
     /**
-     * <code>string sensorID = 1;</code>
+     * <code>string alarmInfo = 1;</code>
      */
-    public Builder setSensorIDBytes(
+    public Builder setAlarmInfoBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      sensorID_ = value;
+      alarmInfo_ = value;
       onChanged();
       return this;
     }
@@ -499,41 +499,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:FireSuppressionRequest)
+    // @@protoc_insertion_point(builder_scope:AlarmCheckResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:FireSuppressionRequest)
-  private static final AlarmController.FireSuppressionRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:AlarmCheckResponse)
+  private static final AlarmController.AlarmCheckResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new AlarmController.FireSuppressionRequest();
+    DEFAULT_INSTANCE = new AlarmController.AlarmCheckResponse();
   }
 
-  public static AlarmController.FireSuppressionRequest getDefaultInstance() {
+  public static AlarmController.AlarmCheckResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<FireSuppressionRequest>
-      PARSER = new com.google.protobuf.AbstractParser<FireSuppressionRequest>() {
+  private static final com.google.protobuf.Parser<AlarmCheckResponse>
+      PARSER = new com.google.protobuf.AbstractParser<AlarmCheckResponse>() {
     @java.lang.Override
-    public FireSuppressionRequest parsePartialFrom(
+    public AlarmCheckResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new FireSuppressionRequest(input, extensionRegistry);
+      return new AlarmCheckResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<FireSuppressionRequest> parser() {
+  public static com.google.protobuf.Parser<AlarmCheckResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<FireSuppressionRequest> getParserForType() {
+  public com.google.protobuf.Parser<AlarmCheckResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public AlarmController.FireSuppressionRequest getDefaultInstanceForType() {
+  public AlarmController.AlarmCheckResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

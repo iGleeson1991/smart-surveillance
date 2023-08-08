@@ -16,11 +16,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CameraAutomationRequest() {
-    cameraID_ = "";
-    motionDetected_ = false;
-    cameraBeingControlled_ = false;
+    automatedCameraID_ = "";
     locationOfMovement_ = "";
-    cameraPosition_ = "";
   }
 
   @java.lang.Override
@@ -50,29 +47,13 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            cameraID_ = s;
+            automatedCameraID_ = s;
             break;
           }
-          case 16: {
-
-            motionDetected_ = input.readBool();
-            break;
-          }
-          case 24: {
-
-            cameraBeingControlled_ = input.readBool();
-            break;
-          }
-          case 34: {
+          case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             locationOfMovement_ = s;
-            break;
-          }
-          case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            cameraPosition_ = s;
             break;
           }
           default: {
@@ -107,62 +88,44 @@ private static final long serialVersionUID = 0L;
             CameraController.CameraAutomationRequest.class, CameraController.CameraAutomationRequest.Builder.class);
   }
 
-  public static final int CAMERAID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object cameraID_;
+  public static final int AUTOMATEDCAMERAID_FIELD_NUMBER = 1;
+  private volatile java.lang.Object automatedCameraID_;
   /**
-   * <code>string cameraID = 1;</code>
+   * <code>string automatedCameraID = 1;</code>
    */
-  public java.lang.String getCameraID() {
-    java.lang.Object ref = cameraID_;
+  public java.lang.String getAutomatedCameraID() {
+    java.lang.Object ref = automatedCameraID_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      cameraID_ = s;
+      automatedCameraID_ = s;
       return s;
     }
   }
   /**
-   * <code>string cameraID = 1;</code>
+   * <code>string automatedCameraID = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getCameraIDBytes() {
-    java.lang.Object ref = cameraID_;
+      getAutomatedCameraIDBytes() {
+    java.lang.Object ref = automatedCameraID_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      cameraID_ = b;
+      automatedCameraID_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int MOTIONDETECTED_FIELD_NUMBER = 2;
-  private boolean motionDetected_;
-  /**
-   * <code>bool motionDetected = 2;</code>
-   */
-  public boolean getMotionDetected() {
-    return motionDetected_;
-  }
-
-  public static final int CAMERABEINGCONTROLLED_FIELD_NUMBER = 3;
-  private boolean cameraBeingControlled_;
-  /**
-   * <code>bool cameraBeingControlled = 3;</code>
-   */
-  public boolean getCameraBeingControlled() {
-    return cameraBeingControlled_;
-  }
-
-  public static final int LOCATIONOFMOVEMENT_FIELD_NUMBER = 4;
+  public static final int LOCATIONOFMOVEMENT_FIELD_NUMBER = 2;
   private volatile java.lang.Object locationOfMovement_;
   /**
-   * <code>string locationOfMovement = 4;</code>
+   * <code>string locationOfMovement = 2;</code>
    */
   public java.lang.String getLocationOfMovement() {
     java.lang.Object ref = locationOfMovement_;
@@ -177,7 +140,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string locationOfMovement = 4;</code>
+   * <code>string locationOfMovement = 2;</code>
    */
   public com.google.protobuf.ByteString
       getLocationOfMovementBytes() {
@@ -187,40 +150,6 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       locationOfMovement_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int CAMERAPOSITION_FIELD_NUMBER = 5;
-  private volatile java.lang.Object cameraPosition_;
-  /**
-   * <code>string cameraPosition = 5;</code>
-   */
-  public java.lang.String getCameraPosition() {
-    java.lang.Object ref = cameraPosition_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      cameraPosition_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string cameraPosition = 5;</code>
-   */
-  public com.google.protobuf.ByteString
-      getCameraPositionBytes() {
-    java.lang.Object ref = cameraPosition_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      cameraPosition_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -241,20 +170,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getCameraIDBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cameraID_);
-    }
-    if (motionDetected_ != false) {
-      output.writeBool(2, motionDetected_);
-    }
-    if (cameraBeingControlled_ != false) {
-      output.writeBool(3, cameraBeingControlled_);
+    if (!getAutomatedCameraIDBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, automatedCameraID_);
     }
     if (!getLocationOfMovementBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, locationOfMovement_);
-    }
-    if (!getCameraPositionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, cameraPosition_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, locationOfMovement_);
     }
     unknownFields.writeTo(output);
   }
@@ -265,22 +185,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getCameraIDBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cameraID_);
-    }
-    if (motionDetected_ != false) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(2, motionDetected_);
-    }
-    if (cameraBeingControlled_ != false) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(3, cameraBeingControlled_);
+    if (!getAutomatedCameraIDBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, automatedCameraID_);
     }
     if (!getLocationOfMovementBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, locationOfMovement_);
-    }
-    if (!getCameraPositionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, cameraPosition_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, locationOfMovement_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -298,16 +207,10 @@ private static final long serialVersionUID = 0L;
     CameraController.CameraAutomationRequest other = (CameraController.CameraAutomationRequest) obj;
 
     boolean result = true;
-    result = result && getCameraID()
-        .equals(other.getCameraID());
-    result = result && (getMotionDetected()
-        == other.getMotionDetected());
-    result = result && (getCameraBeingControlled()
-        == other.getCameraBeingControlled());
+    result = result && getAutomatedCameraID()
+        .equals(other.getAutomatedCameraID());
     result = result && getLocationOfMovement()
         .equals(other.getLocationOfMovement());
-    result = result && getCameraPosition()
-        .equals(other.getCameraPosition());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -319,18 +222,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CAMERAID_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraID().hashCode();
-    hash = (37 * hash) + MOTIONDETECTED_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getMotionDetected());
-    hash = (37 * hash) + CAMERABEINGCONTROLLED_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getCameraBeingControlled());
+    hash = (37 * hash) + AUTOMATEDCAMERAID_FIELD_NUMBER;
+    hash = (53 * hash) + getAutomatedCameraID().hashCode();
     hash = (37 * hash) + LOCATIONOFMOVEMENT_FIELD_NUMBER;
     hash = (53 * hash) + getLocationOfMovement().hashCode();
-    hash = (37 * hash) + CAMERAPOSITION_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraPosition().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -464,15 +359,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      cameraID_ = "";
-
-      motionDetected_ = false;
-
-      cameraBeingControlled_ = false;
+      automatedCameraID_ = "";
 
       locationOfMovement_ = "";
-
-      cameraPosition_ = "";
 
       return this;
     }
@@ -500,11 +389,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public CameraController.CameraAutomationRequest buildPartial() {
       CameraController.CameraAutomationRequest result = new CameraController.CameraAutomationRequest(this);
-      result.cameraID_ = cameraID_;
-      result.motionDetected_ = motionDetected_;
-      result.cameraBeingControlled_ = cameraBeingControlled_;
+      result.automatedCameraID_ = automatedCameraID_;
       result.locationOfMovement_ = locationOfMovement_;
-      result.cameraPosition_ = cameraPosition_;
       onBuilt();
       return result;
     }
@@ -553,22 +439,12 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(CameraController.CameraAutomationRequest other) {
       if (other == CameraController.CameraAutomationRequest.getDefaultInstance()) return this;
-      if (!other.getCameraID().isEmpty()) {
-        cameraID_ = other.cameraID_;
+      if (!other.getAutomatedCameraID().isEmpty()) {
+        automatedCameraID_ = other.automatedCameraID_;
         onChanged();
-      }
-      if (other.getMotionDetected() != false) {
-        setMotionDetected(other.getMotionDetected());
-      }
-      if (other.getCameraBeingControlled() != false) {
-        setCameraBeingControlled(other.getCameraBeingControlled());
       }
       if (!other.getLocationOfMovement().isEmpty()) {
         locationOfMovement_ = other.locationOfMovement_;
-        onChanged();
-      }
-      if (!other.getCameraPosition().isEmpty()) {
-        cameraPosition_ = other.cameraPosition_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -600,130 +476,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object cameraID_ = "";
+    private java.lang.Object automatedCameraID_ = "";
     /**
-     * <code>string cameraID = 1;</code>
+     * <code>string automatedCameraID = 1;</code>
      */
-    public java.lang.String getCameraID() {
-      java.lang.Object ref = cameraID_;
+    public java.lang.String getAutomatedCameraID() {
+      java.lang.Object ref = automatedCameraID_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        cameraID_ = s;
+        automatedCameraID_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string cameraID = 1;</code>
+     * <code>string automatedCameraID = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getCameraIDBytes() {
-      java.lang.Object ref = cameraID_;
+        getAutomatedCameraIDBytes() {
+      java.lang.Object ref = automatedCameraID_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        cameraID_ = b;
+        automatedCameraID_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string cameraID = 1;</code>
+     * <code>string automatedCameraID = 1;</code>
      */
-    public Builder setCameraID(
+    public Builder setAutomatedCameraID(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      cameraID_ = value;
+      automatedCameraID_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraID = 1;</code>
+     * <code>string automatedCameraID = 1;</code>
      */
-    public Builder clearCameraID() {
+    public Builder clearAutomatedCameraID() {
       
-      cameraID_ = getDefaultInstance().getCameraID();
+      automatedCameraID_ = getDefaultInstance().getAutomatedCameraID();
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraID = 1;</code>
+     * <code>string automatedCameraID = 1;</code>
      */
-    public Builder setCameraIDBytes(
+    public Builder setAutomatedCameraIDBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      cameraID_ = value;
-      onChanged();
-      return this;
-    }
-
-    private boolean motionDetected_ ;
-    /**
-     * <code>bool motionDetected = 2;</code>
-     */
-    public boolean getMotionDetected() {
-      return motionDetected_;
-    }
-    /**
-     * <code>bool motionDetected = 2;</code>
-     */
-    public Builder setMotionDetected(boolean value) {
-      
-      motionDetected_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>bool motionDetected = 2;</code>
-     */
-    public Builder clearMotionDetected() {
-      
-      motionDetected_ = false;
-      onChanged();
-      return this;
-    }
-
-    private boolean cameraBeingControlled_ ;
-    /**
-     * <code>bool cameraBeingControlled = 3;</code>
-     */
-    public boolean getCameraBeingControlled() {
-      return cameraBeingControlled_;
-    }
-    /**
-     * <code>bool cameraBeingControlled = 3;</code>
-     */
-    public Builder setCameraBeingControlled(boolean value) {
-      
-      cameraBeingControlled_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>bool cameraBeingControlled = 3;</code>
-     */
-    public Builder clearCameraBeingControlled() {
-      
-      cameraBeingControlled_ = false;
+      automatedCameraID_ = value;
       onChanged();
       return this;
     }
 
     private java.lang.Object locationOfMovement_ = "";
     /**
-     * <code>string locationOfMovement = 4;</code>
+     * <code>string locationOfMovement = 2;</code>
      */
     public java.lang.String getLocationOfMovement() {
       java.lang.Object ref = locationOfMovement_;
@@ -738,7 +562,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string locationOfMovement = 4;</code>
+     * <code>string locationOfMovement = 2;</code>
      */
     public com.google.protobuf.ByteString
         getLocationOfMovementBytes() {
@@ -754,7 +578,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string locationOfMovement = 4;</code>
+     * <code>string locationOfMovement = 2;</code>
      */
     public Builder setLocationOfMovement(
         java.lang.String value) {
@@ -767,7 +591,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string locationOfMovement = 4;</code>
+     * <code>string locationOfMovement = 2;</code>
      */
     public Builder clearLocationOfMovement() {
       
@@ -776,7 +600,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string locationOfMovement = 4;</code>
+     * <code>string locationOfMovement = 2;</code>
      */
     public Builder setLocationOfMovementBytes(
         com.google.protobuf.ByteString value) {
@@ -786,75 +610,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       locationOfMovement_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object cameraPosition_ = "";
-    /**
-     * <code>string cameraPosition = 5;</code>
-     */
-    public java.lang.String getCameraPosition() {
-      java.lang.Object ref = cameraPosition_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cameraPosition_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string cameraPosition = 5;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCameraPositionBytes() {
-      java.lang.Object ref = cameraPosition_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cameraPosition_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string cameraPosition = 5;</code>
-     */
-    public Builder setCameraPosition(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      cameraPosition_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cameraPosition = 5;</code>
-     */
-    public Builder clearCameraPosition() {
-      
-      cameraPosition_ = getDefaultInstance().getCameraPosition();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cameraPosition = 5;</code>
-     */
-    public Builder setCameraPositionBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      cameraPosition_ = value;
       onChanged();
       return this;
     }

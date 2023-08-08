@@ -8,42 +8,22 @@ public interface CameraAutomationRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string cameraID = 1;</code>
+   * <code>string automatedCameraID = 1;</code>
    */
-  java.lang.String getCameraID();
+  java.lang.String getAutomatedCameraID();
   /**
-   * <code>string cameraID = 1;</code>
+   * <code>string automatedCameraID = 1;</code>
    */
   com.google.protobuf.ByteString
-      getCameraIDBytes();
+      getAutomatedCameraIDBytes();
 
   /**
-   * <code>bool motionDetected = 2;</code>
-   */
-  boolean getMotionDetected();
-
-  /**
-   * <code>bool cameraBeingControlled = 3;</code>
-   */
-  boolean getCameraBeingControlled();
-
-  /**
-   * <code>string locationOfMovement = 4;</code>
+   * <code>string locationOfMovement = 2;</code>
    */
   java.lang.String getLocationOfMovement();
   /**
-   * <code>string locationOfMovement = 4;</code>
+   * <code>string locationOfMovement = 2;</code>
    */
   com.google.protobuf.ByteString
       getLocationOfMovementBytes();
-
-  /**
-   * <code>string cameraPosition = 5;</code>
-   */
-  java.lang.String getCameraPosition();
-  /**
-   * <code>string cameraPosition = 5;</code>
-   */
-  com.google.protobuf.ByteString
-      getCameraPositionBytes();
 }

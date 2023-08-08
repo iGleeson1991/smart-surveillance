@@ -8,21 +8,31 @@ public interface ManualAlarmResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string activateEmergencyLighting = 1;</code>
+   * <code>string alarmActivation = 1;</code>
+   */
+  java.lang.String getAlarmActivation();
+  /**
+   * <code>string alarmActivation = 1;</code>
+   */
+  com.google.protobuf.ByteString
+      getAlarmActivationBytes();
+
+  /**
+   * <code>string activateEmergencyLighting = 2;</code>
    */
   java.lang.String getActivateEmergencyLighting();
   /**
-   * <code>string activateEmergencyLighting = 1;</code>
+   * <code>string activateEmergencyLighting = 2;</code>
    */
   com.google.protobuf.ByteString
       getActivateEmergencyLightingBytes();
 
   /**
-   * <code>string activateEmergencySirens = 2;</code>
+   * <code>string activateEmergencySirens = 3;</code>
    */
   java.lang.String getActivateEmergencySirens();
   /**
-   * <code>string activateEmergencySirens = 2;</code>
+   * <code>string activateEmergencySirens = 3;</code>
    */
   com.google.protobuf.ByteString
       getActivateEmergencySirensBytes();

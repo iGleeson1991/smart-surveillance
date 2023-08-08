@@ -3,6 +3,7 @@ package CameraController;
 import CameraController.Service2Grpc.Service2ImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -99,8 +100,28 @@ public class Service2Server extends Service2ImplBase {
     //Remote Methods
     // TODO: 04/08/2023 Finish remote methods
 
-    public void cameraAdjustment() {
+    public StreamObserver<CameraAdjustmentRequest> cameraAdjustment(StreamObserver<CameraAdjustmentResponse> cameraResponse) {
+        //Returns a new "StreamObserver" object of type "CameraAdjustmentRequest".
+        return new StreamObserver<CameraAdjustmentRequest>() {
+            @Override
+            //cameraRequest should contain the cameraID and securityCode
+            public void onNext(CameraAdjustmentRequest cameraRequest) {
+                System.out.println("\nCamera Adjustment: Receiving Info: " + cameraRequest);
+            }
 
+            //Method will print any errors caught to the console.
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println(throwable.getMessage());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+                cameraResponse.onCompleted();
+                System.out.println("Camera Adjustment: Completed\n");
+            }
+        };
     }
 
     public void motionDetected() {

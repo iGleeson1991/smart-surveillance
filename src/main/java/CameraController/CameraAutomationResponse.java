@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CameraAutomationResponse() {
-    cameraDirection_ = "";
+    cameraAutomation_ = "";
   }
 
   @java.lang.Override
@@ -46,7 +46,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            cameraDirection_ = s;
+            cameraAutomation_ = s;
             break;
           }
           default: {
@@ -81,34 +81,34 @@ private static final long serialVersionUID = 0L;
             CameraController.CameraAutomationResponse.class, CameraController.CameraAutomationResponse.Builder.class);
   }
 
-  public static final int CAMERADIRECTION_FIELD_NUMBER = 1;
-  private volatile java.lang.Object cameraDirection_;
+  public static final int CAMERAAUTOMATION_FIELD_NUMBER = 1;
+  private volatile java.lang.Object cameraAutomation_;
   /**
-   * <code>string cameraDirection = 1;</code>
+   * <code>string cameraAutomation = 1;</code>
    */
-  public java.lang.String getCameraDirection() {
-    java.lang.Object ref = cameraDirection_;
+  public java.lang.String getCameraAutomation() {
+    java.lang.Object ref = cameraAutomation_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      cameraDirection_ = s;
+      cameraAutomation_ = s;
       return s;
     }
   }
   /**
-   * <code>string cameraDirection = 1;</code>
+   * <code>string cameraAutomation = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getCameraDirectionBytes() {
-    java.lang.Object ref = cameraDirection_;
+      getCameraAutomationBytes() {
+    java.lang.Object ref = cameraAutomation_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      cameraDirection_ = b;
+      cameraAutomation_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -129,8 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getCameraDirectionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cameraDirection_);
+    if (!getCameraAutomationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cameraAutomation_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getCameraDirectionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cameraDirection_);
+    if (!getCameraAutomationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cameraAutomation_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,8 +160,8 @@ private static final long serialVersionUID = 0L;
     CameraController.CameraAutomationResponse other = (CameraController.CameraAutomationResponse) obj;
 
     boolean result = true;
-    result = result && getCameraDirection()
-        .equals(other.getCameraDirection());
+    result = result && getCameraAutomation()
+        .equals(other.getCameraAutomation());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,8 +173,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CAMERADIRECTION_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraDirection().hashCode();
+    hash = (37 * hash) + CAMERAAUTOMATION_FIELD_NUMBER;
+    hash = (53 * hash) + getCameraAutomation().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -308,7 +308,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      cameraDirection_ = "";
+      cameraAutomation_ = "";
 
       return this;
     }
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public CameraController.CameraAutomationResponse buildPartial() {
       CameraController.CameraAutomationResponse result = new CameraController.CameraAutomationResponse(this);
-      result.cameraDirection_ = cameraDirection_;
+      result.cameraAutomation_ = cameraAutomation_;
       onBuilt();
       return result;
     }
@@ -385,8 +385,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(CameraController.CameraAutomationResponse other) {
       if (other == CameraController.CameraAutomationResponse.getDefaultInstance()) return this;
-      if (!other.getCameraDirection().isEmpty()) {
-        cameraDirection_ = other.cameraDirection_;
+      if (!other.getCameraAutomation().isEmpty()) {
+        cameraAutomation_ = other.cameraAutomation_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -418,71 +418,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object cameraDirection_ = "";
+    private java.lang.Object cameraAutomation_ = "";
     /**
-     * <code>string cameraDirection = 1;</code>
+     * <code>string cameraAutomation = 1;</code>
      */
-    public java.lang.String getCameraDirection() {
-      java.lang.Object ref = cameraDirection_;
+    public java.lang.String getCameraAutomation() {
+      java.lang.Object ref = cameraAutomation_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        cameraDirection_ = s;
+        cameraAutomation_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string cameraDirection = 1;</code>
+     * <code>string cameraAutomation = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getCameraDirectionBytes() {
-      java.lang.Object ref = cameraDirection_;
+        getCameraAutomationBytes() {
+      java.lang.Object ref = cameraAutomation_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        cameraDirection_ = b;
+        cameraAutomation_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string cameraDirection = 1;</code>
+     * <code>string cameraAutomation = 1;</code>
      */
-    public Builder setCameraDirection(
+    public Builder setCameraAutomation(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      cameraDirection_ = value;
+      cameraAutomation_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraDirection = 1;</code>
+     * <code>string cameraAutomation = 1;</code>
      */
-    public Builder clearCameraDirection() {
+    public Builder clearCameraAutomation() {
       
-      cameraDirection_ = getDefaultInstance().getCameraDirection();
+      cameraAutomation_ = getDefaultInstance().getCameraAutomation();
       onChanged();
       return this;
     }
     /**
-     * <code>string cameraDirection = 1;</code>
+     * <code>string cameraAutomation = 1;</code>
      */
-    public Builder setCameraDirectionBytes(
+    public Builder setCameraAutomationBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      cameraDirection_ = value;
+      cameraAutomation_ = value;
       onChanged();
       return this;
     }

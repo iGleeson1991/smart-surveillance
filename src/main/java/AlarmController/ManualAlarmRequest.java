@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
   }
   private ManualAlarmRequest() {
     alarmID_ = "";
-    alarmTriggered_ = "";
   }
 
   @java.lang.Override
@@ -48,12 +47,6 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             alarmID_ = s;
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            alarmTriggered_ = s;
             break;
           }
           default: {
@@ -122,40 +115,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int ALARMTRIGGERED_FIELD_NUMBER = 2;
-  private volatile java.lang.Object alarmTriggered_;
-  /**
-   * <code>string alarmTriggered = 2;</code>
-   */
-  public java.lang.String getAlarmTriggered() {
-    java.lang.Object ref = alarmTriggered_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      alarmTriggered_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string alarmTriggered = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getAlarmTriggeredBytes() {
-    java.lang.Object ref = alarmTriggered_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      alarmTriggered_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -173,9 +132,6 @@ private static final long serialVersionUID = 0L;
     if (!getAlarmIDBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, alarmID_);
     }
-    if (!getAlarmTriggeredBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, alarmTriggered_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -187,9 +143,6 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getAlarmIDBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, alarmID_);
-    }
-    if (!getAlarmTriggeredBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, alarmTriggered_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -209,8 +162,6 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getAlarmID()
         .equals(other.getAlarmID());
-    result = result && getAlarmTriggered()
-        .equals(other.getAlarmTriggered());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -224,8 +175,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ALARMID_FIELD_NUMBER;
     hash = (53 * hash) + getAlarmID().hashCode();
-    hash = (37 * hash) + ALARMTRIGGERED_FIELD_NUMBER;
-    hash = (53 * hash) + getAlarmTriggered().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -361,8 +310,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       alarmID_ = "";
 
-      alarmTriggered_ = "";
-
       return this;
     }
 
@@ -390,7 +337,6 @@ private static final long serialVersionUID = 0L;
     public AlarmController.ManualAlarmRequest buildPartial() {
       AlarmController.ManualAlarmRequest result = new AlarmController.ManualAlarmRequest(this);
       result.alarmID_ = alarmID_;
-      result.alarmTriggered_ = alarmTriggered_;
       onBuilt();
       return result;
     }
@@ -441,10 +387,6 @@ private static final long serialVersionUID = 0L;
       if (other == AlarmController.ManualAlarmRequest.getDefaultInstance()) return this;
       if (!other.getAlarmID().isEmpty()) {
         alarmID_ = other.alarmID_;
-        onChanged();
-      }
-      if (!other.getAlarmTriggered().isEmpty()) {
-        alarmTriggered_ = other.alarmTriggered_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -541,75 +483,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       alarmID_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object alarmTriggered_ = "";
-    /**
-     * <code>string alarmTriggered = 2;</code>
-     */
-    public java.lang.String getAlarmTriggered() {
-      java.lang.Object ref = alarmTriggered_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        alarmTriggered_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string alarmTriggered = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getAlarmTriggeredBytes() {
-      java.lang.Object ref = alarmTriggered_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        alarmTriggered_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string alarmTriggered = 2;</code>
-     */
-    public Builder setAlarmTriggered(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      alarmTriggered_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string alarmTriggered = 2;</code>
-     */
-    public Builder clearAlarmTriggered() {
-      
-      alarmTriggered_ = getDefaultInstance().getAlarmTriggered();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string alarmTriggered = 2;</code>
-     */
-    public Builder setAlarmTriggeredBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      alarmTriggered_ = value;
       onChanged();
       return this;
     }

@@ -5,29 +5,29 @@ option java_package = "AlarmController";
 option java_outer_classname = "AlarmControlsImpl";
 
 service Service3 {
-  rpc manualAlarm(ManualAlarmRequest) returns (stream ManualAlarmResponse) {}
+  rpc manualAlarm(ManualAlarmRequest) returns (ManualAlarmResponse) {}
 
-  rpc fireSuppression(FireSuppressionRequest) returns (stream FireSuppressionResponse) {}
+  rpc fireSuppression(FireSuppressionRequest) returns (FireSuppressionResponse) {}
 
   rpc emergencyServicesCall(EmergencyServicesCallRequest) returns (EmergencyServicesCallResponse) {}
+
+  rpc alarmCheck(Empty) returns (AlarmCheckResponse) {}
 }
 
 message ManualAlarmRequest {
   string alarmID = 1;
-
-  string alarmTriggered = 2;
 }
 
 message ManualAlarmResponse {
-  string activateEmergencyLighting = 1;
+  string alarmActivation = 1;
 
-  string activateEmergencySirens = 2;
+  string activateEmergencyLighting = 2;
+
+  string activateEmergencySirens = 3;
 }
 
 message FireSuppressionRequest {
   string sensorID = 1;
-
-  string typeOfHazard = 2;
 }
 
 message FireSuppressionResponse {
@@ -44,4 +44,12 @@ message EmergencyServicesCallRequest {
 
 message EmergencyServicesCallResponse {
   string callConfirmation = 1;
+}
+
+message Empty {
+
+}
+
+message AlarmCheckResponse {
+  string alarmInfo = 1;
 }

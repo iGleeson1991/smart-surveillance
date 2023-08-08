@@ -8,12 +8,12 @@ public interface CameraAutomationResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string cameraDirection = 1;</code>
+   * <code>string cameraAutomation = 1;</code>
    */
-  java.lang.String getCameraDirection();
+  java.lang.String getCameraAutomation();
   /**
-   * <code>string cameraDirection = 1;</code>
+   * <code>string cameraAutomation = 1;</code>
    */
   com.google.protobuf.ByteString
-      getCameraDirectionBytes();
+      getCameraAutomationBytes();
 }

@@ -33,7 +33,7 @@ public class SecurityGUI extends JFrame {
     private JPanel cameraControllerJPanel, cameraSelectJPanel, directionControlsJPanel, motionDetectorJPanel;
     private JRadioButton camera1RadioButton, camera2RadioButton;
     private JButton upButton, leftButton, rightButton, downButton, motionLocationSubmitButton;
-    private JTextField cameraPosition, inputDetectedMotionLocation, motionDetectedStatus;
+    private JTextField cameraPosition, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus;
 
     //Camera Screen
     private JPanel cameraScreenJPanel;
@@ -41,9 +41,10 @@ public class SecurityGUI extends JFrame {
     private JLayeredPane visualCameraPosition;
 
     //Alarm Controls Tab
-    private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel;
-    private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button;
+    private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel, alarmCheckJPanel, alarmCheckButtonJPanel;
+    private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button, alarmCheckButton;
     private JTextField alarmActivatedAlarmTest, emergencyLightsAlarmTest, emergencySirensAlarmTest, emergencyLightsFSTest, emergencySirensFSTest, fireSuppressionFSTest, emergencyServicesCallTestStatus;
+    private JTextArea alarmCheckInfo;
 
     public SecurityGUI() {
         setContentPane(securityControllerGUI);
@@ -193,6 +194,12 @@ public class SecurityGUI extends JFrame {
             }
         });
         alarm4Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        alarmCheckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 

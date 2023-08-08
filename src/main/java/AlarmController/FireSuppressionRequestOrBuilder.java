@@ -16,14 +16,4 @@ public interface FireSuppressionRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getSensorIDBytes();
-
-  /**
-   * <code>string typeOfHazard = 2;</code>
-   */
-  java.lang.String getTypeOfHazard();
-  /**
-   * <code>string typeOfHazard = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getTypeOfHazardBytes();
 }

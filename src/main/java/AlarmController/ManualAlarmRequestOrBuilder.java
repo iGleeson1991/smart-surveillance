@@ -16,14 +16,4 @@ public interface ManualAlarmRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getAlarmIDBytes();
-
-  /**
-   * <code>string alarmTriggered = 2;</code>
-   */
-  java.lang.String getAlarmTriggered();
-  /**
-   * <code>string alarmTriggered = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getAlarmTriggeredBytes();
 }

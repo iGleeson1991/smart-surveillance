@@ -34,7 +34,7 @@ public final class Service3Grpc {
       fullMethodName = SERVICE_NAME + '/' + "manualAlarm",
       requestType = AlarmController.ManualAlarmRequest.class,
       responseType = AlarmController.ManualAlarmResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<AlarmController.ManualAlarmRequest,
       AlarmController.ManualAlarmResponse> getManualAlarmMethod() {
     io.grpc.MethodDescriptor<AlarmController.ManualAlarmRequest, AlarmController.ManualAlarmResponse> getManualAlarmMethod;
@@ -43,7 +43,7 @@ public final class Service3Grpc {
         if ((getManualAlarmMethod = Service3Grpc.getManualAlarmMethod) == null) {
           Service3Grpc.getManualAlarmMethod = getManualAlarmMethod = 
               io.grpc.MethodDescriptor.<AlarmController.ManualAlarmRequest, AlarmController.ManualAlarmResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service3", "manualAlarm"))
               .setSampledToLocalTracing(true)
@@ -66,7 +66,7 @@ public final class Service3Grpc {
       fullMethodName = SERVICE_NAME + '/' + "fireSuppression",
       requestType = AlarmController.FireSuppressionRequest.class,
       responseType = AlarmController.FireSuppressionResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<AlarmController.FireSuppressionRequest,
       AlarmController.FireSuppressionResponse> getFireSuppressionMethod() {
     io.grpc.MethodDescriptor<AlarmController.FireSuppressionRequest, AlarmController.FireSuppressionResponse> getFireSuppressionMethod;
@@ -75,7 +75,7 @@ public final class Service3Grpc {
         if ((getFireSuppressionMethod = Service3Grpc.getFireSuppressionMethod) == null) {
           Service3Grpc.getFireSuppressionMethod = getFireSuppressionMethod = 
               io.grpc.MethodDescriptor.<AlarmController.FireSuppressionRequest, AlarmController.FireSuppressionResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service3", "fireSuppression"))
               .setSampledToLocalTracing(true)
@@ -121,6 +121,38 @@ public final class Service3Grpc {
         }
      }
      return getEmergencyServicesCallMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<AlarmController.Empty,
+      AlarmController.AlarmCheckResponse> getAlarmCheckMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "alarmCheck",
+      requestType = AlarmController.Empty.class,
+      responseType = AlarmController.AlarmCheckResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<AlarmController.Empty,
+      AlarmController.AlarmCheckResponse> getAlarmCheckMethod() {
+    io.grpc.MethodDescriptor<AlarmController.Empty, AlarmController.AlarmCheckResponse> getAlarmCheckMethod;
+    if ((getAlarmCheckMethod = Service3Grpc.getAlarmCheckMethod) == null) {
+      synchronized (Service3Grpc.class) {
+        if ((getAlarmCheckMethod = Service3Grpc.getAlarmCheckMethod) == null) {
+          Service3Grpc.getAlarmCheckMethod = getAlarmCheckMethod = 
+              io.grpc.MethodDescriptor.<AlarmController.Empty, AlarmController.AlarmCheckResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "Service3", "alarmCheck"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  AlarmController.Empty.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  AlarmController.AlarmCheckResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new Service3MethodDescriptorSupplier("alarmCheck"))
+                  .build();
+          }
+        }
+     }
+     return getAlarmCheckMethod;
   }
 
   /**
@@ -171,18 +203,25 @@ public final class Service3Grpc {
       asyncUnimplementedUnaryCall(getEmergencyServicesCallMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void alarmCheck(AlarmController.Empty request,
+        io.grpc.stub.StreamObserver<AlarmController.AlarmCheckResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getAlarmCheckMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getManualAlarmMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 AlarmController.ManualAlarmRequest,
                 AlarmController.ManualAlarmResponse>(
                   this, METHODID_MANUAL_ALARM)))
           .addMethod(
             getFireSuppressionMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 AlarmController.FireSuppressionRequest,
                 AlarmController.FireSuppressionResponse>(
@@ -194,6 +233,13 @@ public final class Service3Grpc {
                 AlarmController.EmergencyServicesCallRequest,
                 AlarmController.EmergencyServicesCallResponse>(
                   this, METHODID_EMERGENCY_SERVICES_CALL)))
+          .addMethod(
+            getAlarmCheckMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                AlarmController.Empty,
+                AlarmController.AlarmCheckResponse>(
+                  this, METHODID_ALARM_CHECK)))
           .build();
     }
   }
@@ -220,7 +266,7 @@ public final class Service3Grpc {
      */
     public void manualAlarm(AlarmController.ManualAlarmRequest request,
         io.grpc.stub.StreamObserver<AlarmController.ManualAlarmResponse> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getManualAlarmMethod(), getCallOptions()), request, responseObserver);
     }
 
@@ -228,7 +274,7 @@ public final class Service3Grpc {
      */
     public void fireSuppression(AlarmController.FireSuppressionRequest request,
         io.grpc.stub.StreamObserver<AlarmController.FireSuppressionResponse> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getFireSuppressionMethod(), getCallOptions()), request, responseObserver);
     }
 
@@ -238,6 +284,14 @@ public final class Service3Grpc {
         io.grpc.stub.StreamObserver<AlarmController.EmergencyServicesCallResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getEmergencyServicesCallMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void alarmCheck(AlarmController.Empty request,
+        io.grpc.stub.StreamObserver<AlarmController.AlarmCheckResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getAlarmCheckMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -261,17 +315,15 @@ public final class Service3Grpc {
 
     /**
      */
-    public java.util.Iterator<AlarmController.ManualAlarmResponse> manualAlarm(
-        AlarmController.ManualAlarmRequest request) {
-      return blockingServerStreamingCall(
+    public AlarmController.ManualAlarmResponse manualAlarm(AlarmController.ManualAlarmRequest request) {
+      return blockingUnaryCall(
           getChannel(), getManualAlarmMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public java.util.Iterator<AlarmController.FireSuppressionResponse> fireSuppression(
-        AlarmController.FireSuppressionRequest request) {
-      return blockingServerStreamingCall(
+    public AlarmController.FireSuppressionResponse fireSuppression(AlarmController.FireSuppressionRequest request) {
+      return blockingUnaryCall(
           getChannel(), getFireSuppressionMethod(), getCallOptions(), request);
     }
 
@@ -280,6 +332,13 @@ public final class Service3Grpc {
     public AlarmController.EmergencyServicesCallResponse emergencyServicesCall(AlarmController.EmergencyServicesCallRequest request) {
       return blockingUnaryCall(
           getChannel(), getEmergencyServicesCallMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public AlarmController.AlarmCheckResponse alarmCheck(AlarmController.Empty request) {
+      return blockingUnaryCall(
+          getChannel(), getAlarmCheckMethod(), getCallOptions(), request);
     }
   }
 
@@ -303,16 +362,41 @@ public final class Service3Grpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<AlarmController.ManualAlarmResponse> manualAlarm(
+        AlarmController.ManualAlarmRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getManualAlarmMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<AlarmController.FireSuppressionResponse> fireSuppression(
+        AlarmController.FireSuppressionRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getFireSuppressionMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<AlarmController.EmergencyServicesCallResponse> emergencyServicesCall(
         AlarmController.EmergencyServicesCallRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getEmergencyServicesCallMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<AlarmController.AlarmCheckResponse> alarmCheck(
+        AlarmController.Empty request) {
+      return futureUnaryCall(
+          getChannel().newCall(getAlarmCheckMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_MANUAL_ALARM = 0;
   private static final int METHODID_FIRE_SUPPRESSION = 1;
   private static final int METHODID_EMERGENCY_SERVICES_CALL = 2;
+  private static final int METHODID_ALARM_CHECK = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -342,6 +426,10 @@ public final class Service3Grpc {
         case METHODID_EMERGENCY_SERVICES_CALL:
           serviceImpl.emergencyServicesCall((AlarmController.EmergencyServicesCallRequest) request,
               (io.grpc.stub.StreamObserver<AlarmController.EmergencyServicesCallResponse>) responseObserver);
+          break;
+        case METHODID_ALARM_CHECK:
+          serviceImpl.alarmCheck((AlarmController.Empty) request,
+              (io.grpc.stub.StreamObserver<AlarmController.AlarmCheckResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -407,6 +495,7 @@ public final class Service3Grpc {
               .addMethod(getManualAlarmMethod())
               .addMethod(getFireSuppressionMethod())
               .addMethod(getEmergencyServicesCallMethod())
+              .addMethod(getAlarmCheckMethod())
               .build();
         }
       }

@@ -230,6 +230,7 @@
                             </constraints>
                             <properties>
                               <contentType value="text/plain"/>
+                              <editable value="false"/>
                               <text value="Valid Door 1 Codes:&#10;1234&#10;4321&#10;&#10;Valid Door 2 Codes:&#10;9999&#10;1111"/>
                             </properties>
                           </component>
@@ -577,7 +578,7 @@
                       </vspacer>
                     </children>
                   </grid>
-                  <grid id="e499d" binding="motionDetectorJPanel" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="e499d" binding="motionDetectorJPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="10" bottom="10" right="10"/>
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -629,7 +630,18 @@
                         </constraints>
                         <properties>
                           <editable value="false"/>
-                          <text value="No motion detected."/>
+                          <text value="Motion Dectector: "/>
+                        </properties>
+                      </component>
+                      <component id="e892a" class="javax.swing.JTextField" binding="motionLocationStatus">
+                        <constraints>
+                          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <editable value="false"/>
+                          <text value="Motion Location: "/>
                         </properties>
                       </component>
                     </children>
@@ -656,7 +668,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="76db7" binding="alarmControlsJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="76db7" binding="alarmControlsJPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Alarm Controls"/>
@@ -883,7 +895,7 @@
               <grid id="f9fd3" binding="emergencyServicesCallJPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="3" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="bevel-raised"/>
@@ -938,6 +950,57 @@
                         <properties>
                           <editable value="false"/>
                           <text value="Emergency Services:"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="685fa" binding="alarmCheckJPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="2" row-span="4" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="bevel-raised"/>
+                <children>
+                  <component id="7b134" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font name="Segoe MDL2 Assets" size="12" style="1"/>
+                      <text value="Alarm and Sensor Check"/>
+                    </properties>
+                  </component>
+                  <component id="6d999" class="javax.swing.JTextArea" binding="alarmCheckInfo">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <editable value="false"/>
+                    </properties>
+                  </component>
+                  <grid id="78f68" binding="alarmCheckButtonJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="20" left="0" bottom="20" right="0"/>
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="b8d3f" class="javax.swing.JButton" binding="alarmCheckButton" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="150" height="50"/>
+                            <preferred-size width="150" height="50"/>
+                            <maximum-size width="150" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <text value="Alarm Check"/>
                         </properties>
                       </component>
                     </children>

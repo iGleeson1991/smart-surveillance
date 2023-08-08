@@ -81,7 +81,6 @@ public class Service1Server extends Service1ImplBase {
     }
 
     //Remote Methods
-    // TODO: 04/08/2023 Finish remote methods
 
     public void scanSecurityBadge(ScanSecurityBadgeRequest badgeRequest, StreamObserver<ScanSecurityBadgeResponse> badgeResponseObserver) {
         //badgeRequest should contain the doorID and badgeID
@@ -141,10 +140,9 @@ public class Service1Server extends Service1ImplBase {
         System.out.println("Security Code Entered: Completed\n");
     }
 
-    public void intercomCall(IntercomCallRequest callRequest, StreamObserver<IntercomCallResponse> callResponseObserver) {
-        System.out.println("\nIntercom Call: Receiving Info: " + callRequest);
+    public void intercomCall(Empty callRequest, StreamObserver<IntercomCallResponse> callResponseObserver) {
+        System.out.println("\nIntercom Call: Requesting Call");
         String responseMessage = "Calling...";
-
 
         System.out.println("Intercom Call: " + responseMessage);
 
@@ -157,17 +155,22 @@ public class Service1Server extends Service1ImplBase {
     }
 
     public void intercomAnswer(IntercomAnswerRequest answerRequest, StreamObserver<IntercomAnswerResponse> answerResponseObserver) {
-        System.out.println("\nSecurity Code Entered: Receiving Info: " + answerRequest);
-        String responseMessage = "";
+        System.out.println("\nIntercom Answer: Receiving Info: " + answerRequest);
+        String responseMessage = "Call Timed Out";
         if (answerRequest.getAnswerRequest() == "answer") {
             responseMessage = "Call Answered";
         } else if (answerRequest.getAnswerRequest() == "reject") {
             responseMessage = "Call Rejected";
         }
 
-        System.out.println("Security Code Entered: " + responseMessage);
+        System.out.println("Intercom Answer: " + responseMessage);
 
-        System.out.println("Security Code Entered: Completed\n");
+        IntercomAnswerResponse answerResponse = IntercomAnswerResponse.newBuilder().setAnswerResponse(responseMessage).build();
+
+        answerResponseObserver.onNext(answerResponse);
+        answerResponseObserver.onCompleted();
+
+        System.out.println("Intercom Answer: Completed\n");
     }
 
     public StreamObserver<OneWayCommunicationRequest> oneWayCommunication(StreamObserver<OneWayCommunicationResponse> oneWayResponseObserver) {
@@ -187,9 +190,9 @@ public class Service1Server extends Service1ImplBase {
 
             //Method will print any errors caught to the console.
             @Override
-            public void onError(Throwable t) {
-                System.out.println(t.getMessage());
-                t.printStackTrace();
+            public void onError(Throwable throwable) {
+                System.out.println(throwable.getMessage());
+                throwable.printStackTrace();
             }
 
             @Override

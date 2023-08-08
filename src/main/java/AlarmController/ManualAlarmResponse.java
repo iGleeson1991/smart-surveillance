@@ -16,6 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ManualAlarmResponse() {
+    alarmActivation_ = "";
     activateEmergencyLighting_ = "";
     activateEmergencySirens_ = "";
   }
@@ -47,10 +48,16 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            activateEmergencyLighting_ = s;
+            alarmActivation_ = s;
             break;
           }
           case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            activateEmergencyLighting_ = s;
+            break;
+          }
+          case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
             activateEmergencySirens_ = s;
@@ -88,10 +95,44 @@ private static final long serialVersionUID = 0L;
             AlarmController.ManualAlarmResponse.class, AlarmController.ManualAlarmResponse.Builder.class);
   }
 
-  public static final int ACTIVATEEMERGENCYLIGHTING_FIELD_NUMBER = 1;
+  public static final int ALARMACTIVATION_FIELD_NUMBER = 1;
+  private volatile java.lang.Object alarmActivation_;
+  /**
+   * <code>string alarmActivation = 1;</code>
+   */
+  public java.lang.String getAlarmActivation() {
+    java.lang.Object ref = alarmActivation_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      alarmActivation_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string alarmActivation = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAlarmActivationBytes() {
+    java.lang.Object ref = alarmActivation_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      alarmActivation_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int ACTIVATEEMERGENCYLIGHTING_FIELD_NUMBER = 2;
   private volatile java.lang.Object activateEmergencyLighting_;
   /**
-   * <code>string activateEmergencyLighting = 1;</code>
+   * <code>string activateEmergencyLighting = 2;</code>
    */
   public java.lang.String getActivateEmergencyLighting() {
     java.lang.Object ref = activateEmergencyLighting_;
@@ -106,7 +147,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string activateEmergencyLighting = 1;</code>
+   * <code>string activateEmergencyLighting = 2;</code>
    */
   public com.google.protobuf.ByteString
       getActivateEmergencyLightingBytes() {
@@ -122,10 +163,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int ACTIVATEEMERGENCYSIRENS_FIELD_NUMBER = 2;
+  public static final int ACTIVATEEMERGENCYSIRENS_FIELD_NUMBER = 3;
   private volatile java.lang.Object activateEmergencySirens_;
   /**
-   * <code>string activateEmergencySirens = 2;</code>
+   * <code>string activateEmergencySirens = 3;</code>
    */
   public java.lang.String getActivateEmergencySirens() {
     java.lang.Object ref = activateEmergencySirens_;
@@ -140,7 +181,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string activateEmergencySirens = 2;</code>
+   * <code>string activateEmergencySirens = 3;</code>
    */
   public com.google.protobuf.ByteString
       getActivateEmergencySirensBytes() {
@@ -170,11 +211,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!getAlarmActivationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, alarmActivation_);
+    }
     if (!getActivateEmergencyLightingBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, activateEmergencyLighting_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, activateEmergencyLighting_);
     }
     if (!getActivateEmergencySirensBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, activateEmergencySirens_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, activateEmergencySirens_);
     }
     unknownFields.writeTo(output);
   }
@@ -185,11 +229,14 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!getAlarmActivationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, alarmActivation_);
+    }
     if (!getActivateEmergencyLightingBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, activateEmergencyLighting_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, activateEmergencyLighting_);
     }
     if (!getActivateEmergencySirensBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, activateEmergencySirens_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, activateEmergencySirens_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -207,6 +254,8 @@ private static final long serialVersionUID = 0L;
     AlarmController.ManualAlarmResponse other = (AlarmController.ManualAlarmResponse) obj;
 
     boolean result = true;
+    result = result && getAlarmActivation()
+        .equals(other.getAlarmActivation());
     result = result && getActivateEmergencyLighting()
         .equals(other.getActivateEmergencyLighting());
     result = result && getActivateEmergencySirens()
@@ -222,6 +271,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + ALARMACTIVATION_FIELD_NUMBER;
+    hash = (53 * hash) + getAlarmActivation().hashCode();
     hash = (37 * hash) + ACTIVATEEMERGENCYLIGHTING_FIELD_NUMBER;
     hash = (53 * hash) + getActivateEmergencyLighting().hashCode();
     hash = (37 * hash) + ACTIVATEEMERGENCYSIRENS_FIELD_NUMBER;
@@ -359,6 +410,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      alarmActivation_ = "";
+
       activateEmergencyLighting_ = "";
 
       activateEmergencySirens_ = "";
@@ -389,6 +442,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public AlarmController.ManualAlarmResponse buildPartial() {
       AlarmController.ManualAlarmResponse result = new AlarmController.ManualAlarmResponse(this);
+      result.alarmActivation_ = alarmActivation_;
       result.activateEmergencyLighting_ = activateEmergencyLighting_;
       result.activateEmergencySirens_ = activateEmergencySirens_;
       onBuilt();
@@ -439,6 +493,10 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(AlarmController.ManualAlarmResponse other) {
       if (other == AlarmController.ManualAlarmResponse.getDefaultInstance()) return this;
+      if (!other.getAlarmActivation().isEmpty()) {
+        alarmActivation_ = other.alarmActivation_;
+        onChanged();
+      }
       if (!other.getActivateEmergencyLighting().isEmpty()) {
         activateEmergencyLighting_ = other.activateEmergencyLighting_;
         onChanged();
@@ -476,9 +534,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object alarmActivation_ = "";
+    /**
+     * <code>string alarmActivation = 1;</code>
+     */
+    public java.lang.String getAlarmActivation() {
+      java.lang.Object ref = alarmActivation_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        alarmActivation_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string alarmActivation = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAlarmActivationBytes() {
+      java.lang.Object ref = alarmActivation_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        alarmActivation_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string alarmActivation = 1;</code>
+     */
+    public Builder setAlarmActivation(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      alarmActivation_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string alarmActivation = 1;</code>
+     */
+    public Builder clearAlarmActivation() {
+      
+      alarmActivation_ = getDefaultInstance().getAlarmActivation();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string alarmActivation = 1;</code>
+     */
+    public Builder setAlarmActivationBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      alarmActivation_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object activateEmergencyLighting_ = "";
     /**
-     * <code>string activateEmergencyLighting = 1;</code>
+     * <code>string activateEmergencyLighting = 2;</code>
      */
     public java.lang.String getActivateEmergencyLighting() {
       java.lang.Object ref = activateEmergencyLighting_;
@@ -493,7 +620,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string activateEmergencyLighting = 1;</code>
+     * <code>string activateEmergencyLighting = 2;</code>
      */
     public com.google.protobuf.ByteString
         getActivateEmergencyLightingBytes() {
@@ -509,7 +636,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string activateEmergencyLighting = 1;</code>
+     * <code>string activateEmergencyLighting = 2;</code>
      */
     public Builder setActivateEmergencyLighting(
         java.lang.String value) {
@@ -522,7 +649,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string activateEmergencyLighting = 1;</code>
+     * <code>string activateEmergencyLighting = 2;</code>
      */
     public Builder clearActivateEmergencyLighting() {
       
@@ -531,7 +658,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string activateEmergencyLighting = 1;</code>
+     * <code>string activateEmergencyLighting = 2;</code>
      */
     public Builder setActivateEmergencyLightingBytes(
         com.google.protobuf.ByteString value) {
@@ -547,7 +674,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object activateEmergencySirens_ = "";
     /**
-     * <code>string activateEmergencySirens = 2;</code>
+     * <code>string activateEmergencySirens = 3;</code>
      */
     public java.lang.String getActivateEmergencySirens() {
       java.lang.Object ref = activateEmergencySirens_;
@@ -562,7 +689,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string activateEmergencySirens = 2;</code>
+     * <code>string activateEmergencySirens = 3;</code>
      */
     public com.google.protobuf.ByteString
         getActivateEmergencySirensBytes() {
@@ -578,7 +705,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string activateEmergencySirens = 2;</code>
+     * <code>string activateEmergencySirens = 3;</code>
      */
     public Builder setActivateEmergencySirens(
         java.lang.String value) {
@@ -591,7 +718,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string activateEmergencySirens = 2;</code>
+     * <code>string activateEmergencySirens = 3;</code>
      */
     public Builder clearActivateEmergencySirens() {
       
@@ -600,7 +727,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string activateEmergencySirens = 2;</code>
+     * <code>string activateEmergencySirens = 3;</code>
      */
     public Builder setActivateEmergencySirensBytes(
         com.google.protobuf.ByteString value) {
