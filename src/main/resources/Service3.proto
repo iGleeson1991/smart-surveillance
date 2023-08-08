@@ -9,9 +9,9 @@ service Service3 {
 
   rpc fireSuppression(FireSuppressionRequest) returns (FireSuppressionResponse) {}
 
-  rpc emergencyServicesCall(EmergencyServicesCallRequest) returns (EmergencyServicesCallResponse) {}
+  rpc emergencyServicesCall(Empty) returns (EmergencyServicesCallResponse) {}
 
-  rpc alarmCheck(Empty) returns (AlarmCheckResponse) {}
+  rpc alarmCheck(Empty) returns (stream AlarmCheckResponse) {}
 }
 
 message ManualAlarmRequest {
@@ -38,16 +38,12 @@ message FireSuppressionResponse {
   string activateFireSuppression = 3;
 }
 
-message EmergencyServicesCallRequest {
-  string alarmTriggered = 1;
+message Empty {
+
 }
 
 message EmergencyServicesCallResponse {
   string callConfirmation = 1;
-}
-
-message Empty {
-
 }
 
 message AlarmCheckResponse {

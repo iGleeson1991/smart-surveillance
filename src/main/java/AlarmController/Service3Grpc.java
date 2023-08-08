@@ -91,28 +91,28 @@ public final class Service3Grpc {
      return getFireSuppressionMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<AlarmController.EmergencyServicesCallRequest,
+  private static volatile io.grpc.MethodDescriptor<AlarmController.Empty,
       AlarmController.EmergencyServicesCallResponse> getEmergencyServicesCallMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "emergencyServicesCall",
-      requestType = AlarmController.EmergencyServicesCallRequest.class,
+      requestType = AlarmController.Empty.class,
       responseType = AlarmController.EmergencyServicesCallResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<AlarmController.EmergencyServicesCallRequest,
+  public static io.grpc.MethodDescriptor<AlarmController.Empty,
       AlarmController.EmergencyServicesCallResponse> getEmergencyServicesCallMethod() {
-    io.grpc.MethodDescriptor<AlarmController.EmergencyServicesCallRequest, AlarmController.EmergencyServicesCallResponse> getEmergencyServicesCallMethod;
+    io.grpc.MethodDescriptor<AlarmController.Empty, AlarmController.EmergencyServicesCallResponse> getEmergencyServicesCallMethod;
     if ((getEmergencyServicesCallMethod = Service3Grpc.getEmergencyServicesCallMethod) == null) {
       synchronized (Service3Grpc.class) {
         if ((getEmergencyServicesCallMethod = Service3Grpc.getEmergencyServicesCallMethod) == null) {
           Service3Grpc.getEmergencyServicesCallMethod = getEmergencyServicesCallMethod = 
-              io.grpc.MethodDescriptor.<AlarmController.EmergencyServicesCallRequest, AlarmController.EmergencyServicesCallResponse>newBuilder()
+              io.grpc.MethodDescriptor.<AlarmController.Empty, AlarmController.EmergencyServicesCallResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service3", "emergencyServicesCall"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  AlarmController.EmergencyServicesCallRequest.getDefaultInstance()))
+                  AlarmController.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   AlarmController.EmergencyServicesCallResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new Service3MethodDescriptorSupplier("emergencyServicesCall"))
@@ -130,7 +130,7 @@ public final class Service3Grpc {
       fullMethodName = SERVICE_NAME + '/' + "alarmCheck",
       requestType = AlarmController.Empty.class,
       responseType = AlarmController.AlarmCheckResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<AlarmController.Empty,
       AlarmController.AlarmCheckResponse> getAlarmCheckMethod() {
     io.grpc.MethodDescriptor<AlarmController.Empty, AlarmController.AlarmCheckResponse> getAlarmCheckMethod;
@@ -139,7 +139,7 @@ public final class Service3Grpc {
         if ((getAlarmCheckMethod = Service3Grpc.getAlarmCheckMethod) == null) {
           Service3Grpc.getAlarmCheckMethod = getAlarmCheckMethod = 
               io.grpc.MethodDescriptor.<AlarmController.Empty, AlarmController.AlarmCheckResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "Service3", "alarmCheck"))
               .setSampledToLocalTracing(true)
@@ -198,7 +198,7 @@ public final class Service3Grpc {
 
     /**
      */
-    public void emergencyServicesCall(AlarmController.EmergencyServicesCallRequest request,
+    public void emergencyServicesCall(AlarmController.Empty request,
         io.grpc.stub.StreamObserver<AlarmController.EmergencyServicesCallResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getEmergencyServicesCallMethod(), responseObserver);
     }
@@ -230,12 +230,12 @@ public final class Service3Grpc {
             getEmergencyServicesCallMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                AlarmController.EmergencyServicesCallRequest,
+                AlarmController.Empty,
                 AlarmController.EmergencyServicesCallResponse>(
                   this, METHODID_EMERGENCY_SERVICES_CALL)))
           .addMethod(
             getAlarmCheckMethod(),
-            asyncUnaryCall(
+            asyncServerStreamingCall(
               new MethodHandlers<
                 AlarmController.Empty,
                 AlarmController.AlarmCheckResponse>(
@@ -280,7 +280,7 @@ public final class Service3Grpc {
 
     /**
      */
-    public void emergencyServicesCall(AlarmController.EmergencyServicesCallRequest request,
+    public void emergencyServicesCall(AlarmController.Empty request,
         io.grpc.stub.StreamObserver<AlarmController.EmergencyServicesCallResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getEmergencyServicesCallMethod(), getCallOptions()), request, responseObserver);
@@ -290,7 +290,7 @@ public final class Service3Grpc {
      */
     public void alarmCheck(AlarmController.Empty request,
         io.grpc.stub.StreamObserver<AlarmController.AlarmCheckResponse> responseObserver) {
-      asyncUnaryCall(
+      asyncServerStreamingCall(
           getChannel().newCall(getAlarmCheckMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -329,15 +329,16 @@ public final class Service3Grpc {
 
     /**
      */
-    public AlarmController.EmergencyServicesCallResponse emergencyServicesCall(AlarmController.EmergencyServicesCallRequest request) {
+    public AlarmController.EmergencyServicesCallResponse emergencyServicesCall(AlarmController.Empty request) {
       return blockingUnaryCall(
           getChannel(), getEmergencyServicesCallMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public AlarmController.AlarmCheckResponse alarmCheck(AlarmController.Empty request) {
-      return blockingUnaryCall(
+    public java.util.Iterator<AlarmController.AlarmCheckResponse> alarmCheck(
+        AlarmController.Empty request) {
+      return blockingServerStreamingCall(
           getChannel(), getAlarmCheckMethod(), getCallOptions(), request);
     }
   }
@@ -379,17 +380,9 @@ public final class Service3Grpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<AlarmController.EmergencyServicesCallResponse> emergencyServicesCall(
-        AlarmController.EmergencyServicesCallRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getEmergencyServicesCallMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<AlarmController.AlarmCheckResponse> alarmCheck(
         AlarmController.Empty request) {
       return futureUnaryCall(
-          getChannel().newCall(getAlarmCheckMethod(), getCallOptions()), request);
+          getChannel().newCall(getEmergencyServicesCallMethod(), getCallOptions()), request);
     }
   }
 
@@ -424,7 +417,7 @@ public final class Service3Grpc {
               (io.grpc.stub.StreamObserver<AlarmController.FireSuppressionResponse>) responseObserver);
           break;
         case METHODID_EMERGENCY_SERVICES_CALL:
-          serviceImpl.emergencyServicesCall((AlarmController.EmergencyServicesCallRequest) request,
+          serviceImpl.emergencyServicesCall((AlarmController.Empty) request,
               (io.grpc.stub.StreamObserver<AlarmController.EmergencyServicesCallResponse>) responseObserver);
           break;
         case METHODID_ALARM_CHECK:

@@ -20,8 +20,8 @@ public class Service1Server extends Service1ImplBase {
     //Server Variables
     private final ArrayList<String> door1Badges = new ArrayList<>(Arrays.asList("badge1", "badge3"));
     private final ArrayList<String> door2Badges = new ArrayList<>(Arrays.asList("badge2", "badge4"));
-    private ArrayList<String> door1Codes = new ArrayList<>(Arrays.asList("1234", "4321"));
-    private ArrayList<String> door2Codes = new ArrayList<>(Arrays.asList("9999", "1111"));
+    private final ArrayList<String> door1Codes = new ArrayList<>(Arrays.asList("1234", "4321"));
+    private final ArrayList<String> door2Codes = new ArrayList<>(Arrays.asList("9999", "1111"));
 
     //Server Methods
 

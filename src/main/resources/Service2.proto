@@ -12,15 +12,13 @@ service Service2 {
   rpc motionDetected(Empty) returns (MotionDetectedResponse) {}
 
   //When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
-  rpc cameraAutomation(stream CameraAutomationRequest) returns (stream CameraAutomationResponse) {}
+  rpc cameraAutomation(CameraAutomationRequest) returns (CameraAutomationResponse) {}
 }
 
 message CameraAdjustmentRequest {
   string cameraID = 1;
 
-  int32 cameraPositionX = 2;
-
-  int32 cameraPositionY = 3;
+  string cameraPosition = 2;
 
   enum CameraDirection {
     UP = 0;
@@ -28,7 +26,7 @@ message CameraAdjustmentRequest {
     LEFT = 2;
     RIGHT = 3;
   }
-  CameraDirection cameraDirection = 4;
+  CameraDirection cameraDirection = 3;
 }
 
 message CameraAdjustmentResponse {

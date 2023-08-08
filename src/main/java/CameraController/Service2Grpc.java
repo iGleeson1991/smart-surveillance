@@ -98,7 +98,7 @@ public final class Service2Grpc {
       fullMethodName = SERVICE_NAME + '/' + "cameraAutomation",
       requestType = CameraController.CameraAutomationRequest.class,
       responseType = CameraController.CameraAutomationResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<CameraController.CameraAutomationRequest,
       CameraController.CameraAutomationResponse> getCameraAutomationMethod() {
     io.grpc.MethodDescriptor<CameraController.CameraAutomationRequest, CameraController.CameraAutomationResponse> getCameraAutomationMethod;
@@ -107,7 +107,7 @@ public final class Service2Grpc {
         if ((getCameraAutomationMethod = Service2Grpc.getCameraAutomationMethod) == null) {
           Service2Grpc.getCameraAutomationMethod = getCameraAutomationMethod = 
               io.grpc.MethodDescriptor.<CameraController.CameraAutomationRequest, CameraController.CameraAutomationResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service2", "cameraAutomation"))
               .setSampledToLocalTracing(true)
@@ -175,9 +175,9 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<CameraController.CameraAutomationRequest> cameraAutomation(
+    public void cameraAutomation(CameraController.CameraAutomationRequest request,
         io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getCameraAutomationMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getCameraAutomationMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -198,7 +198,7 @@ public final class Service2Grpc {
                   this, METHODID_MOTION_DETECTED)))
           .addMethod(
             getCameraAutomationMethod(),
-            asyncBidiStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 CameraController.CameraAutomationRequest,
                 CameraController.CameraAutomationResponse>(
@@ -252,10 +252,10 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<CameraController.CameraAutomationRequest> cameraAutomation(
+    public void cameraAutomation(CameraController.CameraAutomationRequest request,
         io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse> responseObserver) {
-      return asyncBidiStreamingCall(
-          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), responseObserver);
+      asyncUnaryCall(
+          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -285,6 +285,16 @@ public final class Service2Grpc {
     public CameraController.MotionDetectedResponse motionDetected(CameraController.Empty request) {
       return blockingUnaryCall(
           getChannel(), getMotionDetectedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
+     * </pre>
+     */
+    public CameraController.CameraAutomationResponse cameraAutomation(CameraController.CameraAutomationRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCameraAutomationMethod(), getCallOptions(), request);
     }
   }
 
@@ -316,11 +326,22 @@ public final class Service2Grpc {
       return futureUnaryCall(
           getChannel().newCall(getMotionDetectedMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<CameraController.CameraAutomationResponse> cameraAutomation(
+        CameraController.CameraAutomationRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_MOTION_DETECTED = 0;
-  private static final int METHODID_CAMERA_ADJUSTMENT = 1;
-  private static final int METHODID_CAMERA_AUTOMATION = 2;
+  private static final int METHODID_CAMERA_AUTOMATION = 1;
+  private static final int METHODID_CAMERA_ADJUSTMENT = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -343,6 +364,10 @@ public final class Service2Grpc {
           serviceImpl.motionDetected((CameraController.Empty) request,
               (io.grpc.stub.StreamObserver<CameraController.MotionDetectedResponse>) responseObserver);
           break;
+        case METHODID_CAMERA_AUTOMATION:
+          serviceImpl.cameraAutomation((CameraController.CameraAutomationRequest) request,
+              (io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -356,9 +381,6 @@ public final class Service2Grpc {
         case METHODID_CAMERA_ADJUSTMENT:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.cameraAdjustment(
               (io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse>) responseObserver);
-        case METHODID_CAMERA_AUTOMATION:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.cameraAutomation(
-              (io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse>) responseObserver);
         default:
           throw new AssertionError();
       }

@@ -3,6 +3,7 @@ package AlarmController;
 import AlarmController.Service3Grpc.Service3ImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -11,35 +12,36 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class Service3Server extends Service3ImplBase {
-    public static void main(String[] args) {
-        //Creates a new "Service3Server" object called "service3Server"
-        Service3Server service3Server = new Service3Server();
-        String propertiesFileName = "Service3.properties";
-        //Creates a new "Properties" object
-        Properties properties = service3Server.getProperties(propertiesFileName);
-        service3Server.registerService(properties);
-        int port = Integer.parseInt(properties.getProperty("service_port"));
+    //Server Variables
+    ArrayList<String> alarmData = new ArrayList<>(Arrays.asList(
+            "Alarm 12: Operational",
+            "Alarm 18: Operational",
+            "Alarm 62: Service Required",
+            "Alarm 2: Operational",
+            "Alarm 31: Operational",
+            "Alarm 9: Operational",
+            "Alarm 17: Service Required",
+            "Alarm 19: Service Required",
+            "Alarm 73: Operational",
+            "Alarm 21: Operational",
+            "Sensor 6: Not found",
+            "Sensor 13: Operational",
+            "Sensor 2: Operational",
+            "Sensor 18: Operational",
+            "Sensor 7: Operational",
+            "Sensor 24: Operational",
+            "Sensor 29: Service Required",
+            "Sensor 14: Operational",
+            "Sensor 1: Service Required",
+            "Sensor 9: Operational"
+    ));
 
-        try {
-            //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
-            Server server3 = ServerBuilder.forPort(port).addService(service3Server).build().start();
-            //Prints the new server's info to the console
-            System.out.println("Server 3 Started: Door Controller. Listening on Port " + port);
-
-            //Waits for the server to terminate
-            server3.awaitTermination();
-
-            //Catches any IO or Interrupted Exceptions and prints them to the console
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    //Private Server Methods
+    //Server Methods
 
     //Creates a private method called "getProperties" that returns "Properties"
     //Reads the data from the properties file using "InputStream" and prints them to the console
@@ -97,17 +99,89 @@ public class Service3Server extends Service3ImplBase {
     }
 
     //Remote Methods
-    // TODO: 04/08/2023 Finish remote methods
 
-    public void manualAlarm() {
+    public void manualAlarm(ManualAlarmRequest alarmRequest, StreamObserver<ManualAlarmResponse> alarmResponseObserver) {
+        //alarmRequest should contain the alarmID
+        System.out.println("\nAlarm Triggered Manually: Receiving Info: " + alarmRequest);
+        String alarmActivated = "";
+        String emergencyResponse = "Activated";
+        if (alarmRequest.getAlarmID().equalsIgnoreCase("alarm1")) {
+            alarmActivated = "Cell Block A";
+        } else if (alarmRequest.getAlarmID().equalsIgnoreCase("alarm2")) {
+            alarmActivated = "Cafeteria";
+        } else if (alarmRequest.getAlarmID().equalsIgnoreCase("alarm3")) {
+            alarmActivated = "Yard";
+        }
+        System.out.println("Alarm Triggered Manually: " + alarmActivated);
+        System.out.println("Activating Emergency Measures");
 
+        ManualAlarmResponse alarmResponse = ManualAlarmResponse.newBuilder().setAlarmActivation(alarmActivated).setActivateEmergencyLighting(emergencyResponse).setActivateEmergencyLighting(emergencyResponse).build();
+        alarmResponseObserver.onNext(alarmResponse);
+        alarmResponseObserver.onCompleted();
+
+        System.out.println("Alarm Triggered Manually: Completed\n");
     }
 
-    public void fireSuppression() {
+    public void fireSuppression(FireSuppressionRequest fireSuppressionRequest, StreamObserver<FireSuppressionResponse> fireSuppressionResponseObserver) {
+        //fireSuppressionRequest should contain the sensorID
+        System.out.println("\nSensor Activated: Receiving Info: " + fireSuppressionRequest);
+        String emergencyResponse = "Activated";
+        String sensorType = "";
+        if (fireSuppressionRequest.getSensorID().equalsIgnoreCase("securitySensor")) {
+            sensorType = "Primed";
+        } else if (fireSuppressionRequest.getSensorID().equalsIgnoreCase("fireSensor")) {
+            sensorType = "Activated";
+        }
+        System.out.println("Sensor Activated: Activating Appropriate Emergency Measures");
 
+        FireSuppressionResponse fireSuppressionResponse = FireSuppressionResponse.newBuilder().setActivateEmergencyLighting(emergencyResponse).setActivateEmergencySirens(emergencyResponse).setActivateFireSuppression(sensorType).build();
+        fireSuppressionResponseObserver.onNext(fireSuppressionResponse);
+        fireSuppressionResponseObserver.onCompleted();
+
+        System.out.println("Sensor Activated: Completed\n");
     }
 
-    public void emergencyServicesCall() {
+    public void emergencyServicesCall(Empty emergencyCallRequest, StreamObserver<EmergencyServicesCallResponse> emergencyResponseObserver) {
+        System.out.println("\nAlarm Activated: Contacting Emergency Services");
+        String responseMessage = "On-Route";
+        EmergencyServicesCallResponse emergencyCallResponse = EmergencyServicesCallResponse.newBuilder().setCallConfirmation(responseMessage).build();
+        emergencyResponseObserver.onNext(emergencyCallResponse);
+        emergencyResponseObserver.onCompleted();
+        System.out.println("Emergency Services Call: Completed");
+    }
 
+    public void alarmCheck(Empty alarmCheckRequest, StreamObserver<AlarmCheckResponse> alarmCheckResponseObserver) {
+        System.out.println("\nAlarm Check Request: Received");
+        for (int i = 0; i < alarmData.size(); i++) {
+            alarmCheckResponseObserver.onNext(AlarmCheckResponse.newBuilder().setAlarmInfo(alarmData.get(i) + "\n").build());
+        }
+        System.out.println("Alarm Check Request: Sending Data");
+        alarmCheckResponseObserver.onCompleted();
+        System.out.println("Alarm Check Request: Completed\n");
+    }
+
+    public static void main(String[] args) {
+        //Creates a new "Service3Server" object called "service3Server"
+        Service3Server service3Server = new Service3Server();
+        String propertiesFileName = "Service3.properties";
+        //Creates a new "Properties" object
+        Properties properties = service3Server.getProperties(propertiesFileName);
+        service3Server.registerService(properties);
+        int port = Integer.parseInt(properties.getProperty("service_port"));
+
+        try {
+            //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
+            Server server3 = ServerBuilder.forPort(port).addService(service3Server).build().start();
+            //Prints the new server's info to the console
+            System.out.println("Server 3 Started: Door Controller. Listening on Port " + port);
+
+            //Waits for the server to terminate
+            server3.awaitTermination();
+
+            //Catches any IO or Interrupted Exceptions and prints them to the console
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

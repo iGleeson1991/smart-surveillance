@@ -35,20 +35,15 @@ public final class AlarmControlsImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_FireSuppressionResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_EmergencyServicesCallRequest_descriptor;
+    internal_static_Empty_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_EmergencyServicesCallRequest_fieldAccessorTable;
+      internal_static_Empty_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_EmergencyServicesCallResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_EmergencyServicesCallResponse_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Empty_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Empty_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_AlarmCheckResponse_descriptor;
   static final 
@@ -71,19 +66,17 @@ public final class AlarmControlsImpl {
       "\010sensorID\030\001 \001(\t\"~\n\027FireSuppressionRespon" +
       "se\022!\n\031activateEmergencyLighting\030\001 \001(\t\022\037\n" +
       "\027activateEmergencySirens\030\002 \001(\t\022\037\n\027activa" +
-      "teFireSuppression\030\003 \001(\t\"6\n\034EmergencyServ" +
-      "icesCallRequest\022\026\n\016alarmTriggered\030\001 \001(\t\"" +
-      "9\n\035EmergencyServicesCallResponse\022\030\n\020call" +
-      "Confirmation\030\001 \001(\t\"\007\n\005Empty\"\'\n\022AlarmChec" +
-      "kResponse\022\021\n\talarmInfo\030\001 \001(\t2\225\002\n\010Service" +
-      "3\022:\n\013manualAlarm\022\023.ManualAlarmRequest\032\024." +
-      "ManualAlarmResponse\"\000\022F\n\017fireSuppression" +
-      "\022\027.FireSuppressionRequest\032\030.FireSuppress" +
-      "ionResponse\"\000\022X\n\025emergencyServicesCall\022\035" +
-      ".EmergencyServicesCallRequest\032\036.Emergenc" +
-      "yServicesCallResponse\"\000\022+\n\nalarmCheck\022\006." +
-      "Empty\032\023.AlarmCheckResponse\"\000B&\n\017AlarmCon" +
-      "trollerB\021AlarmControlsImplP\001b\006proto3"
+      "teFireSuppression\030\003 \001(\t\"\007\n\005Empty\"9\n\035Emer" +
+      "gencyServicesCallResponse\022\030\n\020callConfirm" +
+      "ation\030\001 \001(\t\"\'\n\022AlarmCheckResponse\022\021\n\tala" +
+      "rmInfo\030\001 \001(\t2\200\002\n\010Service3\022:\n\013manualAlarm" +
+      "\022\023.ManualAlarmRequest\032\024.ManualAlarmRespo" +
+      "nse\"\000\022F\n\017fireSuppression\022\027.FireSuppressi" +
+      "onRequest\032\030.FireSuppressionResponse\"\000\022A\n" +
+      "\025emergencyServicesCall\022\006.Empty\032\036.Emergen" +
+      "cyServicesCallResponse\"\000\022-\n\nalarmCheck\022\006" +
+      ".Empty\032\023.AlarmCheckResponse\"\0000\001B&\n\017Alarm" +
+      "ControllerB\021AlarmControlsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -121,26 +114,20 @@ public final class AlarmControlsImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_FireSuppressionResponse_descriptor,
         new java.lang.String[] { "ActivateEmergencyLighting", "ActivateEmergencySirens", "ActivateFireSuppression", });
-    internal_static_EmergencyServicesCallRequest_descriptor =
+    internal_static_Empty_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_EmergencyServicesCallRequest_fieldAccessorTable = new
+    internal_static_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_EmergencyServicesCallRequest_descriptor,
-        new java.lang.String[] { "AlarmTriggered", });
+        internal_static_Empty_descriptor,
+        new java.lang.String[] { });
     internal_static_EmergencyServicesCallResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_EmergencyServicesCallResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_EmergencyServicesCallResponse_descriptor,
         new java.lang.String[] { "CallConfirmation", });
-    internal_static_Empty_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_Empty_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Empty_descriptor,
-        new java.lang.String[] { });
     internal_static_AlarmCheckResponse_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_AlarmCheckResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_AlarmCheckResponse_descriptor,
