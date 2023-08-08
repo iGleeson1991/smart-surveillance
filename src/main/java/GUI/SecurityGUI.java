@@ -3,13 +3,16 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 public class SecurityGUI extends JFrame {
-    public static void main(String[] args) {
-        new SecurityGUI();
-    }
-
     //GUI Variables
+
     //Main Panel
     private JPanel securityControllerGUI;
 
@@ -205,5 +208,31 @@ public class SecurityGUI extends JFrame {
 
             }
         });
+    }
+
+    //jmDNS Discovery Methods
+
+    //Retrieves the "service_type" from the service properties files
+    private String getServiceType(String fileName) {
+        //Creates a variable for the "service_type"
+        String serviceType = "";
+        //Attempts to use the "FileInputStream" class to locate and retrieve data from the specified properties file
+        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName, ".properties"))) {
+            //Creates an object of type "Properties" called "properties" and sets it equal to the retrieved properties files
+            Properties properties = new Properties();
+            properties.load(input);
+            //Isolates the relevant data and stores it in "serviceType"
+            serviceType = properties.getProperty("service_type");
+
+        //Will catch any IO Exceptions such as "File Not Found"
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+            ioe.printStackTrace();
+        }
+        return serviceType;
+    }
+
+    public static void main(String[] args) {
+        new SecurityGUI();
     }
 }

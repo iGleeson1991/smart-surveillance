@@ -23,7 +23,7 @@ public class Service2Server extends Service2ImplBase {
         Properties properties = null; //Empty "Properties" object called "properties"
 
         //Attempts to read data from the properties file using an "InputStream" called "input"
-        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/",fileName))){
+        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName, ".properties"))){
             properties = new Properties(); //Makes "properties" equal to an empty property list
             properties.load(input); //Loads the properties files from "input"
             //Prints the data from the properties file
