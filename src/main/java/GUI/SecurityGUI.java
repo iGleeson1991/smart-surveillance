@@ -1,16 +1,42 @@
 package GUI;
 
+import io.grpc.Context;
+import io.grpc.Context.CancellableContext;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
+import io.grpc.stub.StreamObserver;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
 public class SecurityGUI extends JFrame {
+    //Service Variables
+
+    //A ten-second deadline for server responses. Requests will terminate after 10 seconds
+    //Copied from Sample Project - Smart Health
+    private int deadline = 10;
+
+    //Used to cancel requests
+    //Copied from Sample Project - Smart Health
+    private CancellableContext cancelRequest;
+
+    //ServiceInfo variables to store data for each service
+    private ServiceInfo doorControllerService1Info, cameraControllerService2Info, alarmControllerService3Info;
+
     //GUI Variables
 
     //Main Panel
@@ -50,6 +76,12 @@ public class SecurityGUI extends JFrame {
     private JTextArea alarmCheckInfo;
 
     public SecurityGUI() {
+        //Discovers all registered services
+        discoverJMDNSServices();
+
+        System.out.println("\nLaunching Security GUI");
+
+        //Creates GUI
         setContentPane(securityControllerGUI);
         setTitle("Security GUI");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -213,11 +245,11 @@ public class SecurityGUI extends JFrame {
     //jmDNS Discovery Methods
 
     //Retrieves the "service_type" from the service properties files
-    private String getServiceType(String fileName) {
+    private static String getServiceType(String fileName) {
         //Creates a variable for the "service_type"
         String serviceType = "";
         //Attempts to use the "FileInputStream" class to locate and retrieve data from the specified properties file
-        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName, ".properties"))) {
+        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName))) {
             //Creates an object of type "Properties" called "properties" and sets it equal to the retrieved properties files
             Properties properties = new Properties();
             properties.load(input);
@@ -232,7 +264,78 @@ public class SecurityGUI extends JFrame {
         return serviceType;
     }
 
+    //Attempts to discover the registered services
+    //Copied from Sample Project - Smart Health & Calculator Project
+    private void discoverJMDNSService(String serviceType, String nameOfService, String nameOfServiceInfo) {
+        try {
+            //Creates a "JmDNS" object called "jmdns" and sets it to the IP address of the local host
+            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+            //Creates a "ServiceListener" to discover registered services
+            jmdns.addServiceListener(serviceType, new ServiceListener() {
+                @Override
+                public void serviceAdded(ServiceEvent event) {
+                    System.out.println(nameOfService + " has been added: " + event.getName());
+                }
+
+                @Override
+                public void serviceRemoved(ServiceEvent event) {
+                    System.out.println(nameOfService + " has been removed: " + event.getName());
+                }
+
+                @Override
+                public void serviceResolved(ServiceEvent event) {
+                    System.out.println(nameOfService + " has been resolved: " + event.getName());
+
+                    //Retrieves data from the "ServiceEvent" object and stores it in a "ServiceInfo" object called "serviceInfo"
+                    ServiceInfo serviceInfo = event.getInfo();
+                    System.out.println(serviceInfo);
+
+                    //Sets "serviceInfo" equal to the name of the service we are trying to discover
+                    if (nameOfServiceInfo == "doorControllerService1Info") {
+                        doorControllerService1Info = serviceInfo;
+                    } else if (nameOfServiceInfo == "cameraControllerService2Info") {
+                        cameraControllerService2Info = serviceInfo;
+                    } else if (nameOfServiceInfo == "alarmControllerService3Info") {
+                        alarmControllerService3Info = serviceInfo;
+                    }
+
+                    //Prints out the data received from the registered service
+                    System.out.println("Resolving Service: " + serviceType +
+                    "\nType: " + event.getType() +
+                    "\nName: " + event.getName() +
+                    "\nDescription: " + serviceInfo.getNiceTextString() +
+                    "\nHost: " + serviceInfo.getHostAddresses()[0] +
+                    "\nPort: " + serviceInfo.getPort()
+                    );
+                }
+            });
+            //Waits for a specifed amount of time and then closes the stream
+            Thread.sleep(500);
+            jmdns.close();
+        }
+        //Catches any errors and prints their details to the console
+        catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+            uhe.printStackTrace();
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+            ioe.printStackTrace();
+        } catch (InterruptedException ie) {
+            System.out.println(ie.getMessage());
+            ie.printStackTrace();
+        }
+    }
+
+    //Calls the "discoverJMDNSService() method on all registered services
+    private void discoverJMDNSServices() {
+        System.out.println("Discovering Registered Services\n");
+        discoverJMDNSService(getServiceType("Service1.properties"), "Door Controller", "doorControllerService1Info");
+        discoverJMDNSService(getServiceType("Service2.properties"), "Camera Controller", "cameraControllerService2Info");
+        discoverJMDNSService(getServiceType("Service3.properties"), "Alarm Controller", "alarmControllerService3Info");
+    }
+
     public static void main(String[] args) {
-        new SecurityGUI();
+        //Creates a "SecurityGUI" object called "securityGUI"
+        SecurityGUI securityGUI = new SecurityGUI();
     }
 }

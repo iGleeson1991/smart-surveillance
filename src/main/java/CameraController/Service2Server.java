@@ -23,11 +23,11 @@ public class Service2Server extends Service2ImplBase {
         Properties properties = null; //Empty "Properties" object called "properties"
 
         //Attempts to read data from the properties file using an "InputStream" called "input"
-        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName, ".properties"))){
+        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName))) {
             properties = new Properties(); //Makes "properties" equal to an empty property list
             properties.load(input); //Loads the properties files from "input"
             //Prints the data from the properties file
-            System.out.println("---- " + properties.getProperty("service_name") + " Properties ----");
+            System.out.println("\n---- " + properties.getProperty("service_name") + " Properties ----");
             System.out.println("Service Type: " + properties.getProperty("service_type"));
             System.out.println("Service Name: " + properties.getProperty("service_name"));
             System.out.println("Service Description: " + properties.getProperty("service_desc"));
@@ -60,7 +60,7 @@ public class Service2Server extends Service2ImplBase {
             jmdns.registerService(serviceInfo);
 
             //Prints a message to the console with the details of the service being registered
-            System.out.println("Registering Service:\nService Type: " + service_type + "\nService Name: " + service_name + "\nService Description: " + service_desc + "\nService Port: " + service_port);
+            System.out.println("\nRegistering Service:\nService Type: " + service_type + "\nService Name: " + service_name + "\nService Description: " + service_desc + "\nService Port: " + service_port);
 
             //Pause instruction
             Thread.sleep(500);
@@ -191,7 +191,7 @@ public class Service2Server extends Service2ImplBase {
             //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
             Server server2 = ServerBuilder.forPort(port).addService(service2Server).build().start();
             //Prints the new server's info to the console
-            System.out.println("Server 2 Started: Door Controller. Listening on Port " + port);
+            System.out.println("\nServer 2 Started: Door Controller. Listening on Port " + port);
 
             //Waits for the server to terminate
             server2.awaitTermination();

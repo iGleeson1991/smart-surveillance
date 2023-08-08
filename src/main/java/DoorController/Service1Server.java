@@ -31,7 +31,7 @@ public class Service1Server extends Service1ImplBase {
         Properties properties = null; //Empty "Properties" object called "properties"
 
         //Attempts to read data from the properties file using an "InputStream" called "input"
-        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName, ".properties"))){
+        try (InputStream input = Files.newInputStream(Paths.get("Smart Surveillance/src/main/resources/", fileName))) {
             properties = new Properties(); //Makes "properties" equal to an empty property list
             properties.load(input); //Loads the properties files from "input"
             //Prints the data from the properties file
@@ -70,7 +70,7 @@ public class Service1Server extends Service1ImplBase {
             //Prints a message to the console with the details of the service being registered
             System.out.println("\nRegistering Service:\nService Type: " + service_type + "\nService Name: " + service_name + "\nService Description: " + service_desc + "\nService Port: " + service_port);
 
-            //Pause instruction
+            //Pause instructions
             Thread.sleep(500);
 
         //Catches any IO or Interrupted Exceptions and prints them to the console
