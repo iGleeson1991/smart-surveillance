@@ -35,10 +35,10 @@ public final class DoorControlsImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_SecurityCodeEntryResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_IntercomCallRequest_descriptor;
+    internal_static_Empty_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_IntercomCallRequest_fieldAccessorTable;
+      internal_static_Empty_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_IntercomCallResponse_descriptor;
   static final 
@@ -78,25 +78,24 @@ public final class DoorControlsImpl {
       "\031ScanSecurityBadgeResponse\022\r\n\005valid\030\001 \001(" +
       "\t\"@\n\030SecurityCodeEntryRequest\022\016\n\006doorID\030" +
       "\001 \001(\t\022\024\n\014securityCode\030\002 \001(\t\"*\n\031SecurityC" +
-      "odeEntryResponse\022\r\n\005valid\030\001 \001(\t\"*\n\023Inter" +
-      "comCallRequest\022\023\n\013callRequest\030\001 \001(\t\",\n\024I" +
-      "ntercomCallResponse\022\024\n\014callResponse\030\001 \001(" +
-      "\t\".\n\025IntercomAnswerRequest\022\025\n\ranswerRequ" +
-      "est\030\001 \001(\t\"0\n\026IntercomAnswerResponse\022\026\n\016a" +
-      "nswerResponse\030\001 \001(\t\"0\n\032OneWayCommunicati" +
-      "onRequest\022\022\n\nbuttonHeld\030\001 \001(\010\"4\n\033OneWayC" +
-      "ommunicationResponse\022\025\n\rchannelStatus\030\001 " +
-      "\001(\t2\200\003\n\010Service1\022L\n\021scanSecurityBadge\022\031." +
-      "ScanSecurityBadgeRequest\032\032.ScanSecurityB" +
-      "adgeResponse\"\000\022L\n\021securityCodeEntry\022\031.Se" +
-      "curityCodeEntryRequest\032\032.SecurityCodeEnt" +
-      "ryResponse\"\000\022=\n\014intercomCall\022\024.IntercomC" +
-      "allRequest\032\025.IntercomCallResponse\"\000\022C\n\016i" +
-      "ntercomAnswer\022\026.IntercomAnswerRequest\032\027." +
-      "IntercomAnswerResponse\"\000\022T\n\023oneWayCommun" +
-      "ication\022\033.OneWayCommunicationRequest\032\034.O" +
-      "neWayCommunicationResponse\"\000(\001B$\n\016DoorCo" +
-      "ntrollerB\020DoorControlsImplP\001b\006proto3"
+      "odeEntryResponse\022\r\n\005valid\030\001 \001(\t\"\007\n\005Empty" +
+      "\",\n\024IntercomCallResponse\022\024\n\014callResponse" +
+      "\030\001 \001(\t\".\n\025IntercomAnswerRequest\022\025\n\ranswe" +
+      "rRequest\030\001 \001(\t\"0\n\026IntercomAnswerResponse" +
+      "\022\026\n\016answerResponse\030\001 \001(\t\"0\n\032OneWayCommun" +
+      "icationRequest\022\022\n\nbuttonHeld\030\001 \001(\010\"4\n\033On" +
+      "eWayCommunicationResponse\022\025\n\rchannelStat" +
+      "us\030\001 \001(\t2\362\002\n\010Service1\022L\n\021scanSecurityBad" +
+      "ge\022\031.ScanSecurityBadgeRequest\032\032.ScanSecu" +
+      "rityBadgeResponse\"\000\022L\n\021securityCodeEntry" +
+      "\022\031.SecurityCodeEntryRequest\032\032.SecurityCo" +
+      "deEntryResponse\"\000\022/\n\014intercomCall\022\006.Empt" +
+      "y\032\025.IntercomCallResponse\"\000\022C\n\016intercomAn" +
+      "swer\022\026.IntercomAnswerRequest\032\027.IntercomA" +
+      "nswerResponse\"\000\022T\n\023oneWayCommunication\022\033" +
+      ".OneWayCommunicationRequest\032\034.OneWayComm" +
+      "unicationResponse\"\000(\001B$\n\016DoorControllerB" +
+      "\020DoorControlsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -134,12 +133,12 @@ public final class DoorControlsImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SecurityCodeEntryResponse_descriptor,
         new java.lang.String[] { "Valid", });
-    internal_static_IntercomCallRequest_descriptor =
+    internal_static_Empty_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_IntercomCallRequest_fieldAccessorTable = new
+    internal_static_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_IntercomCallRequest_descriptor,
-        new java.lang.String[] { "CallRequest", });
+        internal_static_Empty_descriptor,
+        new java.lang.String[] { });
     internal_static_IntercomCallResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_IntercomCallResponse_fieldAccessorTable = new

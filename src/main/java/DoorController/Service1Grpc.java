@@ -91,28 +91,28 @@ public final class Service1Grpc {
      return getSecurityCodeEntryMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<DoorController.IntercomCallRequest,
+  private static volatile io.grpc.MethodDescriptor<DoorController.Empty,
       DoorController.IntercomCallResponse> getIntercomCallMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "intercomCall",
-      requestType = DoorController.IntercomCallRequest.class,
+      requestType = DoorController.Empty.class,
       responseType = DoorController.IntercomCallResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<DoorController.IntercomCallRequest,
+  public static io.grpc.MethodDescriptor<DoorController.Empty,
       DoorController.IntercomCallResponse> getIntercomCallMethod() {
-    io.grpc.MethodDescriptor<DoorController.IntercomCallRequest, DoorController.IntercomCallResponse> getIntercomCallMethod;
+    io.grpc.MethodDescriptor<DoorController.Empty, DoorController.IntercomCallResponse> getIntercomCallMethod;
     if ((getIntercomCallMethod = Service1Grpc.getIntercomCallMethod) == null) {
       synchronized (Service1Grpc.class) {
         if ((getIntercomCallMethod = Service1Grpc.getIntercomCallMethod) == null) {
           Service1Grpc.getIntercomCallMethod = getIntercomCallMethod = 
-              io.grpc.MethodDescriptor.<DoorController.IntercomCallRequest, DoorController.IntercomCallResponse>newBuilder()
+              io.grpc.MethodDescriptor.<DoorController.Empty, DoorController.IntercomCallResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service1", "intercomCall"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DoorController.IntercomCallRequest.getDefaultInstance()))
+                  DoorController.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   DoorController.IntercomCallResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new Service1MethodDescriptorSupplier("intercomCall"))
@@ -239,7 +239,7 @@ public final class Service1Grpc {
      *Sends the user's request for an intercom call and returns a call initiated message
      * </pre>
      */
-    public void intercomCall(DoorController.IntercomCallRequest request,
+    public void intercomCall(DoorController.Empty request,
         io.grpc.stub.StreamObserver<DoorController.IntercomCallResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getIntercomCallMethod(), responseObserver);
     }
@@ -284,7 +284,7 @@ public final class Service1Grpc {
             getIntercomCallMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                DoorController.IntercomCallRequest,
+                DoorController.Empty,
                 DoorController.IntercomCallResponse>(
                   this, METHODID_INTERCOM_CALL)))
           .addMethod(
@@ -350,7 +350,7 @@ public final class Service1Grpc {
      *Sends the user's request for an intercom call and returns a call initiated message
      * </pre>
      */
-    public void intercomCall(DoorController.IntercomCallRequest request,
+    public void intercomCall(DoorController.Empty request,
         io.grpc.stub.StreamObserver<DoorController.IntercomCallResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getIntercomCallMethod(), getCallOptions()), request, responseObserver);
@@ -422,7 +422,7 @@ public final class Service1Grpc {
      *Sends the user's request for an intercom call and returns a call initiated message
      * </pre>
      */
-    public DoorController.IntercomCallResponse intercomCall(DoorController.IntercomCallRequest request) {
+    public DoorController.IntercomCallResponse intercomCall(DoorController.Empty request) {
       return blockingUnaryCall(
           getChannel(), getIntercomCallMethod(), getCallOptions(), request);
     }
@@ -484,7 +484,7 @@ public final class Service1Grpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<DoorController.IntercomCallResponse> intercomCall(
-        DoorController.IntercomCallRequest request) {
+        DoorController.Empty request) {
       return futureUnaryCall(
           getChannel().newCall(getIntercomCallMethod(), getCallOptions()), request);
     }
@@ -533,7 +533,7 @@ public final class Service1Grpc {
               (io.grpc.stub.StreamObserver<DoorController.SecurityCodeEntryResponse>) responseObserver);
           break;
         case METHODID_INTERCOM_CALL:
-          serviceImpl.intercomCall((DoorController.IntercomCallRequest) request,
+          serviceImpl.intercomCall((DoorController.Empty) request,
               (io.grpc.stub.StreamObserver<DoorController.IntercomCallResponse>) responseObserver);
           break;
         case METHODID_INTERCOM_ANSWER:

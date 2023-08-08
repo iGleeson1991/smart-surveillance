@@ -12,7 +12,7 @@ service Service1 {
   rpc securityCodeEntry(SecurityCodeEntryRequest) returns (SecurityCodeEntryResponse) {}
 
   //Sends the user's request for an intercom call and returns a call initiated message
-  rpc intercomCall(IntercomCallRequest) returns (IntercomCallResponse) {}
+  rpc intercomCall(Empty) returns (IntercomCallResponse) {}
 
   //Sends the receiving user's response to an intercom call
   rpc intercomAnswer(IntercomAnswerRequest) returns (IntercomAnswerResponse) {}
@@ -41,8 +41,8 @@ message SecurityCodeEntryResponse {
   string valid = 1;
 }
 
-message IntercomCallRequest {
-  string callRequest = 1;
+message Empty {
+
 }
 
 message IntercomCallResponse {

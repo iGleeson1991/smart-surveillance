@@ -4,19 +4,18 @@
 package DoorController;
 
 /**
- * Protobuf type {@code IntercomCallRequest}
+ * Protobuf type {@code Empty}
  */
-public  final class IntercomCallRequest extends
+public  final class Empty extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:IntercomCallRequest)
-    IntercomCallRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:Empty)
+    EmptyOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use IntercomCallRequest.newBuilder() to construct.
-  private IntercomCallRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use Empty.newBuilder() to construct.
+  private Empty(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private IntercomCallRequest() {
-    callRequest_ = "";
+  private Empty() {
   }
 
   @java.lang.Override
@@ -24,7 +23,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private IntercomCallRequest(
+  private Empty(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -32,7 +31,6 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -43,12 +41,6 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            callRequest_ = s;
-            break;
-          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -70,49 +62,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return DoorController.DoorControlsImpl.internal_static_IntercomCallRequest_descriptor;
+    return DoorController.DoorControlsImpl.internal_static_Empty_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return DoorController.DoorControlsImpl.internal_static_IntercomCallRequest_fieldAccessorTable
+    return DoorController.DoorControlsImpl.internal_static_Empty_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            DoorController.IntercomCallRequest.class, DoorController.IntercomCallRequest.Builder.class);
-  }
-
-  public static final int CALLREQUEST_FIELD_NUMBER = 1;
-  private volatile java.lang.Object callRequest_;
-  /**
-   * <code>string callRequest = 1;</code>
-   */
-  public java.lang.String getCallRequest() {
-    java.lang.Object ref = callRequest_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      callRequest_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string callRequest = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getCallRequestBytes() {
-    java.lang.Object ref = callRequest_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      callRequest_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+            DoorController.Empty.class, DoorController.Empty.Builder.class);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -129,9 +87,6 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getCallRequestBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, callRequest_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -141,9 +96,6 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getCallRequestBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, callRequest_);
-    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -154,14 +106,12 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof DoorController.IntercomCallRequest)) {
+    if (!(obj instanceof DoorController.Empty)) {
       return super.equals(obj);
     }
-    DoorController.IntercomCallRequest other = (DoorController.IntercomCallRequest) obj;
+    DoorController.Empty other = (DoorController.Empty) obj;
 
     boolean result = true;
-    result = result && getCallRequest()
-        .equals(other.getCallRequest());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,76 +123,74 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CALLREQUEST_FIELD_NUMBER;
-    hash = (53 * hash) + getCallRequest().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static DoorController.IntercomCallRequest parseFrom(byte[] data)
+  public static DoorController.Empty parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static DoorController.IntercomCallRequest parseFrom(java.io.InputStream input)
+  public static DoorController.Empty parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static DoorController.IntercomCallRequest parseDelimitedFrom(java.io.InputStream input)
+  public static DoorController.Empty parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static DoorController.IntercomCallRequest parseDelimitedFrom(
+  public static DoorController.Empty parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static DoorController.IntercomCallRequest parseFrom(
+  public static DoorController.Empty parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -255,7 +203,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(DoorController.IntercomCallRequest prototype) {
+  public static Builder newBuilder(DoorController.Empty prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -271,26 +219,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code IntercomCallRequest}
+   * Protobuf type {@code Empty}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:IntercomCallRequest)
-      DoorController.IntercomCallRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:Empty)
+      DoorController.EmptyOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return DoorController.DoorControlsImpl.internal_static_IntercomCallRequest_descriptor;
+      return DoorController.DoorControlsImpl.internal_static_Empty_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return DoorController.DoorControlsImpl.internal_static_IntercomCallRequest_fieldAccessorTable
+      return DoorController.DoorControlsImpl.internal_static_Empty_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              DoorController.IntercomCallRequest.class, DoorController.IntercomCallRequest.Builder.class);
+              DoorController.Empty.class, DoorController.Empty.Builder.class);
     }
 
-    // Construct using DoorController.IntercomCallRequest.newBuilder()
+    // Construct using DoorController.Empty.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -308,25 +256,23 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      callRequest_ = "";
-
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return DoorController.DoorControlsImpl.internal_static_IntercomCallRequest_descriptor;
+      return DoorController.DoorControlsImpl.internal_static_Empty_descriptor;
     }
 
     @java.lang.Override
-    public DoorController.IntercomCallRequest getDefaultInstanceForType() {
-      return DoorController.IntercomCallRequest.getDefaultInstance();
+    public DoorController.Empty getDefaultInstanceForType() {
+      return DoorController.Empty.getDefaultInstance();
     }
 
     @java.lang.Override
-    public DoorController.IntercomCallRequest build() {
-      DoorController.IntercomCallRequest result = buildPartial();
+    public DoorController.Empty build() {
+      DoorController.Empty result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -334,9 +280,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public DoorController.IntercomCallRequest buildPartial() {
-      DoorController.IntercomCallRequest result = new DoorController.IntercomCallRequest(this);
-      result.callRequest_ = callRequest_;
+    public DoorController.Empty buildPartial() {
+      DoorController.Empty result = new DoorController.Empty(this);
       onBuilt();
       return result;
     }
@@ -375,20 +320,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof DoorController.IntercomCallRequest) {
-        return mergeFrom((DoorController.IntercomCallRequest)other);
+      if (other instanceof DoorController.Empty) {
+        return mergeFrom((DoorController.Empty)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(DoorController.IntercomCallRequest other) {
-      if (other == DoorController.IntercomCallRequest.getDefaultInstance()) return this;
-      if (!other.getCallRequest().isEmpty()) {
-        callRequest_ = other.callRequest_;
-        onChanged();
-      }
+    public Builder mergeFrom(DoorController.Empty other) {
+      if (other == DoorController.Empty.getDefaultInstance()) return this;
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -404,86 +345,17 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      DoorController.IntercomCallRequest parsedMessage = null;
+      DoorController.Empty parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (DoorController.IntercomCallRequest) e.getUnfinishedMessage();
+        parsedMessage = (DoorController.Empty) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
           mergeFrom(parsedMessage);
         }
       }
-      return this;
-    }
-
-    private java.lang.Object callRequest_ = "";
-    /**
-     * <code>string callRequest = 1;</code>
-     */
-    public java.lang.String getCallRequest() {
-      java.lang.Object ref = callRequest_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        callRequest_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string callRequest = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCallRequestBytes() {
-      java.lang.Object ref = callRequest_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        callRequest_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string callRequest = 1;</code>
-     */
-    public Builder setCallRequest(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      callRequest_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string callRequest = 1;</code>
-     */
-    public Builder clearCallRequest() {
-      
-      callRequest_ = getDefaultInstance().getCallRequest();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string callRequest = 1;</code>
-     */
-    public Builder setCallRequestBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      callRequest_ = value;
-      onChanged();
       return this;
     }
     @java.lang.Override
@@ -499,41 +371,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:IntercomCallRequest)
+    // @@protoc_insertion_point(builder_scope:Empty)
   }
 
-  // @@protoc_insertion_point(class_scope:IntercomCallRequest)
-  private static final DoorController.IntercomCallRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:Empty)
+  private static final DoorController.Empty DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new DoorController.IntercomCallRequest();
+    DEFAULT_INSTANCE = new DoorController.Empty();
   }
 
-  public static DoorController.IntercomCallRequest getDefaultInstance() {
+  public static DoorController.Empty getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<IntercomCallRequest>
-      PARSER = new com.google.protobuf.AbstractParser<IntercomCallRequest>() {
+  private static final com.google.protobuf.Parser<Empty>
+      PARSER = new com.google.protobuf.AbstractParser<Empty>() {
     @java.lang.Override
-    public IntercomCallRequest parsePartialFrom(
+    public Empty parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new IntercomCallRequest(input, extensionRegistry);
+      return new Empty(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<IntercomCallRequest> parser() {
+  public static com.google.protobuf.Parser<Empty> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<IntercomCallRequest> getParserForType() {
+  public com.google.protobuf.Parser<Empty> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public DoorController.IntercomCallRequest getDefaultInstanceForType() {
+  public DoorController.Empty getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

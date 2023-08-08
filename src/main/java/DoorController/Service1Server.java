@@ -116,7 +116,6 @@ public class Service1Server extends Service1ImplBase {
     public void securityCodeEntry(SecurityCodeEntryRequest codeEntryRequest, StreamObserver<SecurityCodeEntryResponse> codeEntryResponseObserver) {
         //codeEntryRequest should contain the doorID and securityCode
         System.out.println("\nSecurity Code Entered: Receiving Info: " + codeEntryRequest);
-        //Variable to store our response message
         String responseMessage = "";
         //Assumes that there are only two doors
         if (codeEntryRequest.getDoorID() == "door1") {
@@ -134,7 +133,6 @@ public class Service1Server extends Service1ImplBase {
         }
         System.out.println("Security Code Entered: " + responseMessage);
 
-        //Creates a "SecurityCodeEntryResponse" object and attaches "responseMessage" to it.
         SecurityCodeEntryResponse codeEntryResponse = SecurityCodeEntryResponse.newBuilder().setValid(responseMessage).build();
 
         codeEntryResponseObserver.onNext(codeEntryResponse);
@@ -143,16 +141,36 @@ public class Service1Server extends Service1ImplBase {
         System.out.println("Security Code Entered: Completed\n");
     }
 
-    public void intercomCall() {
+    public void intercomCall(IntercomCallRequest callRequest, StreamObserver<IntercomCallResponse> callResponseObserver) {
+        System.out.println("\nIntercom Call: Receiving Info: " + callRequest);
+        String responseMessage = "Calling...";
 
+
+        System.out.println("Intercom Call: " + responseMessage);
+
+        IntercomCallResponse callResponse = IntercomCallResponse.newBuilder().setCallResponse(responseMessage).build();
+
+        callResponseObserver.onNext(callResponse);
+        callResponseObserver.onCompleted();
+
+        System.out.println("Intercom Call: Completed\n");
     }
 
-    public void intercomAnswer() {
+    public void intercomAnswer(IntercomAnswerRequest answerRequest, StreamObserver<IntercomAnswerResponse> answerResponseObserver) {
+        System.out.println("\nSecurity Code Entered: Receiving Info: " + answerRequest);
+        String responseMessage = "";
+        if (answerRequest.getAnswerRequest() == "answer") {
+            responseMessage = "Call Answered";
+        } else if (answerRequest.getAnswerRequest() == "reject") {
+            responseMessage = "Call Rejected";
+        }
 
+        System.out.println("Security Code Entered: " + responseMessage);
+
+        System.out.println("Security Code Entered: Completed\n");
     }
 
     public StreamObserver<OneWayCommunicationRequest> oneWayCommunication(StreamObserver<OneWayCommunicationResponse> oneWayResponseObserver) {
-
         //Returns a new "StreamObserver" object of type "OneWayCommunicationRequest".
         return new StreamObserver<OneWayCommunicationRequest>() {
             String responseMessage = "";
