@@ -230,7 +230,7 @@
                             </constraints>
                             <properties>
                               <contentType value="text/plain"/>
-                              <text value="Valid Door 1 Codes: &#10;1234&#10;4321&#10;&#10;Valid Door 2 Codes:&#10;9999&#10;0000"/>
+                              <text value="Valid Door 1 Codes:&#10;1234&#10;4321&#10;&#10;Valid Door 2 Codes:&#10;9999&#10;1111"/>
                             </properties>
                           </component>
                           <component id="c7a5e" class="javax.swing.JTextField" binding="securityCodeInput">

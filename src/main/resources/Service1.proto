@@ -11,8 +11,11 @@ service Service1 {
   //Sends the user's input Security Code and returns a message after validation
   rpc securityCodeEntry(SecurityCodeEntryRequest) returns (SecurityCodeEntryResponse) {}
 
-  //Sends the user's request for an intercom call and returns an acceptance/rejection message
+  //Sends the user's request for an intercom call and returns a call initiated message
   rpc intercomCall(IntercomCallRequest) returns (IntercomCallResponse) {}
+
+  //Sends the receiving user's response to an intercom call
+  rpc intercomAnswer(IntercomAnswerRequest) returns (IntercomAnswerResponse) {}
 
   //Sends a streamed message to the server when the user has the communication button held
   rpc oneWayCommunication(stream OneWayCommunicationRequest) returns (OneWayCommunicationResponse) {}
@@ -43,7 +46,15 @@ message IntercomCallRequest {
 }
 
 message IntercomCallResponse {
-  bool callAnswered = 1;
+  string callResponse = 1;
+}
+
+message IntercomAnswerRequest {
+  string answerRequest = 1;
+}
+
+message IntercomAnswerResponse {
+  string answerResponse = 1;
 }
 
 message OneWayCommunicationRequest {

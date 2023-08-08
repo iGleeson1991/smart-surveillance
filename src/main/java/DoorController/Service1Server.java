@@ -3,6 +3,7 @@ package DoorController;
 import DoorController.Service1Grpc.Service1ImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -11,35 +12,18 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class Service1Server extends Service1ImplBase {
-    public static void main(String[] args) {
-        //Creates a new "Service1Server" object called "service1Server"
-        Service1Server service1Server = new Service1Server();
-        String propertiesFileName = "Service1.properties";
-        //Creates a new "Properties" object
-        Properties properties = service1Server.getProperties(propertiesFileName);
-        service1Server.registerService(properties);
-        int port = Integer.parseInt(properties.getProperty("service_port"));
+    //Server Variables
+    private final ArrayList<String> door1Badges = new ArrayList<>(Arrays.asList("badge1", "badge3"));
+    private final ArrayList<String> door2Badges = new ArrayList<>(Arrays.asList("badge2", "badge4"));
+    private ArrayList<String> door1Codes = new ArrayList<>(Arrays.asList("1234", "4321"));
+    private ArrayList<String> door2Codes = new ArrayList<>(Arrays.asList("9999", "1111"));
 
-        try {
-            //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
-            Server server1 = ServerBuilder.forPort(port).addService(service1Server).build().start();
-            //Prints the new server's info to the console
-            System.out.println("\nServer 1 Started: Door Controller. Listening on Port " + port);
-
-            //Waits for the server to terminate
-            server1.awaitTermination();
-
-        //Catches any IO or Interrupted Exceptions and prints them to the console
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    //Private Server Methods
+    //Server Methods
 
     //Creates a private method called "getProperties" that returns "Properties"
     //Reads the data from the properties file using "InputStream" and prints them to the console
@@ -99,20 +83,130 @@ public class Service1Server extends Service1ImplBase {
     //Remote Methods
     // TODO: 04/08/2023 Finish remote methods
 
-    public void scanSecurityBadge() {
+    public void scanSecurityBadge(ScanSecurityBadgeRequest badgeRequest, StreamObserver<ScanSecurityBadgeResponse> badgeResponseObserver) {
+        //badgeRequest should contain the doorID and badgeID
+        System.out.println("\nSecurity Badge Scanned: Receiving Info: " + badgeRequest);
+        //Variable to store our response message
+        String responseMessage = "";
+        //Assumes that there are only two doors
+        if (badgeRequest.getDoorID() == "door1") {
+            if (door1Badges.contains(badgeRequest.getBadgeID())) {
+                responseMessage = "Access Granted";
+            } else {
+                responseMessage = "Access Denied";
+            }
+        } else {
+            if (door2Badges.contains(badgeRequest.getBadgeID())) {
+                responseMessage = "Access Granted";
+            } else {
+                responseMessage = "Access Denied";
+            }
+        }
+        System.out.println("Security Badge Scanned: " + responseMessage);
 
+        //Creates a "ScanSecurityBadgeResponse" object and attaches "responseMessage" to it.
+        ScanSecurityBadgeResponse badgeResponse = ScanSecurityBadgeResponse.newBuilder().setValid(responseMessage).build();
+
+        badgeResponseObserver.onNext(badgeResponse);
+        badgeResponseObserver.onCompleted();
+
+        System.out.println("Security Badge Scanned: Completed\n");
     }
 
-    public void securityCodeEntry() {
+    public void securityCodeEntry(SecurityCodeEntryRequest codeEntryRequest, StreamObserver<SecurityCodeEntryResponse> codeEntryResponseObserver) {
+        //codeEntryRequest should contain the doorID and securityCode
+        System.out.println("\nSecurity Code Entered: Receiving Info: " + codeEntryRequest);
+        //Variable to store our response message
+        String responseMessage = "";
+        //Assumes that there are only two doors
+        if (codeEntryRequest.getDoorID() == "door1") {
+            if (door1Codes.contains(codeEntryRequest.getSecurityCode())) {
+                responseMessage = "Access Granted";
+            } else {
+                responseMessage = "Access Denied";
+            }
+        } else {
+            if (door2Codes.contains(codeEntryRequest.getSecurityCode())) {
+                responseMessage = "Access Granted";
+            } else {
+                responseMessage = "Access Denied";
+            }
+        }
+        System.out.println("Security Code Entered: " + responseMessage);
 
+        //Creates a "SecurityCodeEntryResponse" object and attaches "responseMessage" to it.
+        SecurityCodeEntryResponse codeEntryResponse = SecurityCodeEntryResponse.newBuilder().setValid(responseMessage).build();
+
+        codeEntryResponseObserver.onNext(codeEntryResponse);
+        codeEntryResponseObserver.onCompleted();
+
+        System.out.println("Security Code Entered: Completed\n");
     }
 
     public void intercomCall() {
 
     }
 
-    public void oneWayCommunication() {
+    public void intercomAnswer() {
 
+    }
+
+    public StreamObserver<OneWayCommunicationRequest> oneWayCommunication(StreamObserver<OneWayCommunicationResponse> oneWayResponseObserver) {
+
+        //Returns a new "StreamObserver" object of type "OneWayCommunicationRequest".
+        return new StreamObserver<OneWayCommunicationRequest>() {
+            String responseMessage = "";
+            @Override
+            public void onNext(OneWayCommunicationRequest oneWayRequest) {
+                System.out.println("\nOne Way Communication: Receiving Info: " + oneWayRequest);
+
+                if(oneWayRequest.getButtonHeld() == true) {
+                    responseMessage = "Communications Channel Open";
+                } else {
+                    responseMessage = "Communications Channel Closed";
+                }
+            }
+
+            //Method will print any errors caught to the console.
+            @Override
+            public void onError(Throwable t) {
+                System.out.println(t.getMessage());
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+                OneWayCommunicationResponse oneWayResponse = OneWayCommunicationResponse.newBuilder().setChannelStatus(responseMessage).build();
+                oneWayResponseObserver.onNext(oneWayResponse);
+                oneWayResponseObserver.onCompleted();
+                System.out.println("One Way Communication: Completed\n");
+            }
+        };
+    }
+
+    public static void main(String[] args) {
+        //Creates a new "Service1Server" object called "service1Server"
+        Service1Server service1Server = new Service1Server();
+        String propertiesFileName = "Service1.properties";
+        //Creates a new "Properties" object
+        Properties properties = service1Server.getProperties(propertiesFileName);
+        service1Server.registerService(properties);
+        int port = Integer.parseInt(properties.getProperty("service_port"));
+
+        try {
+            //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
+            Server server1 = ServerBuilder.forPort(port).addService(service1Server).build().start();
+            //Prints the new server's info to the console
+            System.out.println("\nServer 1 Started: Door Controller. Listening on Port " + port);
+
+            //Waits for the server to terminate
+            server1.awaitTermination();
+
+            //Catches any IO or Interrupted Exceptions and prints them to the console
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 
