@@ -101,40 +101,48 @@ private static final long serialVersionUID = 0L;
   public enum CameraDirection
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>UP = 0;</code>
+     * <code>WAIT = 0;</code>
      */
-    UP(0),
+    WAIT(0),
     /**
-     * <code>DOWN = 1;</code>
+     * <code>UP = 1;</code>
      */
-    DOWN(1),
+    UP(1),
     /**
-     * <code>LEFT = 2;</code>
+     * <code>DOWN = 2;</code>
      */
-    LEFT(2),
+    DOWN(2),
     /**
-     * <code>RIGHT = 3;</code>
+     * <code>LEFT = 3;</code>
      */
-    RIGHT(3),
+    LEFT(3),
+    /**
+     * <code>RIGHT = 4;</code>
+     */
+    RIGHT(4),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>UP = 0;</code>
+     * <code>WAIT = 0;</code>
      */
-    public static final int UP_VALUE = 0;
+    public static final int WAIT_VALUE = 0;
     /**
-     * <code>DOWN = 1;</code>
+     * <code>UP = 1;</code>
      */
-    public static final int DOWN_VALUE = 1;
+    public static final int UP_VALUE = 1;
     /**
-     * <code>LEFT = 2;</code>
+     * <code>DOWN = 2;</code>
      */
-    public static final int LEFT_VALUE = 2;
+    public static final int DOWN_VALUE = 2;
     /**
-     * <code>RIGHT = 3;</code>
+     * <code>LEFT = 3;</code>
      */
-    public static final int RIGHT_VALUE = 3;
+    public static final int LEFT_VALUE = 3;
+    /**
+     * <code>RIGHT = 4;</code>
+     */
+    public static final int RIGHT_VALUE = 4;
 
 
     public final int getNumber() {
@@ -155,10 +163,11 @@ private static final long serialVersionUID = 0L;
 
     public static CameraDirection forNumber(int value) {
       switch (value) {
-        case 0: return UP;
-        case 1: return DOWN;
-        case 2: return LEFT;
-        case 3: return RIGHT;
+        case 0: return WAIT;
+        case 1: return UP;
+        case 2: return DOWN;
+        case 3: return LEFT;
+        case 4: return RIGHT;
         default: return null;
       }
     }
@@ -316,7 +325,7 @@ private static final long serialVersionUID = 0L;
     if (!getCameraPositionBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cameraPosition_);
     }
-    if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
+    if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.WAIT.getNumber()) {
       output.writeEnum(3, cameraDirection_);
     }
     unknownFields.writeTo(output);
@@ -334,7 +343,7 @@ private static final long serialVersionUID = 0L;
     if (!getCameraPositionBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cameraPosition_);
     }
-    if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.UP.getNumber()) {
+    if (cameraDirection_ != CameraController.CameraAdjustmentRequest.CameraDirection.WAIT.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, cameraDirection_);
     }

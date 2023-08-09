@@ -53,25 +53,25 @@ public final class CameraControlsImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016Service2.proto\"\300\001\n\027CameraAdjustmentReq" +
+      "\n\016Service2.proto\"\312\001\n\027CameraAdjustmentReq" +
       "uest\022\020\n\010cameraID\030\001 \001(\t\022\026\n\016cameraPosition" +
       "\030\002 \001(\t\022A\n\017cameraDirection\030\003 \001(\0162(.Camera" +
-      "AdjustmentRequest.CameraDirection\"8\n\017Cam" +
-      "eraDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002" +
-      "\022\t\n\005RIGHT\020\003\"2\n\030CameraAdjustmentResponse\022" +
-      "\026\n\016cameraPosition\030\001 \001(\t\"\007\n\005Empty\"0\n\026Moti" +
-      "onDetectedResponse\022\026\n\016detectionAlert\030\001 \001" +
-      "(\t\"P\n\027CameraAutomationRequest\022\031\n\021automat" +
-      "edCameraID\030\001 \001(\t\022\032\n\022locationOfMovement\030\002" +
-      " \001(\t\"4\n\030CameraAutomationResponse\022\030\n\020came" +
-      "raAutomation\030\001 \001(\t2\331\001\n\010Service2\022M\n\020camer" +
-      "aAdjustment\022\030.CameraAdjustmentRequest\032\031." +
-      "CameraAdjustmentResponse\"\000(\0010\001\0223\n\016motion" +
-      "Detected\022\006.Empty\032\027.MotionDetectedRespons" +
-      "e\"\000\022I\n\020cameraAutomation\022\030.CameraAutomati" +
-      "onRequest\032\031.CameraAutomationResponse\"\000B(" +
-      "\n\020CameraControllerB\022CameraControlsImplP\001" +
-      "b\006proto3"
+      "AdjustmentRequest.CameraDirection\"B\n\017Cam" +
+      "eraDirection\022\010\n\004WAIT\020\000\022\006\n\002UP\020\001\022\010\n\004DOWN\020\002" +
+      "\022\010\n\004LEFT\020\003\022\t\n\005RIGHT\020\004\"2\n\030CameraAdjustmen" +
+      "tResponse\022\026\n\016cameraPosition\030\001 \001(\t\"\007\n\005Emp" +
+      "ty\"0\n\026MotionDetectedResponse\022\026\n\016detectio" +
+      "nAlert\030\001 \001(\t\"P\n\027CameraAutomationRequest\022" +
+      "\031\n\021automatedCameraID\030\001 \001(\t\022\032\n\022locationOf" +
+      "Movement\030\002 \001(\t\"4\n\030CameraAutomationRespon" +
+      "se\022\030\n\020cameraAutomation\030\001 \001(\t2\331\001\n\010Service" +
+      "2\022M\n\020cameraAdjustment\022\030.CameraAdjustment" +
+      "Request\032\031.CameraAdjustmentResponse\"\000(\0010\001" +
+      "\0223\n\016motionDetected\022\006.Empty\032\027.MotionDetec" +
+      "tedResponse\"\000\022I\n\020cameraAutomation\022\030.Came" +
+      "raAutomationRequest\032\031.CameraAutomationRe" +
+      "sponse\"\000B(\n\020CameraControllerB\022CameraCont" +
+      "rolsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

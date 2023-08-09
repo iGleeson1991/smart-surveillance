@@ -1,8 +1,11 @@
 package GUI;
 
 import AlarmController.*;
+import CameraController.CameraAdjustmentRequest;
+import CameraController.CameraAdjustmentRequest.CameraDirection;
+import CameraController.CameraAdjustmentResponse;
 import CameraController.Service2Grpc;
-import DoorController.Service1Grpc;
+import com.sun.xml.internal.bind.v2.TODO;
 import io.grpc.Context;
 import io.grpc.Context.CancellableContext;
 import io.grpc.ManagedChannel;
@@ -21,7 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -71,20 +73,19 @@ public class SecurityGUI extends JFrame {
     private JPanel cameraControllerJPanel, cameraSelectJPanel, directionControlsJPanel, motionDetectorJPanel;
     private JRadioButton camera1RadioButton, camera2RadioButton;
     private JButton upButton, leftButton, rightButton, downButton, motionLocationSubmitButton;
-    private JTextField cameraPosition, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus;
-
-    //Camera Screen
-    private JPanel cameraScreenJPanel;
+    private JTextField cameraPositionDisplay, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus;
 
     //Alarm Controls Tab
     private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel, alarmCheckJPanel, alarmCheckButtonJPanel;
     private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button, alarmCheckButton;
     private JTextField alarmActivatedAlarmTest, emergencyLightsAlarmTest, emergencySirensAlarmTest, emergencyLightsFSTest, emergencySirensFSTest, fireSuppressionFSTest, emergencyServicesCallTestStatus;
     private JTextArea alarmCheckInfo;
+    private JPanel cameraScreenJPanel;
+    private JButton controlCameraButton;
 
     public SecurityGUI() {
         //Discovers all registered services
-        discoverJMDNSServices();
+        //discoverJMDNSServices();
 
         System.out.println("\nLaunching Security GUI");
 
@@ -102,109 +103,182 @@ public class SecurityGUI extends JFrame {
                 //TODO Finish
             }
         });
+
         door2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         sBadge1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         sBadge2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         sBadge3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         sBadge4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         doorCodeSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         callSecurityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         answerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         rejectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         intercomButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         camera1RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         camera2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
-        upButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Finish
 
-            }
-        });
-        leftButton.addActionListener(new ActionListener() {
+        // TODO: 09/08/2023 Finish first
+        controlCameraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
-            }
+                upButton.setEnabled(true);
+                leftButton.setEnabled(true);
+                rightButton.setEnabled(true);
+                downButton.setEnabled(true);
+                final CameraDirection[] cameraDirection = {CameraDirection.forNumber(0)};
+
+                ActionListener listener = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JButton pressedButton = (JButton) e.getSource();
+                        String direction = pressedButton.getActionCommand();
+                        switch (direction) {
+                            case "Up":
+                                cameraDirection[0] = CameraDirection.forNumber(1);
+                                break;
+                            case "Down":
+                                cameraDirection[0] = CameraDirection.forNumber(2);
+                                break;
+                            case "Left":
+                                cameraDirection[0] = CameraDirection.forNumber(3);
+                                break;
+                            case "Right":
+                                cameraDirection[0] = CameraDirection.forNumber(4);
+                                break;
+                        }
+                    }
+                };
+                upButton.addActionListener(listener);
+                leftButton.addActionListener(listener);
+                rightButton.addActionListener(listener);
+                downButton.addActionListener(listener);
+
+                System.out.println("\nMoving Camera");
+                String cameraID = "";
+                if (door1RadioButton.isSelected()) {
+                    cameraID = "camera1";
+                } else {
+                    cameraID = "camera2";
+                }
+                String cameraPosition = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
+
+
+                ManagedChannel movingCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+                Service2Grpc.Service2Stub cameraControlsAsyncStub = Service2Grpc.newStub(movingCameraChannel);
+
+                //CameraAdjustmentResponse Stream Observer
+                StreamObserver<CameraAdjustmentResponse> cameraAdjustmentResponseObserver = new StreamObserver<CameraAdjustmentResponse>() {
+                    @Override
+                    public void onNext(CameraAdjustmentResponse cameraAdjustmentResponse) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                };
+
+                StreamObserver<CameraAdjustmentRequest> cameraAdjustmentRequestObserver = cameraControlsAsyncStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentResponseObserver);
+
+
+                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection[0]).build();
+                try {
+
+
+                } catch () {
+
+                } catch () {
+
+                } catch () {
+
+                }
+             }
         });
-        rightButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Finish
-            }
-        });
-        downButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Finish
-            }
-        });
+
         motionLocationSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
             }
         });
+
         alarm1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -226,6 +300,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nManual Alarm Test Complete");
             }
         });
+
         alarm2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -247,6 +322,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nManual Alarm Test Complete");
             }
         });
+
         alarm3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -268,6 +344,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nManual Alarm Test Complete");
             }
         });
+
         securitySensorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -289,6 +366,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nSecurity Sensor Test Complete");
             }
         });
+
         fireSensorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -310,6 +388,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nFire Sensor Test Complete");
             }
         });
+
         alarm4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -329,6 +408,7 @@ public class SecurityGUI extends JFrame {
                 System.out.println("\nEmergency Services Call Test Complete");
             }
         });
+
         alarmCheckButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -100,6 +100,8 @@ public class Service2Server extends Service2ImplBase {
                 String responseMessage = "";
 
                 switch (cameraRequest.getCameraDirection()) {
+                    case WAIT:
+                        break;
                     case UP:
                         if (cameraX >= 0 && cameraX < 2) {
                             cameraX++;
