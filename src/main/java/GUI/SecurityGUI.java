@@ -481,7 +481,7 @@ public class SecurityGUI extends JFrame {
             BufferedImage image;
             ImagePanel(String imageName) {
                 try {
-                    image = ImageIO.read(new File("D:\\Documents\\College\\Software Development\\Distributed Systems\\CA\\CA Code\\Smart Surveillance\\" + imageName));
+                    image = ImageIO.read(new File("D:\\Documents\\College\\Software Development\\Distributed Systems\\CA\\CA Code\\Smart Surveillance\\Images\\" + imageName));
                 } catch (IOException ioe) {
                     System.out.println(ioe.getMessage());
                     ioe.printStackTrace();
