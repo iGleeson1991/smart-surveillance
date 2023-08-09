@@ -173,7 +173,7 @@ public class Service3Server extends Service3ImplBase {
             //Creates a "Server" object called "server1" and uses the "ServerBuilder" class to build and start a new server for the designated port and service registered to "service1Server"
             Server server3 = ServerBuilder.forPort(port).addService(service3Server).build().start();
             //Prints the new server's info to the console
-            System.out.println("\nServer 3 Started: Door Controller. Listening on Port " + port);
+            System.out.println("\nServer 3 Started: Alarm Controller. Listening on Port " + port);
 
             //Waits for the server to terminate
             server3.awaitTermination();
