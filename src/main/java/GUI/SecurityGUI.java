@@ -192,12 +192,15 @@ public class SecurityGUI extends JFrame {
         controlCameraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Enable directional control buttons
                 upButton.setEnabled(true);
                 leftButton.setEnabled(true);
                 rightButton.setEnabled(true);
                 downButton.setEnabled(true);
-                final CameraDirection[] cameraDirection = {CameraDirection.forNumber(0)};
 
+                //Array to store the selected camera direction
+                final CameraDirection[] cameraDirection = {CameraDirection.forNumber(0)};
+                //ActionListener to check which directional button was pressed and store the value in the "cameraDirection" array.
                 ActionListener listener = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -225,16 +228,21 @@ public class SecurityGUI extends JFrame {
                 downButton.addActionListener(listener);
 
                 System.out.println("\nMoving Camera");
+
+                //Gets the currently selected camera and stores the ID in a String
                 String cameraID = "";
                 if (door1RadioButton.isSelected()) {
                     cameraID = "camera1";
                 } else {
                     cameraID = "camera2";
                 }
+                //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
                 String cameraPosition = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
 
-
+                //Creates and channel with the service's IP Address and Port
                 ManagedChannel movingCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+
+                //Creates an asynchronous stub for the above channel to be used in the bidirectional gRPC
                 Service2Grpc.Service2Stub cameraControlsAsyncStub = Service2Grpc.newStub(movingCameraChannel);
 
                 //CameraAdjustmentResponse Stream Observer
@@ -246,7 +254,8 @@ public class SecurityGUI extends JFrame {
 
                     @Override
                     public void onError(Throwable throwable) {
-
+                        cameraPositionDisplay.setText(throwable.getMessage());
+                        throwable.printStackTrace();
                     }
 
                     @Override
@@ -259,16 +268,16 @@ public class SecurityGUI extends JFrame {
 
 
                 CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection[0]).build();
-                try {
-
-
-                } catch () {
-
-                } catch () {
-
-                } catch () {
-
-                }
+                //try {
+                //
+                //
+                //} catch () {
+                //
+                //} catch () {
+                //
+                //} catch () {
+                //
+                //}
              }
         });
 
