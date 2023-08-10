@@ -5,8 +5,8 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceInfo;
+
+import javax.jmdns.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -119,7 +119,7 @@ public class Service3Server extends Service3ImplBase {
         alarmResponseObserver.onNext(alarmResponse);
         alarmResponseObserver.onCompleted();
 
-        System.out.println("Alarm Triggered Manually: Completed\n");
+        System.out.println("Alarm Triggered Manually: Completed");
     }
 
     public void fireSuppression(FireSuppressionRequest fireSuppressionRequest, StreamObserver<FireSuppressionResponse> fireSuppressionResponseObserver) {
@@ -138,7 +138,7 @@ public class Service3Server extends Service3ImplBase {
         fireSuppressionResponseObserver.onNext(fireSuppressionResponse);
         fireSuppressionResponseObserver.onCompleted();
 
-        System.out.println("Sensor Activated: Completed\n");
+        System.out.println("Sensor Activated: Completed");
     }
 
     public void emergencyServicesCall(Empty emergencyCallRequest, StreamObserver<EmergencyServicesCallResponse> emergencyResponseObserver) {
@@ -153,11 +153,11 @@ public class Service3Server extends Service3ImplBase {
     public void alarmCheck(Empty alarmCheckRequest, StreamObserver<AlarmCheckResponse> alarmCheckResponseObserver) {
         System.out.println("\nAlarm Check Request: Received");
         for (int i = 0; i < alarmData.size(); i++) {
-            alarmCheckResponseObserver.onNext(AlarmCheckResponse.newBuilder().setAlarmInfo(alarmData.get(i) + "\n").build());
+            alarmCheckResponseObserver.onNext(AlarmCheckResponse.newBuilder().setAlarmInfo(alarmData.get(i)).build());
         }
         System.out.println("Alarm Check Request: Sending Data");
         alarmCheckResponseObserver.onCompleted();
-        System.out.println("Alarm Check Request: Completed\n");
+        System.out.println("Alarm Check Request: Completed");
     }
 
     public static void main(String[] args) {

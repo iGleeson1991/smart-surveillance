@@ -73,20 +73,115 @@ public class Service2Server extends Service2ImplBase {
     }
 
     //Remote Methods
+    public void cameraAdjustment(CameraAdjustmentRequest cameraAdjustmentRequest, StreamObserver<CameraAdjustmentResponse> cameraAdjustmentResponseObserver) {
+        System.out.println("\nCamera Adjustment: Receiving Info: " + "Camera ID: " + cameraAdjustmentRequest.getCameraID() + ", Current Position: " + cameraAdjustmentRequest.getCameraPosition() + ", Direction: " + cameraAdjustmentRequest.getCameraDirection());
+        //Preparing the request
+        //Converting the camera position in to x and y positions
+        String stringX = cameraAdjustmentRequest.getCameraPosition().substring(1);
+        String stringY = cameraAdjustmentRequest.getCameraPosition().substring(0, 1);
+        int cameraX = Integer.parseInt(stringX) - 1;
+        int cameraY = 0;
+        switch (stringY) {
+            case "A":
+                cameraY = 0;
+                break;
+            case "B":
+                cameraY = 1;
+                break;
+            case "C":
+                cameraY = 2;
+                break;
+        }
+        String responseMessage = "";
 
-    public StreamObserver<CameraAdjustmentRequest> cameraAdjustment(StreamObserver<CameraAdjustmentResponse> cameraResponseObserver) {
-        //Returns a new "StreamObserver" object of type "CameraAdjustmentRequest".
-        return new StreamObserver<CameraAdjustmentRequest>() {
+        //Moving the camera in the chosen direction
+        switch (cameraAdjustmentRequest.getCameraDirection()) {
+            case UP:
+                if (cameraX >= 0 && cameraX < 2) {
+                    cameraX++;
+                    System.out.println("Camera Adjustment: Moving Camera Up");
+                }
+                break;
+            case DOWN:
+                if (cameraX > 0 && cameraX <= 2) {
+                    cameraX--;
+                    System.out.println("Camera Adjustment: Moving Camera Down");
+                }
+                break;
+            case RIGHT:
+                if (cameraY >= 0 && cameraY < 2) {
+                    cameraY++;
+                    System.out.println("Camera Adjustment: Moving Camera Right");
+                }
+                break;
+            case LEFT:
+                if (cameraY > 0 && cameraY <= 2) {
+                    cameraY--;
+                    System.out.println("Camera Adjustment: Moving Camera Left");
+                }
+                break;
+        }
+
+        //Converting the camera's x and y positions back into their original format and adding it to "responseMessage
+        switch (cameraY) {
+            case 0:
+                responseMessage = "A";
+                break;
+            case 1:
+                responseMessage = "B";
+                break;
+            case 2:
+                responseMessage = "C";
+                break;
+        }
+        responseMessage += Integer.toString(cameraX + 1);
+        CameraAdjustmentResponse cameraAdjustmentResponse = CameraAdjustmentResponse.newBuilder().setCameraPosition(responseMessage).build();
+        cameraAdjustmentResponseObserver.onNext(cameraAdjustmentResponse);
+        cameraAdjustmentResponseObserver.onCompleted();
+        System.out.println("Camera Adjustment: Completed");
+    }
+
+    public void motionDetected(Empty motionDetectedRequest, StreamObserver<MotionDetectedResponse> motionDetectedResponseObserver) {
+        System.out.println("\nMotion Detected: Processing");
+        String responseMessage = "Activated";
+        MotionDetectedResponse motionDetectedResponse = MotionDetectedResponse.newBuilder().setDetectionAlert(responseMessage).build();
+        motionDetectedResponseObserver.onNext(motionDetectedResponse);
+        motionDetectedResponseObserver.onCompleted();
+        System.out.println("Motion Detected: Message Sent");
+    }
+
+    public StreamObserver<CameraAutomationRequest> cameraAutomation(StreamObserver<CameraAutomationResponse> cameraAutomationResponseObserver) {
+        return new StreamObserver<CameraAutomationRequest>() {
             @Override
-            //cameraRequest should contain the cameraID, the camera's position and the direction to move the camera
-            public void onNext(CameraAdjustmentRequest cameraRequest) {
-                System.out.println("\nCamera Adjustment: Receiving Info: " + cameraRequest);
-                //Converting the camera position in to x and y positions
-                String stringX = cameraRequest.getCameraPosition().substring(1);
-                String stringY = cameraRequest.getCameraPosition().substring(0, 1);
-                int cameraX = Integer.parseInt(stringX) - 1;
+            public void onNext(CameraAutomationRequest automationRequest) {
+                System.out.println("\nMotion Detected: Moving " + automationRequest.getAutomatedCameraID() + " to " + automationRequest.getLocationOfMovement());
+                System.out.println("Automated Camera Position: " + automationRequest.getCameraPosition());
+
+                //Variable to store response & flag to track camera movement
+                String responseMessage = "";
+                boolean cameraMoved = false;
+                //Converting into x and y positions
+                String locX, locY;
+                String camX, camY;
+                int cameraX, locationX;
                 int cameraY = 0;
-                switch (stringY) {
+                int locationY = 0;
+                locX = automationRequest.getLocationOfMovement().substring(1);
+                locY = automationRequest.getLocationOfMovement().substring(0, 1);
+                camX = automationRequest.getCameraPosition().substring(1);
+                camY = automationRequest.getCameraPosition().substring(0, 1);
+                switch (locY) {
+                    case "A":
+                        locationY = 0;
+                        break;
+                    case "B":
+                        locationY = 1;
+                        break;
+                    case "C":
+                        locationY = 2;
+                        break;
+                }
+                switch (camY) {
                     case "A":
                         cameraY = 0;
                         break;
@@ -97,33 +192,26 @@ public class Service2Server extends Service2ImplBase {
                         cameraY = 2;
                         break;
                 }
-                String responseMessage = "";
+                locationX = Integer.parseInt(locX) - 1;
+                cameraX = Integer.parseInt(camX) - 1;
 
-                switch (cameraRequest.getCameraDirection()) {
-                    case WAIT:
-                        break;
-                    case UP:
-                        if (cameraX >= 0 && cameraX < 2) {
-                            cameraX++;
-                        }
-                        break;
-                    case DOWN:
-                        if (cameraX > 0 && cameraX <= 2) {
-                            cameraX--;
-                        }
-                        break;
-                    case RIGHT:
-                        if (cameraY >= 0 && cameraY < 2) {
-                            cameraY++;
-                        }
-                        break;
-                    case LEFT:
-                        if (cameraY > 0 && cameraY <= 2) {
-                            cameraY--;
-                        }
-                        break;
+                //Move camera towards location of movement one section at a time
+                if (cameraX < locationX) {
+                    cameraX++;
+                    cameraMoved = true;
+                } else if (cameraX > locationX){
+                    cameraX--;
+                    cameraMoved = true;
+                }
+                while (cameraMoved = false) {
+                    if (cameraY < locationY) {
+                        cameraY++;
+                    } else if (cameraY > locationY) {
+                        cameraY--;
+                    }
                 }
 
+                //Converting the camera's x and y positions back into their original format and storing them in "responseMessage"
                 switch (cameraY) {
                     case 0:
                         responseMessage = "A";
@@ -137,47 +225,27 @@ public class Service2Server extends Service2ImplBase {
                 }
                 responseMessage += Integer.toString(cameraX + 1);
 
-                CameraAdjustmentResponse cameraResponse = CameraAdjustmentResponse.newBuilder().setCameraPosition(responseMessage).build();
-                cameraResponseObserver.onNext(cameraResponse);
+                //Preparing response
+                CameraAutomationResponse automationResponse = CameraAutomationResponse.newBuilder().setCameraAutomation(responseMessage).build();
+
+                //Sending response
+                cameraAutomationResponseObserver.onNext(automationResponse);
             }
 
-            //Method will print any errors caught to the console.
+            //Catches errors and prints them to the console
             @Override
             public void onError(Throwable throwable) {
                 System.out.println(throwable.getMessage());
                 throwable.printStackTrace();
             }
 
+            //Runs when the response is completed
             @Override
             public void onCompleted() {
-                cameraResponseObserver.onCompleted();
-                System.out.println("Camera Adjustment: Completed\n");
+                cameraAutomationResponseObserver.onCompleted();
+                System.out.println("Motion Detected: Camera arrived at location of movement");
             }
         };
-    }
-
-    public void motionDetected(Empty motionDetectedRequest, StreamObserver<MotionDetectedResponse> motionDetectedResponseObserver) {
-        System.out.println("\nMotion Detected: Processing");
-        String responseMessage = "Activated";
-        MotionDetectedResponse motionDetectedResponse = MotionDetectedResponse.newBuilder().setDetectionAlert(responseMessage).build();
-        motionDetectedResponseObserver.onNext(motionDetectedResponse);
-        motionDetectedResponseObserver.onCompleted();
-        System.out.println("Motion Detected: Message Sent\n");
-    }
-
-    public void cameraAutomation(CameraAutomationRequest automationRequest, StreamObserver<CameraAutomationResponse> automationResponseObserver) {
-        System.out.println("\nMotion Detected on Inactive Camera: Moving Camera");
-        String responseMessage = "";
-        //Assumes there are only two cameras
-        if (automationRequest.getAutomatedCameraID() == "camera1") {
-            responseMessage = "Camera 1: Section " + automationRequest.getLocationOfMovement();
-        } else if (automationRequest.getAutomatedCameraID() == "camera2") {
-            responseMessage = "Camera 2: Section " + automationRequest.getLocationOfMovement();
-        }
-        CameraAutomationResponse automationResponse = CameraAutomationResponse.newBuilder().setCameraAutomation(responseMessage).build();
-        automationResponseObserver.onNext(automationResponse);
-        automationResponseObserver.onCompleted();
-        System.out.println("Motion Detected on Inactive Camera: Move Complete\n");
     }
 
     public static void main(String[] args) {

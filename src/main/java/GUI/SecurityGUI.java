@@ -1,11 +1,9 @@
 package GUI;
 
 import AlarmController.*;
-import CameraController.CameraAdjustmentRequest;
 import CameraController.CameraAdjustmentRequest.CameraDirection;
 import CameraController.CameraAdjustmentResponse;
 import CameraController.Service2Grpc;
-import com.sun.xml.internal.bind.v2.TODO;
 import io.grpc.Context;
 import io.grpc.Context.CancellableContext;
 import io.grpc.ManagedChannel;
@@ -70,22 +68,24 @@ public class SecurityGUI extends JFrame {
     private JTextField callSecurityStatus, intercomStatus;
 
     //Camera Controls Tab
-    private JPanel cameraControllerJPanel, cameraSelectJPanel, directionControlsJPanel, motionDetectorJPanel;
+    private JPanel cameraControllerJPanel, cameraSelectJPanel, directionControlsJPanel, motionDetectorJPanel, cameraScreenJPanel, cameraAutomationJPanel;
     private JRadioButton camera1RadioButton, camera2RadioButton;
-    private JButton upButton, leftButton, rightButton, downButton, motionLocationSubmitButton;
-    private JTextField cameraPositionDisplay, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus;
+    private JButton upButton, leftButton, rightButton, downButton, motionLocationSubmitButton, cameraAutomationButton;
+    private JTextField cameraPositionDisplay, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus, automatedCameraPosition;
+    String camera1Position = cameraPositionDisplay.getText();
+    String camera2Position = cameraPositionDisplay.getText();
 
     //Alarm Controls Tab
-    private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel, alarmCheckJPanel, alarmCheckButtonJPanel;
-    private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button, alarmCheckButton;
+    private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel, alarmCheckJPanel, alarmCheckButtonJPanel, alarmResetJPanel;
+    private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button, alarmCheckButton, alarmResetButton;
     private JTextField alarmActivatedAlarmTest, emergencyLightsAlarmTest, emergencySirensAlarmTest, emergencyLightsFSTest, emergencySirensFSTest, fireSuppressionFSTest, emergencyServicesCallTestStatus;
     private JTextArea alarmCheckInfo;
-    private JPanel cameraScreenJPanel;
-    private JButton controlCameraButton;
+
+    //GUI Methods
 
     public SecurityGUI() {
         //Discovers all registered services
-        //discoverJMDNSServices();
+        discoverJMDNSServices();
 
         System.out.println("\nLaunching Security GUI");
 
@@ -188,57 +188,77 @@ public class SecurityGUI extends JFrame {
             }
         });
 
-        // TODO: 09/08/2023 Finish first
-        controlCameraButton.addActionListener(new ActionListener() {
+        upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Enable directional control buttons
-                upButton.setEnabled(true);
-                leftButton.setEnabled(true);
-                rightButton.setEnabled(true);
-                downButton.setEnabled(true);
+                //Resets "cameraPositionDisplay" if error message is displayed
+                if (camera1RadioButton.isSelected()) {
+                    cameraPositionDisplay.setText(camera1Position);
+                } else {
+                    cameraPositionDisplay.setText(camera2Position);
+                }
 
-                //Array to store the selected camera direction
-                final CameraDirection[] cameraDirection = {CameraDirection.forNumber(0)};
-                //ActionListener to check which directional button was pressed and store the value in the "cameraDirection" array.
-                ActionListener listener = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JButton pressedButton = (JButton) e.getSource();
-                        String direction = pressedButton.getActionCommand();
-                        switch (direction) {
-                            case "Up":
-                                cameraDirection[0] = CameraDirection.forNumber(1);
-                                break;
-                            case "Down":
-                                cameraDirection[0] = CameraDirection.forNumber(2);
-                                break;
-                            case "Left":
-                                cameraDirection[0] = CameraDirection.forNumber(3);
-                                break;
-                            case "Right":
-                                cameraDirection[0] = CameraDirection.forNumber(4);
-                                break;
-                        }
-                    }
-                };
-                upButton.addActionListener(listener);
-                leftButton.addActionListener(listener);
-                rightButton.addActionListener(listener);
-                downButton.addActionListener(listener);
+                //Waits for a moment to simulate camera movement
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
+                CameraDirection cameraDirection = CameraDirection.forNumber(0);
+                String cameraID = "";
+                String cameraPosition = "";
+
+                //Gets the currently selected camera, and it's position and stores them in Strings
+                if (door1RadioButton.isSelected()) {
+                    cameraID = "camera1";
+                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
+                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
+                } else {
+                    cameraID = "camera2";
+                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
+                }
+
 
                 System.out.println("\nMoving Camera");
 
-                //Gets the currently selected camera and stores the ID in a String
-                String cameraID = "";
-                if (door1RadioButton.isSelected()) {
-                    cameraID = "camera1";
-                } else {
-                    cameraID = "camera2";
-                }
-                //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
-                String cameraPosition = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
 
+            }
+        });
+
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        motionLocationSubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO Finish
+
+            }
+        });
+
+        cameraAutomationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 //Creates and channel with the service's IP Address and Port
                 ManagedChannel movingCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
 
@@ -254,8 +274,10 @@ public class SecurityGUI extends JFrame {
 
                     @Override
                     public void onError(Throwable throwable) {
-                        cameraPositionDisplay.setText(throwable.getMessage());
+                        automatedCameraPosition.setText(throwable.getMessage());
                         throwable.printStackTrace();
+                        System.out.println("Error: Resetting Camera Controller");
+                        movingCameraChannel.shutdown();
                     }
 
                     @Override
@@ -264,34 +286,39 @@ public class SecurityGUI extends JFrame {
                     }
                 };
 
-                StreamObserver<CameraAdjustmentRequest> cameraAdjustmentRequestObserver = cameraControlsAsyncStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentResponseObserver);
+                //Preparing the request
 
+                try {
+                    //End the requests & pause between requests
+                    Thread.sleep(500);
 
-                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection[0]).build();
-                //try {
-                //
-                //
-                //} catch () {
-                //
-                //} catch () {
-                //
-                //} catch () {
-                //
-                //}
-             }
-        });
-
-        motionLocationSubmitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                    //Will catch any exceptions, display an error message to the user and reset the camera controls
+                } catch (RuntimeException re) {
+                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    System.out.println(re.getMessage());
+                    re.printStackTrace();
+                    cancelRequest.cancel(null);
+                } catch (InterruptedException ie) {
+                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                    cancelRequest.cancel(null);
+                } catch (Exception error) {
+                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    System.out.println(error.getMessage());
+                    error.printStackTrace();
+                    cancelRequest.cancel(null);
+                }
             }
         });
 
         alarm1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("\nTesting Manual Alarm");
+                System.out.println("\nTesting Manual Alarm: Cell Block A");
+                alarmActivatedAlarmTest.setText("Alarm Activated: ");
+                emergencyLightsAlarmTest.setText("Emergency Lights: ");
+                emergencySirensAlarmTest.setText("Emergency Sirens: ");
                 ManagedChannel manualAlarmTestChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm1").build();
@@ -301,19 +328,24 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    alarmActivatedAlarmTest.setText(sre.getMessage());
+                    emergencyLightsAlarmTest.setText(sre.getMessage());
+                    emergencySirensAlarmTest.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 manualAlarmTestChannel.shutdown();
-                System.out.println("\nManual Alarm Test Complete");
+                System.out.println("Manual Alarm Test Complete");
             }
         });
 
         alarm2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("\nTesting Manual Alarm");
+                System.out.println("\nTesting Manual Alarm: Cafeteria");
+                alarmActivatedAlarmTest.setText("Alarm Activated: ");
+                emergencyLightsAlarmTest.setText("Emergency Lights: ");
+                emergencySirensAlarmTest.setText("Emergency Sirens: ");
                 ManagedChannel manualAlarmTestChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm2").build();
@@ -323,19 +355,24 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    alarmActivatedAlarmTest.setText(sre.getMessage());
+                    emergencyLightsAlarmTest.setText(sre.getMessage());
+                    emergencySirensAlarmTest.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 manualAlarmTestChannel.shutdown();
-                System.out.println("\nManual Alarm Test Complete");
+                System.out.println("Manual Alarm Test Complete");
             }
         });
 
         alarm3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("\nTesting Manual Alarm");
+                System.out.println("\nTesting Manual Alarm: Yard");
+                alarmActivatedAlarmTest.setText("Alarm Activated: ");
+                emergencyLightsAlarmTest.setText("Emergency Lights: ");
+                emergencySirensAlarmTest.setText("Emergency Sirens: ");
                 ManagedChannel manualAlarmTestChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm3").build();
@@ -345,12 +382,14 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    alarmActivatedAlarmTest.setText(sre.getMessage());
+                    emergencyLightsAlarmTest.setText(sre.getMessage());
+                    emergencySirensAlarmTest.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 manualAlarmTestChannel.shutdown();
-                System.out.println("\nManual Alarm Test Complete");
+                System.out.println("Manual Alarm Test Complete");
             }
         });
 
@@ -358,6 +397,9 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nTesting Security Sensor");
+                fireSuppressionFSTest.setText("Fire Suppression: ");
+                emergencyLightsFSTest.setText("Emergency Lights: ");
+                emergencySirensFSTest.setText("Emergency Sirens: ");
                 ManagedChannel fireSensorTestChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(fireSensorTestChannel);
                 FireSuppressionRequest fireSuppressionRequest = FireSuppressionRequest.newBuilder().setSensorID("securitySensor").build();
@@ -367,12 +409,14 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    fireSuppressionFSTest.setText(sre.getMessage());
+                    emergencyLightsFSTest.setText(sre.getMessage());
+                    emergencySirensFSTest.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 fireSensorTestChannel.shutdown();
-                System.out.println("\nSecurity Sensor Test Complete");
+                System.out.println("Security Sensor Test Complete");
             }
         });
 
@@ -380,6 +424,9 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nTesting Fire Sensor");
+                fireSuppressionFSTest.setText("Fire Suppression: ");
+                emergencyLightsFSTest.setText("Emergency Lights: ");
+                emergencySirensFSTest.setText("Emergency Sirens: ");
                 ManagedChannel fireSensorTestChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(fireSensorTestChannel);
                 FireSuppressionRequest fireSuppressionRequest = FireSuppressionRequest.newBuilder().setSensorID("fireSensor").build();
@@ -389,12 +436,14 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    fireSuppressionFSTest.setText(sre.getMessage());
+                    emergencyLightsFSTest.setText(sre.getMessage());
+                    emergencySirensFSTest.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 fireSensorTestChannel.shutdown();
-                System.out.println("\nFire Sensor Test Complete");
+                System.out.println("Fire Sensor Test Complete");
             }
         });
 
@@ -402,6 +451,7 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nCalling Emergency Services");
+                emergencyServicesCallTestStatus.setText("Emergency Services: ");
                 ManagedChannel callEMSChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(callEMSChannel);
                 Empty callEMSRequest = Empty.newBuilder().build();
@@ -409,12 +459,12 @@ public class SecurityGUI extends JFrame {
                     EmergencyServicesCallResponse callEMSResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).emergencyServicesCall(callEMSRequest);
                     emergencyServicesCallTestStatus.setText(emergencyServicesCallTestStatus.getText() + callEMSResponse.getCallConfirmation());
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    emergencyServicesCallTestStatus.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
                 callEMSChannel.shutdown();
-                System.out.println("\nEmergency Services Call Test Complete");
+                System.out.println("Emergency Services Call Test Complete");
             }
         });
 
@@ -422,17 +472,8 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nChecking Alarms");
+                alarmCheckInfo.setText("");
                 alarmCheckInfo.setText("Checking Alarms\n");
-
-                /* Testing Instructions - jmDNS Services would never resolve on my system
-                try {
-                    System.out.println(InetAddress.getLocalHost());
-                } catch (UnknownHostException ex) {
-                    throw new RuntimeException(ex);
-                }
-                System.out.println(alarmControllerService3Info.getHostAddresses());
-                System.out.println(alarmControllerService3Info.getPort());
-                 */
 
                 //Create a channel
                 ManagedChannel checkAlarmsChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
@@ -454,14 +495,30 @@ public class SecurityGUI extends JFrame {
                     }
 
                 } catch (StatusRuntimeException sre) {
-                    sre.getMessage();
+                    alarmCheckInfo.setText(sre.getMessage());
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
 
                 //Shutdown the channel
                 checkAlarmsChannel.shutdown();
-                System.out.println("\nAlarm Check Complete");
+                System.out.println("Alarm Check Complete");
+            }
+        });
+
+        //Resets all the fields on the "Alarm Controls" tab
+        alarmResetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("\nResetting Fields");
+                alarmActivatedAlarmTest.setText("Alarm Activated: ");
+                emergencyLightsAlarmTest.setText("Emergency Lights: ");
+                emergencySirensAlarmTest.setText("Emergency Sirens: ");
+                fireSuppressionFSTest.setText("Fire Suppression: ");
+                emergencyLightsFSTest.setText("Emergency Lights: ");
+                emergencySirensFSTest.setText("Emergency Sirens: ");
+                emergencyServicesCallTestStatus.setText("Emergency Services: ");
+                alarmCheckInfo.setText("");
             }
         });
     }
@@ -498,21 +555,20 @@ public class SecurityGUI extends JFrame {
             jmdns.addServiceListener(serviceType, new ServiceListener() {
                 @Override
                 public void serviceAdded(ServiceEvent event) {
-                    System.out.println(nameOfService + " has been added: " + event.getInfo());
+                    System.out.println(nameOfService + " has been added: " + event.getName() + "\n");
                 }
 
                 @Override
                 public void serviceRemoved(ServiceEvent event) {
-                    System.out.println(nameOfService + " has been removed: " + event.getInfo());
+                    System.out.println(nameOfService + " has been removed: " + event.getName() + "\n");
                 }
 
                 @Override
                 public void serviceResolved(ServiceEvent event) {
-                    System.out.println(nameOfService + " has been resolved: " + event.getInfo());
+                    System.out.println(nameOfService + " has been resolved: " + event.getName() + "\n");
 
                     //Retrieves data from the "ServiceEvent" object and stores it in a "ServiceInfo" object called "serviceInfo"
                     ServiceInfo serviceInfo = event.getInfo();
-                    System.out.println(serviceInfo);
 
                     //Sets "serviceInfo" equal to the name of the service we are trying to discover
                     if (nameOfServiceInfo == "doorControllerService1Info") {
@@ -524,7 +580,7 @@ public class SecurityGUI extends JFrame {
                     }
 
                     //Prints out the data received from the registered service
-                    System.out.println("Resolving Service: " + serviceType +
+                    System.out.println("Resolving Service: " + nameOfService +
                     "\nType: " + event.getType() +
                     "\nName: " + event.getName() +
                     "\nDescription: " + serviceInfo.getNiceTextString() +

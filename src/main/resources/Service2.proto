@@ -6,13 +6,13 @@ option java_outer_classname = "CameraControlsImpl";
 
 service Service2 {
   //Takes in direction controls and moves the currently selected camera
-  rpc cameraAdjustment(stream CameraAdjustmentRequest) returns (stream CameraAdjustmentResponse) {}
+  rpc cameraAdjustment(CameraAdjustmentRequest) returns (CameraAdjustmentResponse) {}
 
   //When motion is detected on the camera not in use, the user is notified
   rpc motionDetected(Empty) returns (MotionDetectedResponse) {}
 
   //When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
-  rpc cameraAutomation(CameraAutomationRequest) returns (CameraAutomationResponse) {}
+  rpc cameraAutomation(stream CameraAutomationRequest) returns (stream CameraAutomationResponse) {}
 }
 
 message CameraAdjustmentRequest {
@@ -21,11 +21,10 @@ message CameraAdjustmentRequest {
   string cameraPosition = 2;
 
   enum CameraDirection {
-    WAIT = 0;
-    UP = 1;
-    DOWN = 2;
-    LEFT = 3;
-    RIGHT = 4;
+    UP = 0;
+    DOWN = 1;
+    LEFT = 2;
+    RIGHT = 3;
   }
   CameraDirection cameraDirection = 3;
 }
@@ -45,7 +44,9 @@ message MotionDetectedResponse {
 message CameraAutomationRequest {
   string automatedCameraID = 1;
 
-  string locationOfMovement = 2;
+  string cameraPosition = 2;
+
+  string locationOfMovement = 3;
 }
 
 message CameraAutomationResponse {

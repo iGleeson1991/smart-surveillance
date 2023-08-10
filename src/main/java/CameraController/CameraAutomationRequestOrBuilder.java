@@ -18,11 +18,21 @@ public interface CameraAutomationRequestOrBuilder extends
       getAutomatedCameraIDBytes();
 
   /**
-   * <code>string locationOfMovement = 2;</code>
+   * <code>string cameraPosition = 2;</code>
+   */
+  java.lang.String getCameraPosition();
+  /**
+   * <code>string cameraPosition = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getCameraPositionBytes();
+
+  /**
+   * <code>string locationOfMovement = 3;</code>
    */
   java.lang.String getLocationOfMovement();
   /**
-   * <code>string locationOfMovement = 2;</code>
+   * <code>string locationOfMovement = 3;</code>
    */
   com.google.protobuf.ByteString
       getLocationOfMovementBytes();

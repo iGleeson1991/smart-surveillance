@@ -34,7 +34,7 @@ public final class Service2Grpc {
       fullMethodName = SERVICE_NAME + '/' + "cameraAdjustment",
       requestType = CameraController.CameraAdjustmentRequest.class,
       responseType = CameraController.CameraAdjustmentResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<CameraController.CameraAdjustmentRequest,
       CameraController.CameraAdjustmentResponse> getCameraAdjustmentMethod() {
     io.grpc.MethodDescriptor<CameraController.CameraAdjustmentRequest, CameraController.CameraAdjustmentResponse> getCameraAdjustmentMethod;
@@ -43,7 +43,7 @@ public final class Service2Grpc {
         if ((getCameraAdjustmentMethod = Service2Grpc.getCameraAdjustmentMethod) == null) {
           Service2Grpc.getCameraAdjustmentMethod = getCameraAdjustmentMethod = 
               io.grpc.MethodDescriptor.<CameraController.CameraAdjustmentRequest, CameraController.CameraAdjustmentResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service2", "cameraAdjustment"))
               .setSampledToLocalTracing(true)
@@ -98,7 +98,7 @@ public final class Service2Grpc {
       fullMethodName = SERVICE_NAME + '/' + "cameraAutomation",
       requestType = CameraController.CameraAutomationRequest.class,
       responseType = CameraController.CameraAutomationResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
   public static io.grpc.MethodDescriptor<CameraController.CameraAutomationRequest,
       CameraController.CameraAutomationResponse> getCameraAutomationMethod() {
     io.grpc.MethodDescriptor<CameraController.CameraAutomationRequest, CameraController.CameraAutomationResponse> getCameraAutomationMethod;
@@ -107,7 +107,7 @@ public final class Service2Grpc {
         if ((getCameraAutomationMethod = Service2Grpc.getCameraAutomationMethod) == null) {
           Service2Grpc.getCameraAutomationMethod = getCameraAutomationMethod = 
               io.grpc.MethodDescriptor.<CameraController.CameraAutomationRequest, CameraController.CameraAutomationResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "Service2", "cameraAutomation"))
               .setSampledToLocalTracing(true)
@@ -155,9 +155,9 @@ public final class Service2Grpc {
      *Takes in direction controls and moves the currently selected camera
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentRequest> cameraAdjustment(
+    public void cameraAdjustment(CameraController.CameraAdjustmentRequest request,
         io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getCameraAdjustmentMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getCameraAdjustmentMethod(), responseObserver);
     }
 
     /**
@@ -175,16 +175,16 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
      * </pre>
      */
-    public void cameraAutomation(CameraController.CameraAutomationRequest request,
+    public io.grpc.stub.StreamObserver<CameraController.CameraAutomationRequest> cameraAutomation(
         io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getCameraAutomationMethod(), responseObserver);
+      return asyncUnimplementedStreamingCall(getCameraAutomationMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getCameraAdjustmentMethod(),
-            asyncBidiStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 CameraController.CameraAdjustmentRequest,
                 CameraController.CameraAdjustmentResponse>(
@@ -198,7 +198,7 @@ public final class Service2Grpc {
                   this, METHODID_MOTION_DETECTED)))
           .addMethod(
             getCameraAutomationMethod(),
-            asyncUnaryCall(
+            asyncBidiStreamingCall(
               new MethodHandlers<
                 CameraController.CameraAutomationRequest,
                 CameraController.CameraAutomationResponse>(
@@ -230,10 +230,10 @@ public final class Service2Grpc {
      *Takes in direction controls and moves the currently selected camera
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentRequest> cameraAdjustment(
+    public void cameraAdjustment(CameraController.CameraAdjustmentRequest request,
         io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse> responseObserver) {
-      return asyncBidiStreamingCall(
-          getChannel().newCall(getCameraAdjustmentMethod(), getCallOptions()), responseObserver);
+      asyncUnaryCall(
+          getChannel().newCall(getCameraAdjustmentMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -252,10 +252,10 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
      * </pre>
      */
-    public void cameraAutomation(CameraController.CameraAutomationRequest request,
+    public io.grpc.stub.StreamObserver<CameraController.CameraAutomationRequest> cameraAutomation(
         io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), request, responseObserver);
+      return asyncBidiStreamingCall(
+          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -279,22 +279,22 @@ public final class Service2Grpc {
 
     /**
      * <pre>
+     *Takes in direction controls and moves the currently selected camera
+     * </pre>
+     */
+    public CameraController.CameraAdjustmentResponse cameraAdjustment(CameraController.CameraAdjustmentRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCameraAdjustmentMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
      *When motion is detected on the camera not in use, the user is notified
      * </pre>
      */
     public CameraController.MotionDetectedResponse motionDetected(CameraController.Empty request) {
       return blockingUnaryCall(
           getChannel(), getMotionDetectedMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
-     * </pre>
-     */
-    public CameraController.CameraAutomationResponse cameraAutomation(CameraController.CameraAutomationRequest request) {
-      return blockingUnaryCall(
-          getChannel(), getCameraAutomationMethod(), getCallOptions(), request);
     }
   }
 
@@ -318,6 +318,17 @@ public final class Service2Grpc {
 
     /**
      * <pre>
+     *Takes in direction controls and moves the currently selected camera
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<CameraController.CameraAdjustmentResponse> cameraAdjustment(
+        CameraController.CameraAdjustmentRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCameraAdjustmentMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
      *When motion is detected on the camera not in use, the user is notified
      * </pre>
      */
@@ -326,22 +337,11 @@ public final class Service2Grpc {
       return futureUnaryCall(
           getChannel().newCall(getMotionDetectedMethod(), getCallOptions()), request);
     }
-
-    /**
-     * <pre>
-     *When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<CameraController.CameraAutomationResponse> cameraAutomation(
-        CameraController.CameraAutomationRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getCameraAutomationMethod(), getCallOptions()), request);
-    }
   }
 
-  private static final int METHODID_MOTION_DETECTED = 0;
-  private static final int METHODID_CAMERA_AUTOMATION = 1;
-  private static final int METHODID_CAMERA_ADJUSTMENT = 2;
+  private static final int METHODID_CAMERA_ADJUSTMENT = 0;
+  private static final int METHODID_MOTION_DETECTED = 1;
+  private static final int METHODID_CAMERA_AUTOMATION = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -360,13 +360,13 @@ public final class Service2Grpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_CAMERA_ADJUSTMENT:
+          serviceImpl.cameraAdjustment((CameraController.CameraAdjustmentRequest) request,
+              (io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse>) responseObserver);
+          break;
         case METHODID_MOTION_DETECTED:
           serviceImpl.motionDetected((CameraController.Empty) request,
               (io.grpc.stub.StreamObserver<CameraController.MotionDetectedResponse>) responseObserver);
-          break;
-        case METHODID_CAMERA_AUTOMATION:
-          serviceImpl.cameraAutomation((CameraController.CameraAutomationRequest) request,
-              (io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -378,9 +378,9 @@ public final class Service2Grpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_CAMERA_ADJUSTMENT:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.cameraAdjustment(
-              (io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse>) responseObserver);
+        case METHODID_CAMERA_AUTOMATION:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.cameraAutomation(
+              (io.grpc.stub.StreamObserver<CameraController.CameraAutomationResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
