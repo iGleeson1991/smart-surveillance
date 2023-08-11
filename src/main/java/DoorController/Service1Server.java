@@ -84,11 +84,11 @@ public class Service1Server extends Service1ImplBase {
 
     public void scanSecurityBadge(ScanSecurityBadgeRequest badgeRequest, StreamObserver<ScanSecurityBadgeResponse> badgeResponseObserver) {
         //badgeRequest should contain the doorID and badgeID
-        System.out.println("\nSecurity Badge Scanned: Receiving Info: " + badgeRequest);
+        System.out.println("\nSecurity Badge Scanned: Receiving Info: " + badgeRequest.getDoorID() + " " + badgeRequest.getBadgeID());
         //Variable to store our response message
         String responseMessage = "";
         //Assumes that there are only two doors
-        if (badgeRequest.getDoorID() == "door1") {
+        if (badgeRequest.getDoorID().equalsIgnoreCase("door1")) {
             if (door1Badges.contains(badgeRequest.getBadgeID())) {
                 responseMessage = "Access Granted";
             } else {
@@ -109,7 +109,7 @@ public class Service1Server extends Service1ImplBase {
         badgeResponseObserver.onNext(badgeResponse);
         badgeResponseObserver.onCompleted();
 
-        System.out.println("Security Badge Scanned: Completed\n");
+        System.out.println("Security Badge Scanned: Completed");
     }
 
     public void securityCodeEntry(SecurityCodeEntryRequest codeEntryRequest, StreamObserver<SecurityCodeEntryResponse> codeEntryResponseObserver) {
@@ -117,7 +117,7 @@ public class Service1Server extends Service1ImplBase {
         System.out.println("\nSecurity Code Entered: Receiving Info: " + codeEntryRequest);
         String responseMessage = "";
         //Assumes that there are only two doors
-        if (codeEntryRequest.getDoorID() == "door1") {
+        if (codeEntryRequest.getDoorID().equalsIgnoreCase("door1")) {
             if (door1Codes.contains(codeEntryRequest.getSecurityCode())) {
                 responseMessage = "Access Granted";
             } else {
@@ -137,7 +137,7 @@ public class Service1Server extends Service1ImplBase {
         codeEntryResponseObserver.onNext(codeEntryResponse);
         codeEntryResponseObserver.onCompleted();
 
-        System.out.println("Security Code Entered: Completed\n");
+        System.out.println("Security Code Entered: Completed");
     }
 
     public void intercomCall(Empty callRequest, StreamObserver<IntercomCallResponse> callResponseObserver) {
@@ -156,10 +156,10 @@ public class Service1Server extends Service1ImplBase {
 
     public void intercomAnswer(IntercomAnswerRequest answerRequest, StreamObserver<IntercomAnswerResponse> answerResponseObserver) {
         System.out.println("\nIntercom Answer: Receiving Info: " + answerRequest);
-        String responseMessage = "Call Timed Out";
-        if (answerRequest.getAnswerRequest() == "answer") {
+        String responseMessage = "";
+        if (answerRequest.getAnswerRequest().equalsIgnoreCase("answer")) {
             responseMessage = "Call Answered";
-        } else if (answerRequest.getAnswerRequest() == "reject") {
+        } else if (answerRequest.getAnswerRequest().equalsIgnoreCase("reject")) {
             responseMessage = "Call Rejected";
         }
 
@@ -170,7 +170,7 @@ public class Service1Server extends Service1ImplBase {
         answerResponseObserver.onNext(answerResponse);
         answerResponseObserver.onCompleted();
 
-        System.out.println("Intercom Answer: Completed\n");
+        System.out.println("Intercom Answer: Completed");
     }
 
     public StreamObserver<OneWayCommunicationRequest> oneWayCommunication(StreamObserver<OneWayCommunicationResponse> oneWayResponseObserver) {
@@ -200,7 +200,7 @@ public class Service1Server extends Service1ImplBase {
                 OneWayCommunicationResponse oneWayResponse = OneWayCommunicationResponse.newBuilder().setChannelStatus(responseMessage).build();
                 oneWayResponseObserver.onNext(oneWayResponse);
                 oneWayResponseObserver.onCompleted();
-                System.out.println("One Way Communication: Completed\n");
+                System.out.println("One Way Communication: Completed");
             }
         };
     }

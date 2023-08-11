@@ -1,9 +1,9 @@
 package GUI;
 
 import AlarmController.*;
-import AlarmController.Empty;
 import CameraController.*;
 import CameraController.CameraAdjustmentRequest.CameraDirection;
+import DoorController.*;
 import io.grpc.Context;
 import io.grpc.Context.CancellableContext;
 import io.grpc.ManagedChannel;
@@ -85,8 +85,12 @@ public class SecurityGUI extends JFrame {
     private JButton alarm1Button, alarm2Button, alarm3Button, securitySensorButton, fireSensorButton, alarm4Button, alarmCheckButton, alarmResetButton;
     private JTextField alarmActivatedAlarmTest, emergencyLightsAlarmTest, emergencySirensAlarmTest, emergencyLightsFSTest, emergencySirensFSTest, fireSuppressionFSTest, emergencyServicesCallTestStatus;
     private JTextArea alarmCheckInfo;
+    private JButton resetDoorStatus;
 
     //GUI Methods
+    // TODO: 11/08/2023 Go through "getMessage()" calls and replace with error messages where necessary
+    // TODO: 11/08/2023 Update the camera image to include a grid reference (definitely)
+    // TODO: 11/08/2023 Look at swapping the images with the camera buttons (maybe)
 
     public SecurityGUI() {
         //Discovers all registered services
@@ -105,70 +109,295 @@ public class SecurityGUI extends JFrame {
         door1RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                doorID = "door1";
+                securityCodeInput.setText("");
+                doorAccessStatus.setText("Status: ");
+                sBadge1Button.setEnabled(true);
+                sBadge2Button.setEnabled(true);
+                sBadge3Button.setEnabled(true);
+                sBadge4Button.setEnabled(true);
+                doorCodeSubmitButton.setEnabled(true);
             }
         });
 
         door2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                doorID = "door2";
+                securityCodeInput.setText("");
+                doorAccessStatus.setText("Status: ");
+                sBadge1Button.setEnabled(true);
+                sBadge2Button.setEnabled(true);
+                sBadge3Button.setEnabled(true);
+                sBadge4Button.setEnabled(true);
+                doorCodeSubmitButton.setEnabled(true);
             }
         });
 
         sBadge1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                doorAccessStatus.setText("Status: ");
+
+                //Disabling buttons
+                sBadge1Button.setEnabled(false);
+                sBadge2Button.setEnabled(false);
+                sBadge3Button.setEnabled(false);
+                sBadge4Button.setEnabled(false);
+                doorCodeSubmitButton.setEnabled(false);
+
+                System.out.println("\nDoor Access: Swiping Badge 1");
+                ManagedChannel doorControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
+                ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge1").build();
+                try {
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
+                } catch (StatusRuntimeException sre) {
+                    doorAccessStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                doorControlsChannel.shutdown();
+                System.out.println("Door Access: Request Complete");
             }
         });
 
         sBadge2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                doorAccessStatus.setText("Status: ");
+
+                //Disabling buttons
+                sBadge1Button.setEnabled(false);
+                sBadge2Button.setEnabled(false);
+                sBadge3Button.setEnabled(false);
+                sBadge4Button.setEnabled(false);
+                doorCodeSubmitButton.setEnabled(false);
+
+                System.out.println("\nDoor Access: Swiping Badge 2");
+                ManagedChannel doorControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
+                ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge2").build();
+                try {
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
+                } catch (StatusRuntimeException sre) {
+                    doorAccessStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                doorControlsChannel.shutdown();
+                System.out.println("Door Access: Request Complete");
             }
         });
 
         sBadge3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                doorAccessStatus.setText("Status: ");
+
+                //Disabling buttons
+                sBadge1Button.setEnabled(false);
+                sBadge2Button.setEnabled(false);
+                sBadge3Button.setEnabled(false);
+                sBadge4Button.setEnabled(false);
+                doorCodeSubmitButton.setEnabled(false);
+
+                System.out.println("\nDoor Access: Swiping Badge 3");
+                ManagedChannel doorControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
+                ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge3").build();
+                try {
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
+                } catch (StatusRuntimeException sre) {
+                    doorAccessStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                doorControlsChannel.shutdown();
+                System.out.println("Door Access: Request Complete");
             }
         });
 
         sBadge4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                doorAccessStatus.setText("Status: ");
+
+                //Disabling buttons
+                sBadge1Button.setEnabled(false);
+                sBadge2Button.setEnabled(false);
+                sBadge3Button.setEnabled(false);
+                sBadge4Button.setEnabled(false);
+                doorCodeSubmitButton.setEnabled(false);
+
+                System.out.println("\nDoor Access: Swiping Badge 4");
+                ManagedChannel doorControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
+                ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge4").build();
+                try {
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
+                } catch (StatusRuntimeException sre) {
+                    doorAccessStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                doorControlsChannel.shutdown();
+                System.out.println("Door Access: Request Complete");
             }
         });
 
+        //Submit security code button
         doorCodeSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                doorAccessStatus.setText("Status: ");
+
+                //Disabling buttons
+                sBadge1Button.setEnabled(false);
+                sBadge2Button.setEnabled(false);
+                sBadge3Button.setEnabled(false);
+                sBadge4Button.setEnabled(false);
+                doorCodeSubmitButton.setEnabled(false);
+
+                System.out.println("\nDoor Access: Submitting Security Code");
+                ManagedChannel doorControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
+                SecurityCodeEntryRequest securityCodeEntryRequest = SecurityCodeEntryRequest.newBuilder().setDoorID(doorID).setSecurityCode(securityCodeInput.getText()).build();
+
+                try {
+                    SecurityCodeEntryResponse securityCodeEntryResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).securityCodeEntry(securityCodeEntryRequest);
+                    doorAccessStatus.setText(doorAccessStatus.getText() + securityCodeEntryResponse.getValid());
+
+                } catch (StatusRuntimeException sre) {
+                    doorAccessStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                securityCodeInput.setText("");
+                doorControlsChannel.shutdown();
+                System.out.println("Door Access: Request Complete");
             }
         });
 
+        //Reset door status button
+        resetDoorStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doorAccessStatus.setText("Status: ");
+                securityCodeInput.setText("");
+                sBadge1Button.setEnabled(true);
+                sBadge2Button.setEnabled(true);
+                sBadge3Button.setEnabled(true);
+                sBadge4Button.setEnabled(true);
+                doorCodeSubmitButton.setEnabled(true);
+            }
+        });
+
+        //Call security button
         callSecurityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                callSecurityStatus.setText("Status: ");
+
+                //Disabling call button while call in progress
+                callSecurityButton.setEnabled(false);
+
+                //Enabling response buttons
+                answerButton.setEnabled(true);
+                rejectButton.setEnabled(true);
+                
+                System.out.println("\nIntercom Controls: Calling Security");
+                ManagedChannel intercomControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub intercomControlsBlockingStub = Service1Grpc.newBlockingStub(intercomControlsChannel);
+                DoorController.Empty intercomCallRequest = DoorController.Empty.newBuilder().build();
+                
+                try {
+                    IntercomCallResponse intercomCallResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomCall(intercomCallRequest);
+                    callSecurityStatus.setText(callSecurityStatus.getText() + intercomCallResponse.getCallResponse());
+
+                } catch (StatusRuntimeException sre) {
+                    callSecurityStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                intercomControlsChannel.shutdown();
+                System.out.println("Intercom Controls: Calling Called");
             }
         });
 
+        //Answer incoming call button
         answerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                callSecurityStatus.setText("Status: ");
+
+                //Enabling call button
+                callSecurityButton.setEnabled(true);
+
+                //Disabling response buttons while no call in progress
+                answerButton.setEnabled(false);
+                rejectButton.setEnabled(false);
+
+                System.out.println("\nIntercom Controls: Answering Call");
+                ManagedChannel intercomControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub intercomControlsBlockingStub = Service1Grpc.newBlockingStub(intercomControlsChannel);
+                IntercomAnswerRequest intercomAnswerRequest = IntercomAnswerRequest.newBuilder().setAnswerRequest("answer").build();
+
+                try {
+                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
+                    callSecurityStatus.setText(callSecurityStatus.getText() + intercomAnswerResponse.getAnswerResponse());
+
+                } catch (StatusRuntimeException sre) {
+                    callSecurityStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                intercomControlsChannel.shutdown();
+                System.out.println("Intercom Controls: Call Answered");
             }
         });
 
+        //Reject incoming call button
         rejectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //Resetting status field if necessary
+                callSecurityStatus.setText("Status: ");
+
+                //Enabling call button
+                callSecurityButton.setEnabled(true);
+
+                //Disabling response buttons while no call in progress
+                answerButton.setEnabled(false);
+                rejectButton.setEnabled(false);
+
+                System.out.println("\nIntercom Controls: Rejecting Call");
+                ManagedChannel intercomControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+                Service1Grpc.Service1BlockingStub intercomControlsBlockingStub = Service1Grpc.newBlockingStub(intercomControlsChannel);
+                IntercomAnswerRequest intercomAnswerRequest = IntercomAnswerRequest.newBuilder().setAnswerRequest("reject").build();
+
+                try {
+                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
+                    callSecurityStatus.setText(callSecurityStatus.getText() + intercomAnswerResponse.getAnswerResponse());
+
+                } catch (StatusRuntimeException sre) {
+                    callSecurityStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre);
+                }
+                intercomControlsChannel.shutdown();
+                System.out.println("Intercom Controls: Call Rejected");
             }
         });
 
@@ -176,6 +405,7 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
+                // TODO: 11/08/2023 Server streaming RPC 
             }
         });
 
@@ -462,6 +692,7 @@ public class SecurityGUI extends JFrame {
                     cancelRequest.cancel(sre.getCause());
                 }
                 motionDetectorChannel.shutdown();
+                inputDetectedMotionLocation.setText("");
                 System.out.println("Motion Detected: Complete");
             }
         });
@@ -531,11 +762,18 @@ public class SecurityGUI extends JFrame {
                         //Printing end of request message to console
                         System.out.println("Motion Detected: Moving Automated Camera Complete");
 
+                        //Resetting motion detector
+                        motionDetectedStatus.setText("Motion Detector: ");
+                        motionLocationStatus.setText("Motion Location: ");
+
+                        //Disabling test button until motion is detected again
+                        cameraAutomationButton.setEnabled(false);
+
                         //Storing the automated camera's final position
                         if (cameraID.equalsIgnoreCase("camera1")) {
-                            camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
+                            camera2Position = automatedCameraPosition.getText().substring(automatedCameraPosition.getText().length() - 2);
                         } else {
-                            camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
+                            camera1Position = automatedCameraPosition.getText().substring(automatedCameraPosition.getText().length() - 2);
                         }
 
                         //Shutting down channel
@@ -811,7 +1049,7 @@ public class SecurityGUI extends JFrame {
                 emergencyServicesCallTestStatus.setText("Emergency Services: ");
                 ManagedChannel callEMSChannel = ManagedChannelBuilder.forAddress(alarmControllerService3Info.getHostAddresses()[0], alarmControllerService3Info.getPort()).usePlaintext().build();
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(callEMSChannel);
-                Empty callEMSRequest = Empty.newBuilder().build();
+                AlarmController.Empty callEMSRequest = AlarmController.Empty.newBuilder().build();
                 try {
                     EmergencyServicesCallResponse callEMSResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).emergencyServicesCall(callEMSRequest);
                     emergencyServicesCallTestStatus.setText(emergencyServicesCallTestStatus.getText() + callEMSResponse.getCallConfirmation());
@@ -839,7 +1077,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(checkAlarmsChannel);
 
                 //Build the request, in this case it is empty
-                Empty alarmCheckRequest = Empty.newBuilder().build();
+                AlarmController.Empty alarmCheckRequest = AlarmController.Empty.newBuilder().build();
 
                 //Sets "withCancellation" equal to the context of the current scope that is independently cancellable
                 cancelRequest = Context.current().withCancellation();
