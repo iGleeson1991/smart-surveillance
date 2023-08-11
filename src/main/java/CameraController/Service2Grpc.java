@@ -59,28 +59,28 @@ public final class Service2Grpc {
      return getCameraAdjustmentMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<CameraController.Empty,
+  private static volatile io.grpc.MethodDescriptor<CameraController.MotionDetectedRequest,
       CameraController.MotionDetectedResponse> getMotionDetectedMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "motionDetected",
-      requestType = CameraController.Empty.class,
+      requestType = CameraController.MotionDetectedRequest.class,
       responseType = CameraController.MotionDetectedResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<CameraController.Empty,
+  public static io.grpc.MethodDescriptor<CameraController.MotionDetectedRequest,
       CameraController.MotionDetectedResponse> getMotionDetectedMethod() {
-    io.grpc.MethodDescriptor<CameraController.Empty, CameraController.MotionDetectedResponse> getMotionDetectedMethod;
+    io.grpc.MethodDescriptor<CameraController.MotionDetectedRequest, CameraController.MotionDetectedResponse> getMotionDetectedMethod;
     if ((getMotionDetectedMethod = Service2Grpc.getMotionDetectedMethod) == null) {
       synchronized (Service2Grpc.class) {
         if ((getMotionDetectedMethod = Service2Grpc.getMotionDetectedMethod) == null) {
           Service2Grpc.getMotionDetectedMethod = getMotionDetectedMethod = 
-              io.grpc.MethodDescriptor.<CameraController.Empty, CameraController.MotionDetectedResponse>newBuilder()
+              io.grpc.MethodDescriptor.<CameraController.MotionDetectedRequest, CameraController.MotionDetectedResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "Service2", "motionDetected"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  CameraController.Empty.getDefaultInstance()))
+                  CameraController.MotionDetectedRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   CameraController.MotionDetectedResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new Service2MethodDescriptorSupplier("motionDetected"))
@@ -165,7 +165,7 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the user is notified
      * </pre>
      */
-    public void motionDetected(CameraController.Empty request,
+    public void motionDetected(CameraController.MotionDetectedRequest request,
         io.grpc.stub.StreamObserver<CameraController.MotionDetectedResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getMotionDetectedMethod(), responseObserver);
     }
@@ -193,7 +193,7 @@ public final class Service2Grpc {
             getMotionDetectedMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                CameraController.Empty,
+                CameraController.MotionDetectedRequest,
                 CameraController.MotionDetectedResponse>(
                   this, METHODID_MOTION_DETECTED)))
           .addMethod(
@@ -241,7 +241,7 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the user is notified
      * </pre>
      */
-    public void motionDetected(CameraController.Empty request,
+    public void motionDetected(CameraController.MotionDetectedRequest request,
         io.grpc.stub.StreamObserver<CameraController.MotionDetectedResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getMotionDetectedMethod(), getCallOptions()), request, responseObserver);
@@ -292,7 +292,7 @@ public final class Service2Grpc {
      *When motion is detected on the camera not in use, the user is notified
      * </pre>
      */
-    public CameraController.MotionDetectedResponse motionDetected(CameraController.Empty request) {
+    public CameraController.MotionDetectedResponse motionDetected(CameraController.MotionDetectedRequest request) {
       return blockingUnaryCall(
           getChannel(), getMotionDetectedMethod(), getCallOptions(), request);
     }
@@ -333,7 +333,7 @@ public final class Service2Grpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<CameraController.MotionDetectedResponse> motionDetected(
-        CameraController.Empty request) {
+        CameraController.MotionDetectedRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getMotionDetectedMethod(), getCallOptions()), request);
     }
@@ -365,7 +365,7 @@ public final class Service2Grpc {
               (io.grpc.stub.StreamObserver<CameraController.CameraAdjustmentResponse>) responseObserver);
           break;
         case METHODID_MOTION_DETECTED:
-          serviceImpl.motionDetected((CameraController.Empty) request,
+          serviceImpl.motionDetected((CameraController.MotionDetectedRequest) request,
               (io.grpc.stub.StreamObserver<CameraController.MotionDetectedResponse>) responseObserver);
           break;
         default:

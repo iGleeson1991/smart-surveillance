@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private MotionDetectedResponse() {
     detectionAlert_ = "";
+    motionLocation_ = "";
   }
 
   @java.lang.Override
@@ -47,6 +48,12 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             detectionAlert_ = s;
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            motionLocation_ = s;
             break;
           }
           default: {
@@ -115,6 +122,40 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int MOTIONLOCATION_FIELD_NUMBER = 2;
+  private volatile java.lang.Object motionLocation_;
+  /**
+   * <code>string motionLocation = 2;</code>
+   */
+  public java.lang.String getMotionLocation() {
+    java.lang.Object ref = motionLocation_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      motionLocation_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string motionLocation = 2;</code>
+   */
+  public com.google.protobuf.ByteString
+      getMotionLocationBytes() {
+    java.lang.Object ref = motionLocation_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      motionLocation_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -132,6 +173,9 @@ private static final long serialVersionUID = 0L;
     if (!getDetectionAlertBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, detectionAlert_);
     }
+    if (!getMotionLocationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, motionLocation_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -143,6 +187,9 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getDetectionAlertBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, detectionAlert_);
+    }
+    if (!getMotionLocationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, motionLocation_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -162,6 +209,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getDetectionAlert()
         .equals(other.getDetectionAlert());
+    result = result && getMotionLocation()
+        .equals(other.getMotionLocation());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -175,6 +224,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + DETECTIONALERT_FIELD_NUMBER;
     hash = (53 * hash) + getDetectionAlert().hashCode();
+    hash = (37 * hash) + MOTIONLOCATION_FIELD_NUMBER;
+    hash = (53 * hash) + getMotionLocation().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -310,6 +361,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       detectionAlert_ = "";
 
+      motionLocation_ = "";
+
       return this;
     }
 
@@ -337,6 +390,7 @@ private static final long serialVersionUID = 0L;
     public CameraController.MotionDetectedResponse buildPartial() {
       CameraController.MotionDetectedResponse result = new CameraController.MotionDetectedResponse(this);
       result.detectionAlert_ = detectionAlert_;
+      result.motionLocation_ = motionLocation_;
       onBuilt();
       return result;
     }
@@ -387,6 +441,10 @@ private static final long serialVersionUID = 0L;
       if (other == CameraController.MotionDetectedResponse.getDefaultInstance()) return this;
       if (!other.getDetectionAlert().isEmpty()) {
         detectionAlert_ = other.detectionAlert_;
+        onChanged();
+      }
+      if (!other.getMotionLocation().isEmpty()) {
+        motionLocation_ = other.motionLocation_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -483,6 +541,75 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       detectionAlert_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object motionLocation_ = "";
+    /**
+     * <code>string motionLocation = 2;</code>
+     */
+    public java.lang.String getMotionLocation() {
+      java.lang.Object ref = motionLocation_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        motionLocation_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string motionLocation = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMotionLocationBytes() {
+      java.lang.Object ref = motionLocation_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        motionLocation_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string motionLocation = 2;</code>
+     */
+    public Builder setMotionLocation(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      motionLocation_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string motionLocation = 2;</code>
+     */
+    public Builder clearMotionLocation() {
+      
+      motionLocation_ = getDefaultInstance().getMotionLocation();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string motionLocation = 2;</code>
+     */
+    public Builder setMotionLocationBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      motionLocation_ = value;
       onChanged();
       return this;
     }

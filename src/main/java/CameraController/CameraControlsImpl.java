@@ -25,10 +25,10 @@ public final class CameraControlsImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CameraAdjustmentResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Empty_descriptor;
+    internal_static_MotionDetectedRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Empty_fieldAccessorTable;
+      internal_static_MotionDetectedRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_MotionDetectedResponse_descriptor;
   static final 
@@ -59,15 +59,17 @@ public final class CameraControlsImpl {
       "AdjustmentRequest.CameraDirection\"8\n\017Cam" +
       "eraDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002" +
       "\022\t\n\005RIGHT\020\003\"2\n\030CameraAdjustmentResponse\022" +
-      "\026\n\016cameraPosition\030\001 \001(\t\"\007\n\005Empty\"0\n\026Moti" +
+      "\026\n\016cameraPosition\030\001 \001(\t\"/\n\025MotionDetecte" +
+      "dRequest\022\026\n\016motionLocation\030\001 \001(\t\"H\n\026Moti" +
       "onDetectedResponse\022\026\n\016detectionAlert\030\001 \001" +
-      "(\t\"h\n\027CameraAutomationRequest\022\031\n\021automat" +
-      "edCameraID\030\001 \001(\t\022\026\n\016cameraPosition\030\002 \001(\t" +
-      "\022\032\n\022locationOfMovement\030\003 \001(\t\"4\n\030CameraAu" +
-      "tomationResponse\022\030\n\020cameraAutomation\030\001 \001" +
-      "(\t2\331\001\n\010Service2\022I\n\020cameraAdjustment\022\030.Ca" +
-      "meraAdjustmentRequest\032\031.CameraAdjustment" +
-      "Response\"\000\0223\n\016motionDetected\022\006.Empty\032\027.M" +
+      "(\t\022\026\n\016motionLocation\030\002 \001(\t\"h\n\027CameraAuto" +
+      "mationRequest\022\031\n\021automatedCameraID\030\001 \001(\t" +
+      "\022\026\n\016cameraPosition\030\002 \001(\t\022\032\n\022locationOfMo" +
+      "vement\030\003 \001(\t\"4\n\030CameraAutomationResponse" +
+      "\022\030\n\020cameraAutomation\030\001 \001(\t2\351\001\n\010Service2\022" +
+      "I\n\020cameraAdjustment\022\030.CameraAdjustmentRe" +
+      "quest\032\031.CameraAdjustmentResponse\"\000\022C\n\016mo" +
+      "tionDetected\022\026.MotionDetectedRequest\032\027.M" +
       "otionDetectedResponse\"\000\022M\n\020cameraAutomat" +
       "ion\022\030.CameraAutomationRequest\032\031.CameraAu" +
       "tomationResponse\"\000(\0010\001B(\n\020CameraControll" +
@@ -97,18 +99,18 @@ public final class CameraControlsImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CameraAdjustmentResponse_descriptor,
         new java.lang.String[] { "CameraPosition", });
-    internal_static_Empty_descriptor =
+    internal_static_MotionDetectedRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_Empty_fieldAccessorTable = new
+    internal_static_MotionDetectedRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Empty_descriptor,
-        new java.lang.String[] { });
+        internal_static_MotionDetectedRequest_descriptor,
+        new java.lang.String[] { "MotionLocation", });
     internal_static_MotionDetectedResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_MotionDetectedResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MotionDetectedResponse_descriptor,
-        new java.lang.String[] { "DetectionAlert", });
+        new java.lang.String[] { "DetectionAlert", "MotionLocation", });
     internal_static_CameraAutomationRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_CameraAutomationRequest_fieldAccessorTable = new

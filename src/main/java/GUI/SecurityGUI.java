@@ -1,10 +1,9 @@
 package GUI;
 
 import AlarmController.*;
-import CameraController.CameraAdjustmentRequest;
+import AlarmController.Empty;
+import CameraController.*;
 import CameraController.CameraAdjustmentRequest.CameraDirection;
-import CameraController.CameraAdjustmentResponse;
-import CameraController.Service2Grpc;
 import io.grpc.Context;
 import io.grpc.Context.CancellableContext;
 import io.grpc.ManagedChannel;
@@ -29,6 +28,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -62,6 +62,8 @@ public class SecurityGUI extends JFrame {
     private JRadioButton door1RadioButton, door2RadioButton;
     private JButton sBadge1Button, sBadge2Button, sBadge3Button, sBadge4Button, doorCodeSubmitButton;
     private JTextField securityCodeInput, doorAccessStatus;
+    String doorID = "door1";
+
 
     //Intercom Controls Tab
     private JPanel intercomControlsJPanel, userCallJPanel, securityResponseJPanel, intercomJPanel;
@@ -73,8 +75,10 @@ public class SecurityGUI extends JFrame {
     private JRadioButton camera1RadioButton, camera2RadioButton;
     private JButton upButton, leftButton, rightButton, downButton, motionLocationSubmitButton, cameraAutomationButton;
     private JTextField cameraPositionDisplay, inputDetectedMotionLocation, motionDetectedStatus, motionLocationStatus, automatedCameraPosition;
-    String camera1Position = cameraPositionDisplay.getText();
-    String camera2Position = cameraPositionDisplay.getText();
+    String cameraID = "camera1";
+    String automatedCameraID = "camera2";
+    String camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2); //B2
+    String camera2Position = automatedCameraPosition.getText().substring(automatedCameraPosition.getText().length() - 2); //B2
 
     //Alarm Controls Tab
     private JPanel manualAlarmJPanel, fireSuppressionJPanel, emergencyServicesCallJPanel, alarmButtonsJPanel, alarmResponseJPanel, sensorButtonsJPanel, sensorResponseJPanel, escButtonJPanel, escResponseJPanel, alarmCheckJPanel, alarmCheckButtonJPanel, alarmResetJPanel;
@@ -94,7 +98,7 @@ public class SecurityGUI extends JFrame {
         setContentPane(securityControllerGUI);
         setTitle("Security GUI");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(1280, 800);
+        setSize(1280, 900);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -178,14 +182,20 @@ public class SecurityGUI extends JFrame {
         camera1RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                cameraID = "camera1";
+                automatedCameraID = "camera2";
+                cameraPositionDisplay.setText("Camera Position: " + camera1Position);
+                automatedCameraPosition.setText("Automated Camera: Camera 2, " + camera2Position);
             }
         });
 
         camera2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                cameraID = "camera2";
+                automatedCameraID = "camera1";
+                cameraPositionDisplay.setText("Camera Position: " + camera2Position);
+                automatedCameraPosition.setText("Automated Camera: Camera 1, " + camera1Position);
             }
         });
 
@@ -193,11 +203,15 @@ public class SecurityGUI extends JFrame {
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Resets "cameraPositionDisplay" if error message is displayed
-                if (camera1RadioButton.isSelected()) {
-                    cameraPositionDisplay.setText(camera1Position);
+                //Strings to store the camera position
+                String cameraPosition;
+                //Resets "cameraPositionDisplay" if error message is displayed and stores camera position
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    cameraPositionDisplay.setText("Camera Position: " + camera1Position);
+                    cameraPosition = camera1Position;
                 } else {
-                    cameraPositionDisplay.setText(camera2Position);
+                    cameraPositionDisplay.setText("Camera Position: " + camera2Position);
+                    cameraPosition = camera2Position;
                 }
 
                 //Waits for a moment to simulate camera movement
@@ -211,19 +225,6 @@ public class SecurityGUI extends JFrame {
 
                 //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
                 CameraDirection cameraDirection = CameraDirection.forNumber(0);
-                //Strings to store the camera ID and position
-                String cameraID = "";
-                String cameraPosition = "";
-
-                //Gets the currently selected camera, and it's position and stores them in Strings
-                if (door1RadioButton.isSelected()) {
-                    cameraID = "camera1";
-                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
-                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
-                } else {
-                    cameraID = "camera2";
-                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
-                }
 
                 //Creating channel with my service's IP address and port
                 ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
@@ -245,10 +246,10 @@ public class SecurityGUI extends JFrame {
                 }
 
                 //Storing the selected camera's new position
-                if (camera1RadioButton.isSelected()) {
-                    camera1Position = cameraPositionDisplay.getText();
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 } else {
-                    camera2Position = cameraPositionDisplay.getText();
+                    camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 }
 
                 //Shutting down channel
@@ -262,11 +263,15 @@ public class SecurityGUI extends JFrame {
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Resets "cameraPositionDisplay" if error message is displayed
-                if (camera1RadioButton.isSelected()) {
-                    cameraPositionDisplay.setText(camera1Position);
+                //Strings to store the camera position
+                String cameraPosition;
+                //Resets "cameraPositionDisplay" if error message is displayed and stores camera position
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    cameraPositionDisplay.setText("Camera Position: " + camera1Position);
+                    cameraPosition = camera1Position;
                 } else {
-                    cameraPositionDisplay.setText(camera2Position);
+                    cameraPositionDisplay.setText("Camera Position: " + camera2Position);
+                    cameraPosition = camera2Position;
                 }
 
                 //Waits for a moment to simulate camera movement
@@ -280,19 +285,6 @@ public class SecurityGUI extends JFrame {
 
                 //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
                 CameraDirection cameraDirection = CameraDirection.forNumber(1);
-                //Strings to store the camera ID and position
-                String cameraID = "";
-                String cameraPosition = "";
-
-                //Gets the currently selected camera, and it's position and stores them in Strings
-                if (door1RadioButton.isSelected()) {
-                    cameraID = "camera1";
-                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
-                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
-                } else {
-                    cameraID = "camera2";
-                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
-                }
 
                 //Creating channel with my service's IP address and port
                 ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
@@ -314,10 +306,10 @@ public class SecurityGUI extends JFrame {
                 }
 
                 //Storing the selected camera's new position
-                if (camera1RadioButton.isSelected()) {
-                    camera1Position = cameraPositionDisplay.getText();
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 } else {
-                    camera2Position = cameraPositionDisplay.getText();
+                    camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 }
 
                 //Shutting down channel
@@ -331,11 +323,15 @@ public class SecurityGUI extends JFrame {
         leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Resets "cameraPositionDisplay" if error message is displayed
-                if (camera1RadioButton.isSelected()) {
-                    cameraPositionDisplay.setText(camera1Position);
+                //Strings to store the camera position
+                String cameraPosition;
+                //Resets "cameraPositionDisplay" if error message is displayed and stores camera position
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    cameraPositionDisplay.setText("Camera Position: " + camera1Position);
+                    cameraPosition = camera1Position;
                 } else {
-                    cameraPositionDisplay.setText(camera2Position);
+                    cameraPositionDisplay.setText("Camera Position: " + camera2Position);
+                    cameraPosition = camera2Position;
                 }
 
                 //Waits for a moment to simulate camera movement
@@ -349,19 +345,6 @@ public class SecurityGUI extends JFrame {
 
                 //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
                 CameraDirection cameraDirection = CameraDirection.forNumber(2);
-                //Strings to store the camera ID and position
-                String cameraID = "";
-                String cameraPosition = "";
-
-                //Gets the currently selected camera, and it's position and stores them in Strings
-                if (door1RadioButton.isSelected()) {
-                    cameraID = "camera1";
-                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
-                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
-                } else {
-                    cameraID = "camera2";
-                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
-                }
 
                 //Creating channel with my service's IP address and port
                 ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
@@ -383,10 +366,10 @@ public class SecurityGUI extends JFrame {
                 }
 
                 //Storing the selected camera's new position
-                if (camera1RadioButton.isSelected()) {
-                    camera1Position = cameraPositionDisplay.getText();
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 } else {
-                    camera2Position = cameraPositionDisplay.getText();
+                    camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 }
 
                 //Shutting down channel
@@ -400,11 +383,15 @@ public class SecurityGUI extends JFrame {
         rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Resets "cameraPositionDisplay" if error message is displayed
-                if (camera1RadioButton.isSelected()) {
-                    cameraPositionDisplay.setText(camera1Position);
+                //Strings to store the camera position
+                String cameraPosition;
+                //Resets "cameraPositionDisplay" if error message is displayed and stores camera position
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    cameraPositionDisplay.setText("Camera Position: " + camera1Position);
+                    cameraPosition = camera1Position;
                 } else {
-                    cameraPositionDisplay.setText(camera2Position);
+                    cameraPositionDisplay.setText("Camera Position: " + camera2Position);
+                    cameraPosition = camera2Position;
                 }
 
                 //Waits for a moment to simulate camera movement
@@ -418,19 +405,6 @@ public class SecurityGUI extends JFrame {
 
                 //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
                 CameraDirection cameraDirection = CameraDirection.forNumber(3);
-                //Strings to store the camera ID and position
-                String cameraID = "";
-                String cameraPosition = "";
-
-                //Gets the currently selected camera, and it's position and stores them in Strings
-                if (door1RadioButton.isSelected()) {
-                    cameraID = "camera1";
-                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
-                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
-                } else {
-                    cameraID = "camera2";
-                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
-                }
 
                 //Creating channel with my service's IP address and port
                 ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
@@ -452,10 +426,10 @@ public class SecurityGUI extends JFrame {
                 }
 
                 //Storing the selected camera's new position
-                if (camera1RadioButton.isSelected()) {
-                    camera1Position = cameraPositionDisplay.getText();
+                if (cameraID.equalsIgnoreCase("camera1")) {
+                    camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 } else {
-                    camera2Position = cameraPositionDisplay.getText();
+                    camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
                 }
 
                 //Shutting down channel
@@ -468,60 +442,226 @@ public class SecurityGUI extends JFrame {
         motionLocationSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Finish
+                //input validation
+                System.out.println("Motion Detected: " + inputDetectedMotionLocation.getText());
+                motionDetectedStatus.setText("Motion Detector: ");
+                motionLocationStatus.setText("Motion Location: ");
+                ManagedChannel motionDetectorChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(motionDetectorChannel);
+                MotionDetectedRequest motionDetectedRequest = MotionDetectedRequest.newBuilder().setMotionLocation(inputDetectedMotionLocation.getText()).build();
+                try {
+                    MotionDetectedResponse motionDetectedResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).motionDetected(motionDetectedRequest);
+                    motionDetectedStatus.setText(motionDetectedStatus.getText() + motionDetectedResponse.getDetectionAlert());
+                    motionLocationStatus.setText(motionLocationStatus.getText() + motionDetectedResponse.getMotionLocation());
+                    cameraAutomationButton.setEnabled(true);
+                } catch (StatusRuntimeException sre) {
+                    inputDetectedMotionLocation.setText("");
+                    motionDetectedStatus.setText("Error: Please Try Again");
+                    motionLocationStatus.setText("Error: Please Try Again");
+                    sre.printStackTrace();
+                    cancelRequest.cancel(sre.getCause());
+                }
+                motionDetectorChannel.shutdown();
+                System.out.println("Motion Detected: Complete");
             }
         });
 
         cameraAutomationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 11/08/2023 Finish first 
+                System.out.println("\nMotion Detected: Calculating Route");
+                //Resetting camera automation text field
+                if (camera1RadioButton.isSelected()) {
+                    automatedCameraPosition.setText("Automated Camera Position: Camera 2, " + camera2Position);
+                } else {
+                    automatedCameraPosition.setText("Automated Camera Position: Camera 1, " + camera1Position);
+                }
+
                 //Creates and channel with the service's IP Address and Port
-                ManagedChannel movingCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+                ManagedChannel automatedCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
 
                 //Creates an asynchronous stub for the above channel to be used in the bidirectional gRPC
-                Service2Grpc.Service2Stub cameraControlsAsyncStub = Service2Grpc.newStub(movingCameraChannel);
+                Service2Grpc.Service2Stub cameraControlsAsyncStub = Service2Grpc.newStub(automatedCameraChannel);
 
                 //CameraAdjustmentResponse Stream Observer
-                StreamObserver<CameraAdjustmentResponse> cameraAdjustmentResponseObserver = new StreamObserver<CameraAdjustmentResponse>() {
+                StreamObserver<CameraAutomationResponse> cameraAutomationResponseObserver = new StreamObserver<CameraAutomationResponse>() {
                     @Override
-                    public void onNext(CameraAdjustmentResponse cameraAdjustmentResponse) {
+                    public void onNext(CameraAutomationResponse cameraAutomationResponse) {
 
+                        //Displays the current automated camera position to the user and prints it to the console
+                        if (cameraID.equalsIgnoreCase("camera1")) {
+                            System.out.println("Moving Camera 2 to " + cameraAutomationResponse.getCameraAutomation());
+                            automatedCameraPosition.setText("Automated Camera: Camera 2, " + cameraAutomationResponse.getCameraAutomation());
+                        } else {
+                            System.out.println("Moving Camera 1 to " + cameraAutomationResponse.getCameraAutomation());
+                            automatedCameraPosition.setText("Automated Camera: Camera 1, " + cameraAutomationResponse.getCameraAutomation());
+                        }
+
+                        try {
+                            //Waits for a moment to simulate camera movement
+                            Thread.sleep(1000);
+
+                            //Catches any errors, displays an error message to the user and on the console
+                        } catch (RuntimeException re) {
+                            automatedCameraPosition.setText("Error: Resetting Automated Camera");
+                            System.out.println(re.getMessage());
+                            re.printStackTrace();
+                        } catch (InterruptedException ie) {
+                            automatedCameraPosition.setText("Error: Resetting Automated Camera");
+                            System.out.println(ie.getMessage());
+                            ie.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-                        automatedCameraPosition.setText(throwable.getMessage());
+                        //Displaying error message to user
+                        automatedCameraPosition.setText("Error: Resetting Automated Camera");
+
+                        //Printing error to console
+                        System.out.println(throwable.getMessage());
                         throwable.printStackTrace();
-                        System.out.println("Error: Resetting Camera Controller");
-                        movingCameraChannel.shutdown();
+
+                        //Shutting down the channel
+                        automatedCameraChannel.shutdown();
                     }
 
                     @Override
                     public void onCompleted() {
+                        //Printing end of request message to console
+                        System.out.println("Motion Detected: Moving Automated Camera Complete");
 
+                        //Storing the automated camera's final position
+                        if (cameraID.equalsIgnoreCase("camera1")) {
+                            camera2Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
+                        } else {
+                            camera1Position = cameraPositionDisplay.getText().substring(cameraPositionDisplay.getText().length() - 2);
+                        }
+
+                        //Shutting down channel
+                        automatedCameraChannel.shutdown();
                     }
                 };
 
                 //Preparing the request
+                StreamObserver<CameraAutomationRequest> cameraAutomationRequestObserver = cameraControlsAsyncStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAutomation(cameraAutomationResponseObserver);
+
+                //Getting automated camera data
+                String locationOfMovement = motionLocationStatus.getText().substring(motionLocationStatus.getText().length() - 2);
+                String autoCamPosition = automatedCameraPosition.getText().substring(automatedCameraPosition.getText().length() - 2);
+
+                //Plotting automated camera route
+                //Variable to store automated camera route & flag to track camera movement and if camera has arrived
+                ArrayList<String> automatedCameraRoute = new ArrayList<>();
+                ArrayList<Integer> xCoordinates = new ArrayList<>();
+                ArrayList<Integer> yCoordinates = new ArrayList<>();
+                String cameraMovement = "";
+
+                //Converting into x and y positions
+                String locX, locY;
+                String camX, camY;
+                int cameraX, locationX;
+                int cameraY = 0;
+                int locationY = 0;
+                locX = locationOfMovement.substring(1);
+                locY = locationOfMovement.substring(0, 1);
+                camX = autoCamPosition.substring(1);
+                camY = autoCamPosition.substring(0, 1);
+                switch (locY) {
+                    case "A":
+                        locationY = 0;
+                        break;
+                    case "B":
+                        locationY = 1;
+                        break;
+                    case "C":
+                        locationY = 2;
+                        break;
+                }
+                switch (camY) {
+                    case "A":
+                        cameraY = 0;
+                        break;
+                    case "B":
+                        cameraY = 1;
+                        break;
+                    case "C":
+                        cameraY = 2;
+                        break;
+                }
+                locationX = Integer.parseInt(locX) - 1;
+                cameraX = Integer.parseInt(camX) - 1;
+
+                //Simulates the camera moving towards the location of movement one section at a time
+                //Adjust the x position first
+                while (cameraX != locationX) {
+                    if (cameraX < locationX) {
+                        cameraX++;
+                    } else {
+                        cameraX--;
+                    }
+                    //Stores the current x and y positions
+                    xCoordinates.add(cameraX);
+                    yCoordinates.add(cameraY);
+                }
+                //Then adjust the y position
+                while (cameraY != locationY) {
+                    if (cameraY < locationY) {
+                        cameraY++;
+                    } else {
+                        cameraY--;
+                    }
+                    //Stores the current x and y positions
+                    xCoordinates.add(cameraX);
+                    yCoordinates.add(cameraY);
+                }
+
+                //Building camera route and storing it
+                for (int i = 0; i < xCoordinates.size(); i++) {
+                    //Converting the camera's x and y positions back into their original format and storing them in "cameraMovement"
+                    switch (yCoordinates.get(i)) {
+                        case 0:
+                            cameraMovement = "A";
+                            break;
+                        case 1:
+                            cameraMovement = "B";
+                            break;
+                        case 2:
+                            cameraMovement = "C";
+                            break;
+                    }
+                    cameraMovement += Integer.toString(xCoordinates.get(i) + 1);
+                    automatedCameraRoute.add(cameraMovement);
+                }
 
                 try {
-                    //End the requests & pause between requests
+                    if (!automatedCameraRoute.isEmpty()) {
+                        for (int i = 0; i < automatedCameraRoute.size(); i++) {
+                            cameraAutomationRequestObserver.onNext(CameraAutomationRequest.newBuilder().setAutomatedCameraID(automatedCameraID).setCameraPosition(automatedCameraRoute.get(i)).setLocationOfMovement(locationOfMovement).build());
+                        }
+                    } else {
+                        System.out.println("No Movement Required");
+                    }
+
+                    //Marks the end of requests
+                    cameraAutomationRequestObserver.onCompleted();
+
+                    //Pauses between requests
                     Thread.sleep(500);
 
-                    //Will catch any exceptions, display an error message to the user and reset the camera controls
+                //Will catch any exceptions, display an error message to the user and the console, cancel the current request and reset the camera controls
                 } catch (RuntimeException re) {
-                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    automatedCameraPosition.setText("Error: Resetting Automated Camera");
                     System.out.println(re.getMessage());
                     re.printStackTrace();
                     cancelRequest.cancel(null);
                 } catch (InterruptedException ie) {
-                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    automatedCameraPosition.setText("Error: Resetting Automated Camera");
                     System.out.println(ie.getMessage());
                     ie.printStackTrace();
                     cancelRequest.cancel(null);
                 } catch (Exception error) {
-                    automatedCameraPosition.setText("Error: Resetting Camera");
+                    automatedCameraPosition.setText("Error: Resetting Automated Camera");
                     System.out.println(error.getMessage());
                     error.printStackTrace();
                     cancelRequest.cancel(null);
@@ -653,9 +793,9 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                 } catch (StatusRuntimeException sre) {
-                    fireSuppressionFSTest.setText(sre.getMessage());
-                    emergencyLightsFSTest.setText(sre.getMessage());
-                    emergencySirensFSTest.setText(sre.getMessage());
+                    fireSuppressionFSTest.setText("Error: Please Try Again");
+                    emergencyLightsFSTest.setText("Error: Please Try Again");
+                    emergencySirensFSTest.setText("Error: Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }

@@ -141,10 +141,11 @@ public class Service2Server extends Service2ImplBase {
         System.out.println("Camera Adjustment: Completed");
     }
 
-    public void motionDetected(Empty motionDetectedRequest, StreamObserver<MotionDetectedResponse> motionDetectedResponseObserver) {
+    public void motionDetected(MotionDetectedRequest motionDetectedRequest, StreamObserver<MotionDetectedResponse> motionDetectedResponseObserver) {
         System.out.println("\nMotion Detected: Processing");
         String responseMessage = "Activated";
-        MotionDetectedResponse motionDetectedResponse = MotionDetectedResponse.newBuilder().setDetectionAlert(responseMessage).build();
+        String motionLocation = motionDetectedRequest.getMotionLocation();
+        MotionDetectedResponse motionDetectedResponse = MotionDetectedResponse.newBuilder().setDetectionAlert(responseMessage).setMotionLocation(motionLocation).build();
         motionDetectedResponseObserver.onNext(motionDetectedResponse);
         motionDetectedResponseObserver.onCompleted();
         System.out.println("Motion Detected: Message Sent");
@@ -154,76 +155,10 @@ public class Service2Server extends Service2ImplBase {
         return new StreamObserver<CameraAutomationRequest>() {
             @Override
             public void onNext(CameraAutomationRequest automationRequest) {
-                System.out.println("\nMotion Detected: Moving " + automationRequest.getAutomatedCameraID() + " to " + automationRequest.getLocationOfMovement());
+                System.out.println("\nMotion Detected: Moving CameraID: " + automationRequest.getAutomatedCameraID() + " to " + automationRequest.getLocationOfMovement());
                 System.out.println("Automated Camera Position: " + automationRequest.getCameraPosition());
 
-                //Variable to store response & flag to track camera movement
-                String responseMessage = "";
-                boolean cameraMoved = false;
-                //Converting into x and y positions
-                String locX, locY;
-                String camX, camY;
-                int cameraX, locationX;
-                int cameraY = 0;
-                int locationY = 0;
-                locX = automationRequest.getLocationOfMovement().substring(1);
-                locY = automationRequest.getLocationOfMovement().substring(0, 1);
-                camX = automationRequest.getCameraPosition().substring(1);
-                camY = automationRequest.getCameraPosition().substring(0, 1);
-                switch (locY) {
-                    case "A":
-                        locationY = 0;
-                        break;
-                    case "B":
-                        locationY = 1;
-                        break;
-                    case "C":
-                        locationY = 2;
-                        break;
-                }
-                switch (camY) {
-                    case "A":
-                        cameraY = 0;
-                        break;
-                    case "B":
-                        cameraY = 1;
-                        break;
-                    case "C":
-                        cameraY = 2;
-                        break;
-                }
-                locationX = Integer.parseInt(locX) - 1;
-                cameraX = Integer.parseInt(camX) - 1;
-
-                //Move camera towards location of movement one section at a time
-                if (cameraX < locationX) {
-                    cameraX++;
-                    cameraMoved = true;
-                } else if (cameraX > locationX){
-                    cameraX--;
-                    cameraMoved = true;
-                }
-                while (cameraMoved = false) {
-                    if (cameraY < locationY) {
-                        cameraY++;
-                    } else if (cameraY > locationY) {
-                        cameraY--;
-                    }
-                }
-
-                //Converting the camera's x and y positions back into their original format and storing them in "responseMessage"
-                switch (cameraY) {
-                    case 0:
-                        responseMessage = "A";
-                        break;
-                    case 1:
-                        responseMessage = "B";
-                        break;
-                    case 2:
-                        responseMessage = "C";
-                        break;
-                }
-                responseMessage += Integer.toString(cameraX + 1);
+                String responseMessage = automationRequest.getCameraPosition();
 
                 //Preparing response
                 CameraAutomationResponse automationResponse = CameraAutomationResponse.newBuilder().setCameraAutomation(responseMessage).build();

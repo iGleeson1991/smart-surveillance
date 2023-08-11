@@ -4,18 +4,19 @@
 package CameraController;
 
 /**
- * Protobuf type {@code Empty}
+ * Protobuf type {@code MotionDetectedRequest}
  */
-public  final class Empty extends
+public  final class MotionDetectedRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:Empty)
-    EmptyOrBuilder {
+    // @@protoc_insertion_point(message_implements:MotionDetectedRequest)
+    MotionDetectedRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use Empty.newBuilder() to construct.
-  private Empty(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use MotionDetectedRequest.newBuilder() to construct.
+  private MotionDetectedRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private Empty() {
+  private MotionDetectedRequest() {
+    motionLocation_ = "";
   }
 
   @java.lang.Override
@@ -23,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private Empty(
+  private MotionDetectedRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -31,6 +32,7 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
+    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -41,6 +43,12 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            motionLocation_ = s;
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -62,15 +70,49 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return CameraController.CameraControlsImpl.internal_static_Empty_descriptor;
+    return CameraController.CameraControlsImpl.internal_static_MotionDetectedRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return CameraController.CameraControlsImpl.internal_static_Empty_fieldAccessorTable
+    return CameraController.CameraControlsImpl.internal_static_MotionDetectedRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            CameraController.Empty.class, CameraController.Empty.Builder.class);
+            CameraController.MotionDetectedRequest.class, CameraController.MotionDetectedRequest.Builder.class);
+  }
+
+  public static final int MOTIONLOCATION_FIELD_NUMBER = 1;
+  private volatile java.lang.Object motionLocation_;
+  /**
+   * <code>string motionLocation = 1;</code>
+   */
+  public java.lang.String getMotionLocation() {
+    java.lang.Object ref = motionLocation_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      motionLocation_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string motionLocation = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getMotionLocationBytes() {
+    java.lang.Object ref = motionLocation_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      motionLocation_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -87,6 +129,9 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!getMotionLocationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, motionLocation_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -96,6 +141,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!getMotionLocationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, motionLocation_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -106,12 +154,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof CameraController.Empty)) {
+    if (!(obj instanceof CameraController.MotionDetectedRequest)) {
       return super.equals(obj);
     }
-    CameraController.Empty other = (CameraController.Empty) obj;
+    CameraController.MotionDetectedRequest other = (CameraController.MotionDetectedRequest) obj;
 
     boolean result = true;
+    result = result && getMotionLocation()
+        .equals(other.getMotionLocation());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -123,74 +173,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + MOTIONLOCATION_FIELD_NUMBER;
+    hash = (53 * hash) + getMotionLocation().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CameraController.Empty parseFrom(byte[] data)
+  public static CameraController.MotionDetectedRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CameraController.Empty parseFrom(java.io.InputStream input)
+  public static CameraController.MotionDetectedRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CameraController.Empty parseDelimitedFrom(java.io.InputStream input)
+  public static CameraController.MotionDetectedRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static CameraController.Empty parseDelimitedFrom(
+  public static CameraController.MotionDetectedRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CameraController.Empty parseFrom(
+  public static CameraController.MotionDetectedRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -203,7 +255,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(CameraController.Empty prototype) {
+  public static Builder newBuilder(CameraController.MotionDetectedRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -219,26 +271,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code Empty}
+   * Protobuf type {@code MotionDetectedRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:Empty)
-      CameraController.EmptyOrBuilder {
+      // @@protoc_insertion_point(builder_implements:MotionDetectedRequest)
+      CameraController.MotionDetectedRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return CameraController.CameraControlsImpl.internal_static_Empty_descriptor;
+      return CameraController.CameraControlsImpl.internal_static_MotionDetectedRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return CameraController.CameraControlsImpl.internal_static_Empty_fieldAccessorTable
+      return CameraController.CameraControlsImpl.internal_static_MotionDetectedRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              CameraController.Empty.class, CameraController.Empty.Builder.class);
+              CameraController.MotionDetectedRequest.class, CameraController.MotionDetectedRequest.Builder.class);
     }
 
-    // Construct using CameraController.Empty.newBuilder()
+    // Construct using CameraController.MotionDetectedRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -256,23 +308,25 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      motionLocation_ = "";
+
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return CameraController.CameraControlsImpl.internal_static_Empty_descriptor;
+      return CameraController.CameraControlsImpl.internal_static_MotionDetectedRequest_descriptor;
     }
 
     @java.lang.Override
-    public CameraController.Empty getDefaultInstanceForType() {
-      return CameraController.Empty.getDefaultInstance();
+    public CameraController.MotionDetectedRequest getDefaultInstanceForType() {
+      return CameraController.MotionDetectedRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public CameraController.Empty build() {
-      CameraController.Empty result = buildPartial();
+    public CameraController.MotionDetectedRequest build() {
+      CameraController.MotionDetectedRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -280,8 +334,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public CameraController.Empty buildPartial() {
-      CameraController.Empty result = new CameraController.Empty(this);
+    public CameraController.MotionDetectedRequest buildPartial() {
+      CameraController.MotionDetectedRequest result = new CameraController.MotionDetectedRequest(this);
+      result.motionLocation_ = motionLocation_;
       onBuilt();
       return result;
     }
@@ -320,16 +375,20 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof CameraController.Empty) {
-        return mergeFrom((CameraController.Empty)other);
+      if (other instanceof CameraController.MotionDetectedRequest) {
+        return mergeFrom((CameraController.MotionDetectedRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(CameraController.Empty other) {
-      if (other == CameraController.Empty.getDefaultInstance()) return this;
+    public Builder mergeFrom(CameraController.MotionDetectedRequest other) {
+      if (other == CameraController.MotionDetectedRequest.getDefaultInstance()) return this;
+      if (!other.getMotionLocation().isEmpty()) {
+        motionLocation_ = other.motionLocation_;
+        onChanged();
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -345,17 +404,86 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      CameraController.Empty parsedMessage = null;
+      CameraController.MotionDetectedRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (CameraController.Empty) e.getUnfinishedMessage();
+        parsedMessage = (CameraController.MotionDetectedRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
           mergeFrom(parsedMessage);
         }
       }
+      return this;
+    }
+
+    private java.lang.Object motionLocation_ = "";
+    /**
+     * <code>string motionLocation = 1;</code>
+     */
+    public java.lang.String getMotionLocation() {
+      java.lang.Object ref = motionLocation_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        motionLocation_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string motionLocation = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMotionLocationBytes() {
+      java.lang.Object ref = motionLocation_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        motionLocation_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string motionLocation = 1;</code>
+     */
+    public Builder setMotionLocation(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      motionLocation_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string motionLocation = 1;</code>
+     */
+    public Builder clearMotionLocation() {
+      
+      motionLocation_ = getDefaultInstance().getMotionLocation();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string motionLocation = 1;</code>
+     */
+    public Builder setMotionLocationBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      motionLocation_ = value;
+      onChanged();
       return this;
     }
     @java.lang.Override
@@ -371,41 +499,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:Empty)
+    // @@protoc_insertion_point(builder_scope:MotionDetectedRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:Empty)
-  private static final CameraController.Empty DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:MotionDetectedRequest)
+  private static final CameraController.MotionDetectedRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new CameraController.Empty();
+    DEFAULT_INSTANCE = new CameraController.MotionDetectedRequest();
   }
 
-  public static CameraController.Empty getDefaultInstance() {
+  public static CameraController.MotionDetectedRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Empty>
-      PARSER = new com.google.protobuf.AbstractParser<Empty>() {
+  private static final com.google.protobuf.Parser<MotionDetectedRequest>
+      PARSER = new com.google.protobuf.AbstractParser<MotionDetectedRequest>() {
     @java.lang.Override
-    public Empty parsePartialFrom(
+    public MotionDetectedRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new Empty(input, extensionRegistry);
+      return new MotionDetectedRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<Empty> parser() {
+  public static com.google.protobuf.Parser<MotionDetectedRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<Empty> getParserForType() {
+  public com.google.protobuf.Parser<MotionDetectedRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public CameraController.Empty getDefaultInstanceForType() {
+  public CameraController.MotionDetectedRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

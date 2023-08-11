@@ -9,7 +9,7 @@ service Service2 {
   rpc cameraAdjustment(CameraAdjustmentRequest) returns (CameraAdjustmentResponse) {}
 
   //When motion is detected on the camera not in use, the user is notified
-  rpc motionDetected(Empty) returns (MotionDetectedResponse) {}
+  rpc motionDetected(MotionDetectedRequest) returns (MotionDetectedResponse) {}
 
   //When motion is detected on the camera not in use, the camera autonomously moves to the location of the motion
   rpc cameraAutomation(stream CameraAutomationRequest) returns (stream CameraAutomationResponse) {}
@@ -33,12 +33,14 @@ message CameraAdjustmentResponse {
   string cameraPosition = 1;
 }
 
-message Empty {
-
+message MotionDetectedRequest {
+  string motionLocation = 1;
 }
 
 message MotionDetectedResponse {
   string detectionAlert = 1;
+
+  string motionLocation = 2;
 }
 
 message CameraAutomationRequest {

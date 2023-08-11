@@ -16,4 +16,14 @@ public interface MotionDetectedResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getDetectionAlertBytes();
+
+  /**
+   * <code>string motionLocation = 2;</code>
+   */
+  java.lang.String getMotionLocation();
+  /**
+   * <code>string motionLocation = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getMotionLocationBytes();
 }
