@@ -38,7 +38,7 @@ public class SecurityGUI extends JFrame {
 
     //A ten-second deadline for server responses. Requests will terminate after 10 seconds
     //Copied from Sample Project - Smart Health
-    private int deadline = 10;
+    private final int DEADLINE = 10;
 
     //Used to cancel requests
     //Copied from Sample Project - Smart Health
@@ -152,7 +152,7 @@ public class SecurityGUI extends JFrame {
                 Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
                 ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge1").build();
                 try {
-                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
                     doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
                 } catch (StatusRuntimeException sre) {
                     doorAccessStatus.setText("Error: Please Try Again");
@@ -182,7 +182,7 @@ public class SecurityGUI extends JFrame {
                 Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
                 ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge2").build();
                 try {
-                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
                     doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
                 } catch (StatusRuntimeException sre) {
                     doorAccessStatus.setText("Error: Please Try Again");
@@ -212,7 +212,7 @@ public class SecurityGUI extends JFrame {
                 Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
                 ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge3").build();
                 try {
-                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
                     doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
                 } catch (StatusRuntimeException sre) {
                     doorAccessStatus.setText("Error: Please Try Again");
@@ -242,7 +242,7 @@ public class SecurityGUI extends JFrame {
                 Service1Grpc.Service1BlockingStub doorControlsBlockingStub = Service1Grpc.newBlockingStub(doorControlsChannel);
                 ScanSecurityBadgeRequest scanSecurityBadgeRequest = ScanSecurityBadgeRequest.newBuilder().setDoorID(doorID).setBadgeID("badge4").build();
                 try {
-                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
+                    ScanSecurityBadgeResponse scanSecurityBadgeResponse = doorControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).scanSecurityBadge(scanSecurityBadgeRequest);
                     doorAccessStatus.setText(doorAccessStatus.getText() + scanSecurityBadgeResponse.getValid());
                 } catch (StatusRuntimeException sre) {
                     doorAccessStatus.setText("Error: Please Try Again");
@@ -274,7 +274,7 @@ public class SecurityGUI extends JFrame {
                 SecurityCodeEntryRequest securityCodeEntryRequest = SecurityCodeEntryRequest.newBuilder().setDoorID(doorID).setSecurityCode(securityCodeInput.getText()).build();
 
                 try {
-                    SecurityCodeEntryResponse securityCodeEntryResponse = doorControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).securityCodeEntry(securityCodeEntryRequest);
+                    SecurityCodeEntryResponse securityCodeEntryResponse = doorControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).securityCodeEntry(securityCodeEntryRequest);
                     doorAccessStatus.setText(doorAccessStatus.getText() + securityCodeEntryResponse.getValid());
 
                 } catch (StatusRuntimeException sre) {
@@ -322,7 +322,7 @@ public class SecurityGUI extends JFrame {
                 DoorController.Empty intercomCallRequest = DoorController.Empty.newBuilder().build();
                 
                 try {
-                    IntercomCallResponse intercomCallResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomCall(intercomCallRequest);
+                    IntercomCallResponse intercomCallResponse = intercomControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).intercomCall(intercomCallRequest);
                     callSecurityStatus.setText(callSecurityStatus.getText() + intercomCallResponse.getCallResponse());
 
                 } catch (StatusRuntimeException sre) {
@@ -355,7 +355,7 @@ public class SecurityGUI extends JFrame {
                 IntercomAnswerRequest intercomAnswerRequest = IntercomAnswerRequest.newBuilder().setAnswerRequest("answer").build();
 
                 try {
-                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
+                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
                     callSecurityStatus.setText(callSecurityStatus.getText() + intercomAnswerResponse.getAnswerResponse());
 
                 } catch (StatusRuntimeException sre) {
@@ -388,7 +388,7 @@ public class SecurityGUI extends JFrame {
                 IntercomAnswerRequest intercomAnswerRequest = IntercomAnswerRequest.newBuilder().setAnswerRequest("reject").build();
 
                 try {
-                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
+                    IntercomAnswerResponse intercomAnswerResponse = intercomControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).intercomAnswer(intercomAnswerRequest);
                     callSecurityStatus.setText(callSecurityStatus.getText() + intercomAnswerResponse.getAnswerResponse());
 
                 } catch (StatusRuntimeException sre) {
@@ -467,7 +467,7 @@ public class SecurityGUI extends JFrame {
 
                 System.out.println("\nCamera Adjustment: Up");
                 try {
-                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
                     cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
                 } catch (StatusRuntimeException sre) {
                     System.out.println(sre.getMessage());
@@ -527,7 +527,7 @@ public class SecurityGUI extends JFrame {
 
                 System.out.println("\nCamera Adjustment: Down");
                 try {
-                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
                     cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
                 } catch (StatusRuntimeException sre) {
                     System.out.println(sre.getMessage());
@@ -587,7 +587,7 @@ public class SecurityGUI extends JFrame {
 
                 System.out.println("\nCamera Adjustment: Left");
                 try {
-                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
                     cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
                 } catch (StatusRuntimeException sre) {
                     System.out.println(sre.getMessage());
@@ -647,7 +647,7 @@ public class SecurityGUI extends JFrame {
 
                 System.out.println("\nCamera Adjustment: Right");
                 try {
-                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
                     cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
                 } catch (StatusRuntimeException sre) {
                     System.out.println(sre.getMessage());
@@ -680,7 +680,7 @@ public class SecurityGUI extends JFrame {
                 Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(motionDetectorChannel);
                 MotionDetectedRequest motionDetectedRequest = MotionDetectedRequest.newBuilder().setMotionLocation(inputDetectedMotionLocation.getText()).build();
                 try {
-                    MotionDetectedResponse motionDetectedResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).motionDetected(motionDetectedRequest);
+                    MotionDetectedResponse motionDetectedResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).motionDetected(motionDetectedRequest);
                     motionDetectedStatus.setText(motionDetectedStatus.getText() + motionDetectedResponse.getDetectionAlert());
                     motionLocationStatus.setText(motionLocationStatus.getText() + motionDetectedResponse.getMotionLocation());
                     cameraAutomationButton.setEnabled(true);
@@ -782,7 +782,7 @@ public class SecurityGUI extends JFrame {
                 };
 
                 //Preparing the request
-                StreamObserver<CameraAutomationRequest> cameraAutomationRequestObserver = cameraControlsAsyncStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAutomation(cameraAutomationResponseObserver);
+                StreamObserver<CameraAutomationRequest> cameraAutomationRequestObserver = cameraControlsAsyncStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).cameraAutomation(cameraAutomationResponseObserver);
 
                 //Getting automated camera data
                 String locationOfMovement = motionLocationStatus.getText().substring(motionLocationStatus.getText().length() - 2);
@@ -918,7 +918,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm1").build();
                 try {
-                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
+                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
@@ -945,7 +945,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm2").build();
                 try {
-                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
+                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
@@ -972,7 +972,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(manualAlarmTestChannel);
                 ManualAlarmRequest manualAlarmRequest = ManualAlarmRequest.newBuilder().setAlarmID("alarm3").build();
                 try {
-                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
+                    ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
@@ -999,7 +999,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(fireSensorTestChannel);
                 FireSuppressionRequest fireSuppressionRequest = FireSuppressionRequest.newBuilder().setSensorID("securitySensor").build();
                 try {
-                    FireSuppressionResponse fireSuppressionResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).fireSuppression(fireSuppressionRequest);
+                    FireSuppressionResponse fireSuppressionResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).fireSuppression(fireSuppressionRequest);
                     fireSuppressionFSTest.setText(fireSuppressionFSTest.getText() + fireSuppressionResponse.getActivateFireSuppression());
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
@@ -1026,7 +1026,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(fireSensorTestChannel);
                 FireSuppressionRequest fireSuppressionRequest = FireSuppressionRequest.newBuilder().setSensorID("fireSensor").build();
                 try {
-                    FireSuppressionResponse fireSuppressionResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).fireSuppression(fireSuppressionRequest);
+                    FireSuppressionResponse fireSuppressionResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).fireSuppression(fireSuppressionRequest);
                     fireSuppressionFSTest.setText(fireSuppressionFSTest.getText() + fireSuppressionResponse.getActivateFireSuppression());
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
@@ -1051,7 +1051,7 @@ public class SecurityGUI extends JFrame {
                 Service3Grpc.Service3BlockingStub alarmControlsBlockingStub = Service3Grpc.newBlockingStub(callEMSChannel);
                 AlarmController.Empty callEMSRequest = AlarmController.Empty.newBuilder().build();
                 try {
-                    EmergencyServicesCallResponse callEMSResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).emergencyServicesCall(callEMSRequest);
+                    EmergencyServicesCallResponse callEMSResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).emergencyServicesCall(callEMSRequest);
                     emergencyServicesCallTestStatus.setText(emergencyServicesCallTestStatus.getText() + callEMSResponse.getCallConfirmation());
                 } catch (StatusRuntimeException sre) {
                     emergencyServicesCallTestStatus.setText(sre.getMessage());
@@ -1083,7 +1083,7 @@ public class SecurityGUI extends JFrame {
                 cancelRequest = Context.current().withCancellation();
 
                 try {
-                    Iterator<AlarmCheckResponse> alarmCheckResponse = alarmControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).alarmCheck(alarmCheckRequest);
+                    Iterator<AlarmCheckResponse> alarmCheckResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).alarmCheck(alarmCheckRequest);
                     while (alarmCheckResponse.hasNext()) {
                         AlarmCheckResponse temp = alarmCheckResponse.next();
                         alarmCheckInfo.setText(alarmCheckInfo.getText() + temp.getAlarmInfo() + "\n");
