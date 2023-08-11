@@ -97,27 +97,27 @@ public class Service2Server extends Service2ImplBase {
         //Moving the camera in the chosen direction
         switch (cameraAdjustmentRequest.getCameraDirection()) {
             case UP:
-                if (cameraX >= 0 && cameraX < 2) {
-                    cameraX++;
-                    System.out.println("Camera Adjustment: Moving Camera Up");
+                if (cameraY > 0 && cameraY <= 2) {
+                    cameraY--;
+                    System.out.println("Camera Adjustment: Moving Camera Left");
                 }
                 break;
             case DOWN:
-                if (cameraX > 0 && cameraX <= 2) {
-                    cameraX--;
-                    System.out.println("Camera Adjustment: Moving Camera Down");
-                }
-                break;
-            case RIGHT:
                 if (cameraY >= 0 && cameraY < 2) {
                     cameraY++;
                     System.out.println("Camera Adjustment: Moving Camera Right");
                 }
                 break;
+            case RIGHT:
+                if (cameraX >= 0 && cameraX < 2) {
+                    cameraX++;
+                    System.out.println("Camera Adjustment: Moving Camera Up");
+                }
+                break;
             case LEFT:
-                if (cameraY > 0 && cameraY <= 2) {
-                    cameraY--;
-                    System.out.println("Camera Adjustment: Moving Camera Left");
+                if (cameraX > 0 && cameraX <= 2) {
+                    cameraX--;
+                    System.out.println("Camera Adjustment: Moving Camera Down");
                 }
                 break;
         }

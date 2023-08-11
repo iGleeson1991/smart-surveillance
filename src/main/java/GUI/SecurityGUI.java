@@ -1,6 +1,7 @@
 package GUI;
 
 import AlarmController.*;
+import CameraController.CameraAdjustmentRequest;
 import CameraController.CameraAdjustmentRequest.CameraDirection;
 import CameraController.CameraAdjustmentResponse;
 import CameraController.Service2Grpc;
@@ -188,6 +189,7 @@ public class SecurityGUI extends JFrame {
             }
         });
 
+        //Move camera up button
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -201,12 +203,15 @@ public class SecurityGUI extends JFrame {
                 //Waits for a moment to simulate camera movement
                 try {
                     Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
+                } catch (InterruptedException ie) {
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                    cameraPositionDisplay.setText("Error: Camera Resetting");
                 }
 
                 //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
                 CameraDirection cameraDirection = CameraDirection.forNumber(0);
+                //Strings to store the camera ID and position
                 String cameraID = "";
                 String cameraPosition = "";
 
@@ -220,31 +225,243 @@ public class SecurityGUI extends JFrame {
                     cameraPosition = camera2Position.substring(camera2Position.length() - 2);
                 }
 
+                //Creating channel with my service's IP address and port
+                ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
 
-                System.out.println("\nMoving Camera");
+                //Creating gRPC blocking stub to prevent multiple camera movements at once
+                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(cameraAdjustmentChannel);
 
+                //Preparing request
+                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection).build();
 
+                System.out.println("\nCamera Adjustment: Up");
+                try {
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
+                } catch (StatusRuntimeException sre) {
+                    System.out.println(sre.getMessage());
+                    sre.printStackTrace();
+                    System.out.println("Error: Camera Resetting");
+                }
+
+                //Storing the selected camera's new position
+                if (camera1RadioButton.isSelected()) {
+                    camera1Position = cameraPositionDisplay.getText();
+                } else {
+                    camera2Position = cameraPositionDisplay.getText();
+                }
+
+                //Shutting down channel
+                cameraAdjustmentChannel.shutdown();
+
+                System.out.println("Camera Adjustment: Complete");
             }
         });
 
+        //Move camera down button
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Resets "cameraPositionDisplay" if error message is displayed
+                if (camera1RadioButton.isSelected()) {
+                    cameraPositionDisplay.setText(camera1Position);
+                } else {
+                    cameraPositionDisplay.setText(camera2Position);
+                }
 
+                //Waits for a moment to simulate camera movement
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                    cameraPositionDisplay.setText("Error: Camera Resetting");
+                }
+
+                //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
+                CameraDirection cameraDirection = CameraDirection.forNumber(1);
+                //Strings to store the camera ID and position
+                String cameraID = "";
+                String cameraPosition = "";
+
+                //Gets the currently selected camera, and it's position and stores them in Strings
+                if (door1RadioButton.isSelected()) {
+                    cameraID = "camera1";
+                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
+                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
+                } else {
+                    cameraID = "camera2";
+                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
+                }
+
+                //Creating channel with my service's IP address and port
+                ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+
+                //Creating gRPC blocking stub to prevent multiple camera movements at once
+                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(cameraAdjustmentChannel);
+
+                //Preparing request
+                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection).build();
+
+                System.out.println("\nCamera Adjustment: Down");
+                try {
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
+                } catch (StatusRuntimeException sre) {
+                    System.out.println(sre.getMessage());
+                    sre.printStackTrace();
+                    System.out.println("Error: Camera Resetting");
+                }
+
+                //Storing the selected camera's new position
+                if (camera1RadioButton.isSelected()) {
+                    camera1Position = cameraPositionDisplay.getText();
+                } else {
+                    camera2Position = cameraPositionDisplay.getText();
+                }
+
+                //Shutting down channel
+                cameraAdjustmentChannel.shutdown();
+
+                System.out.println("Camera Adjustment: Complete");
             }
         });
 
+        //Move camera left button
         leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Resets "cameraPositionDisplay" if error message is displayed
+                if (camera1RadioButton.isSelected()) {
+                    cameraPositionDisplay.setText(camera1Position);
+                } else {
+                    cameraPositionDisplay.setText(camera2Position);
+                }
 
+                //Waits for a moment to simulate camera movement
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                    cameraPositionDisplay.setText("Error: Camera Resetting");
+                }
+
+                //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
+                CameraDirection cameraDirection = CameraDirection.forNumber(2);
+                //Strings to store the camera ID and position
+                String cameraID = "";
+                String cameraPosition = "";
+
+                //Gets the currently selected camera, and it's position and stores them in Strings
+                if (door1RadioButton.isSelected()) {
+                    cameraID = "camera1";
+                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
+                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
+                } else {
+                    cameraID = "camera2";
+                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
+                }
+
+                //Creating channel with my service's IP address and port
+                ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+
+                //Creating gRPC blocking stub to prevent multiple camera movements at once
+                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(cameraAdjustmentChannel);
+
+                //Preparing request
+                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection).build();
+
+                System.out.println("\nCamera Adjustment: Left");
+                try {
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
+                } catch (StatusRuntimeException sre) {
+                    System.out.println(sre.getMessage());
+                    sre.printStackTrace();
+                    System.out.println("Error: Camera Resetting");
+                }
+
+                //Storing the selected camera's new position
+                if (camera1RadioButton.isSelected()) {
+                    camera1Position = cameraPositionDisplay.getText();
+                } else {
+                    camera2Position = cameraPositionDisplay.getText();
+                }
+
+                //Shutting down channel
+                cameraAdjustmentChannel.shutdown();
+
+                System.out.println("Camera Adjustment: Complete");
             }
         });
 
+        //Move camera right button
         rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Resets "cameraPositionDisplay" if error message is displayed
+                if (camera1RadioButton.isSelected()) {
+                    cameraPositionDisplay.setText(camera1Position);
+                } else {
+                    cameraPositionDisplay.setText(camera2Position);
+                }
 
+                //Waits for a moment to simulate camera movement
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                    cameraPositionDisplay.setText("Error: Camera Resetting");
+                }
+
+                //Creates a "CameraDirection" object called "cameraDirection" and stores the value corresponding to the selected direction
+                CameraDirection cameraDirection = CameraDirection.forNumber(3);
+                //Strings to store the camera ID and position
+                String cameraID = "";
+                String cameraPosition = "";
+
+                //Gets the currently selected camera, and it's position and stores them in Strings
+                if (door1RadioButton.isSelected()) {
+                    cameraID = "camera1";
+                    //Gets the selected camera's current position by reading the text in "cameraPositionDisplay" and creating a substring with the last two characters
+                    cameraPosition = camera1Position.substring(camera1Position.length() - 2);
+                } else {
+                    cameraID = "camera2";
+                    cameraPosition = camera2Position.substring(camera2Position.length() - 2);
+                }
+
+                //Creating channel with my service's IP address and port
+                ManagedChannel cameraAdjustmentChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+
+                //Creating gRPC blocking stub to prevent multiple camera movements at once
+                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(cameraAdjustmentChannel);
+
+                //Preparing request
+                CameraAdjustmentRequest cameraAdjustmentRequest = CameraAdjustmentRequest.newBuilder().setCameraID(cameraID).setCameraPosition(cameraPosition).setCameraDirection(cameraDirection).build();
+
+                System.out.println("\nCamera Adjustment: Right");
+                try {
+                    CameraAdjustmentResponse cameraAdjustmentResponse = cameraControlsBlockingStub.withDeadlineAfter(deadline, TimeUnit.SECONDS).cameraAdjustment(cameraAdjustmentRequest);
+                    cameraPositionDisplay.setText("Camera Position: " + cameraAdjustmentResponse.getCameraPosition());
+                } catch (StatusRuntimeException sre) {
+                    System.out.println(sre.getMessage());
+                    sre.printStackTrace();
+                    System.out.println("Error: Camera Resetting");
+                }
+
+                //Storing the selected camera's new position
+                if (camera1RadioButton.isSelected()) {
+                    camera1Position = cameraPositionDisplay.getText();
+                } else {
+                    camera2Position = cameraPositionDisplay.getText();
+                }
+
+                //Shutting down channel
+                cameraAdjustmentChannel.shutdown();
+
+                System.out.println("Camera Adjustment: Complete");
             }
         });
 
@@ -252,13 +469,13 @@ public class SecurityGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Finish
-
             }
         });
 
         cameraAutomationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // TODO: 11/08/2023 Finish first 
                 //Creates and channel with the service's IP Address and Port
                 ManagedChannel movingCameraChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
 
