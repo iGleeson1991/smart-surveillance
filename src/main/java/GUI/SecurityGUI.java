@@ -1030,7 +1030,7 @@ public class SecurityGUI extends JFrame {
                     ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
-                    emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
+                    emergencySirensAlarmTest.setText(emergencySirensAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
                     alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
@@ -1057,7 +1057,7 @@ public class SecurityGUI extends JFrame {
                     ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
-                    emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
+                    emergencySirensAlarmTest.setText(emergencySirensAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
                     alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
@@ -1084,7 +1084,7 @@ public class SecurityGUI extends JFrame {
                     ManualAlarmResponse manualAlarmResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).manualAlarm(manualAlarmRequest);
                     alarmActivatedAlarmTest.setText(alarmActivatedAlarmTest.getText() + manualAlarmResponse.getAlarmActivation());
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
-                    emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
+                    emergencySirensAlarmTest.setText(emergencySirensAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
                     alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
