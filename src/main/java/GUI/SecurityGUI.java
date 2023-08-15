@@ -31,6 +31,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -93,13 +94,12 @@ public class SecurityGUI extends JFrame {
     private JPanel cameraScreenJPanel2;
 
     //GUI Methods
-    // TODO: 11/08/2023 Update the camera image to include a grid reference (definitely)
 
     public SecurityGUI() {
         //Discovers all registered services
         discoverJMDNSServices();
 
-        System.out.println("\nLaunching Security GUI");
+        System.out.println("Launching Security GUI");
 
         //Creates GUI
         setContentPane(securityControllerGUI);
@@ -334,7 +334,6 @@ public class SecurityGUI extends JFrame {
                     cancelRequest.cancel(sre);
                 }
                 intercomControlsChannel.shutdown();
-                System.out.println("Intercom Controls: Calling Called");
             }
         });
 
@@ -406,8 +405,8 @@ public class SecurityGUI extends JFrame {
         intercomButton.addMouseListener(new MouseAdapter() {
             //Stores the value to be sent to the server
             int callTime = 0;
-            //Creates a "ScheduledExecutorService" called "timedExecutor" and creates a new size 1 thread pool for it to use
-            ScheduledExecutorService timedExecutor = Executors.newScheduledThreadPool(1);
+            //Creates a "ScheduledExecutorService" called "timedExecutor"
+            ScheduledExecutorService timedExecutor;
 
             @Override
             public void mousePressed(MouseEvent e) {
@@ -415,6 +414,7 @@ public class SecurityGUI extends JFrame {
                 intercomStatus.setText("Status: Channel Open");
                 System.out.println("\nIntercom: Receiving Message");
                 //Executor that will increment the value stored in "callTime" by 1 every second
+                timedExecutor = Executors.newScheduledThreadPool(1);
                 timedExecutor.scheduleAtFixedRate(timedTransmission, 0, 1, TimeUnit.SECONDS);
             }
 
@@ -774,28 +774,35 @@ public class SecurityGUI extends JFrame {
         motionLocationSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //input validation
-                System.out.println("Motion Detected: " + inputDetectedMotionLocation.getText());
-                motionDetectedStatus.setText("Motion Detector: ");
-                motionLocationStatus.setText("Motion Location: ");
-                ManagedChannel motionDetectorChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
-                Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(motionDetectorChannel);
-                MotionDetectedRequest motionDetectedRequest = MotionDetectedRequest.newBuilder().setMotionLocation(inputDetectedMotionLocation.getText()).build();
-                try {
-                    MotionDetectedResponse motionDetectedResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).motionDetected(motionDetectedRequest);
-                    motionDetectedStatus.setText(motionDetectedStatus.getText() + motionDetectedResponse.getDetectionAlert());
-                    motionLocationStatus.setText(motionLocationStatus.getText() + motionDetectedResponse.getMotionLocation());
-                    cameraAutomationButton.setEnabled(true);
-                } catch (StatusRuntimeException sre) {
+                //Simple Input Validation
+                ArrayList<String> validCameraLocations = new ArrayList<>(Arrays.asList("A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"));
+                if (validCameraLocations.contains(inputDetectedMotionLocation.getText())) {
+                    System.out.println("\nMotion Detected: " + inputDetectedMotionLocation.getText());
+                    motionDetectedStatus.setText("Motion Detector: ");
+                    motionLocationStatus.setText("Motion Location: ");
+                    ManagedChannel motionDetectorChannel = ManagedChannelBuilder.forAddress(cameraControllerService2Info.getHostAddresses()[0], cameraControllerService2Info.getPort()).usePlaintext().build();
+                    Service2Grpc.Service2BlockingStub cameraControlsBlockingStub = Service2Grpc.newBlockingStub(motionDetectorChannel);
+                    MotionDetectedRequest motionDetectedRequest = MotionDetectedRequest.newBuilder().setMotionLocation(inputDetectedMotionLocation.getText()).build();
+                    try {
+                        MotionDetectedResponse motionDetectedResponse = cameraControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).motionDetected(motionDetectedRequest);
+                        motionDetectedStatus.setText(motionDetectedStatus.getText() + motionDetectedResponse.getDetectionAlert());
+                        motionLocationStatus.setText(motionLocationStatus.getText() + motionDetectedResponse.getMotionLocation());
+                        cameraAutomationButton.setEnabled(true);
+                    } catch (StatusRuntimeException sre) {
+                        inputDetectedMotionLocation.setText("");
+                        motionDetectedStatus.setText("Error: Please Try Again");
+                        motionLocationStatus.setText("Error: Please Try Again");
+                        sre.printStackTrace();
+                        cancelRequest.cancel(sre.getCause());
+                    }
+                    motionDetectorChannel.shutdown();
                     inputDetectedMotionLocation.setText("");
-                    motionDetectedStatus.setText("Error: Please Try Again");
-                    motionLocationStatus.setText("Error: Please Try Again");
-                    sre.printStackTrace();
-                    cancelRequest.cancel(sre.getCause());
+                    System.out.println("Motion Detected: Complete");
+                } else {
+                    inputDetectedMotionLocation.setText("");
+                    motionDetectedStatus.setText("Error: Invalid Input. Please Try Again");
+                    motionLocationStatus.setText("Error: Invalid Input. Please Try Again");
                 }
-                motionDetectorChannel.shutdown();
-                inputDetectedMotionLocation.setText("");
-                System.out.println("Motion Detected: Complete");
             }
         });
 
@@ -1262,8 +1269,6 @@ public class SecurityGUI extends JFrame {
 
                 @Override
                 public void serviceResolved(ServiceEvent event) {
-                    System.out.println(nameOfService + " has been resolved: " + event.getName() + "\n");
-
                     //Retrieves data from the "ServiceEvent" object and stores it in a "ServiceInfo" object called "serviceInfo"
                     ServiceInfo serviceInfo = event.getInfo();
 
@@ -1284,6 +1289,8 @@ public class SecurityGUI extends JFrame {
                     "\nHost: " + serviceInfo.getHostAddresses()[0] +
                     "\nPort: " + serviceInfo.getPort()
                     );
+
+                    System.out.println("\n" + nameOfService + " has been resolved: " + event.getName() + "\n");
                 }
             });
             //Waits for a specifed amount of time and then closes the stream

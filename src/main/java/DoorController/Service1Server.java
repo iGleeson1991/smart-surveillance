@@ -151,7 +151,7 @@ public class Service1Server extends Service1ImplBase {
         callResponseObserver.onNext(callResponse);
         callResponseObserver.onCompleted();
 
-        System.out.println("Intercom Call: Completed\n");
+        System.out.println("Intercom Call: Completed");
     }
 
     public void intercomAnswer(IntercomAnswerRequest answerRequest, StreamObserver<IntercomAnswerResponse> answerResponseObserver) {
