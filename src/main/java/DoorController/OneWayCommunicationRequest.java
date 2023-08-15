@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private OneWayCommunicationRequest() {
-    buttonHeld_ = false;
+    callTime_ = 0;
   }
 
   @java.lang.Override
@@ -45,7 +45,7 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            buttonHeld_ = input.readBool();
+            callTime_ = input.readInt32();
             break;
           }
           default: {
@@ -80,13 +80,13 @@ private static final long serialVersionUID = 0L;
             DoorController.OneWayCommunicationRequest.class, DoorController.OneWayCommunicationRequest.Builder.class);
   }
 
-  public static final int BUTTONHELD_FIELD_NUMBER = 1;
-  private boolean buttonHeld_;
+  public static final int CALLTIME_FIELD_NUMBER = 1;
+  private int callTime_;
   /**
-   * <code>bool buttonHeld = 1;</code>
+   * <code>int32 callTime = 1;</code>
    */
-  public boolean getButtonHeld() {
-    return buttonHeld_;
+  public int getCallTime() {
+    return callTime_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -103,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (buttonHeld_ != false) {
-      output.writeBool(1, buttonHeld_);
+    if (callTime_ != 0) {
+      output.writeInt32(1, callTime_);
     }
     unknownFields.writeTo(output);
   }
@@ -115,9 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (buttonHeld_ != false) {
+    if (callTime_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(1, buttonHeld_);
+        .computeInt32Size(1, callTime_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -135,8 +135,8 @@ private static final long serialVersionUID = 0L;
     DoorController.OneWayCommunicationRequest other = (DoorController.OneWayCommunicationRequest) obj;
 
     boolean result = true;
-    result = result && (getButtonHeld()
-        == other.getButtonHeld());
+    result = result && (getCallTime()
+        == other.getCallTime());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -148,9 +148,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + BUTTONHELD_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getButtonHeld());
+    hash = (37 * hash) + CALLTIME_FIELD_NUMBER;
+    hash = (53 * hash) + getCallTime();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -284,7 +283,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      buttonHeld_ = false;
+      callTime_ = 0;
 
       return this;
     }
@@ -312,7 +311,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public DoorController.OneWayCommunicationRequest buildPartial() {
       DoorController.OneWayCommunicationRequest result = new DoorController.OneWayCommunicationRequest(this);
-      result.buttonHeld_ = buttonHeld_;
+      result.callTime_ = callTime_;
       onBuilt();
       return result;
     }
@@ -361,8 +360,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(DoorController.OneWayCommunicationRequest other) {
       if (other == DoorController.OneWayCommunicationRequest.getDefaultInstance()) return this;
-      if (other.getButtonHeld() != false) {
-        setButtonHeld(other.getButtonHeld());
+      if (other.getCallTime() != 0) {
+        setCallTime(other.getCallTime());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -393,28 +392,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private boolean buttonHeld_ ;
+    private int callTime_ ;
     /**
-     * <code>bool buttonHeld = 1;</code>
+     * <code>int32 callTime = 1;</code>
      */
-    public boolean getButtonHeld() {
-      return buttonHeld_;
+    public int getCallTime() {
+      return callTime_;
     }
     /**
-     * <code>bool buttonHeld = 1;</code>
+     * <code>int32 callTime = 1;</code>
      */
-    public Builder setButtonHeld(boolean value) {
+    public Builder setCallTime(int value) {
       
-      buttonHeld_ = value;
+      callTime_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>bool buttonHeld = 1;</code>
+     * <code>int32 callTime = 1;</code>
      */
-    public Builder clearButtonHeld() {
+    public Builder clearCallTime() {
       
-      buttonHeld_ = false;
+      callTime_ = 0;
       onChanged();
       return this;
     }

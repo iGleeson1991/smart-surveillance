@@ -20,6 +20,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SecurityGUI extends JFrame {
@@ -86,11 +90,10 @@ public class SecurityGUI extends JFrame {
     private JTextField alarmActivatedAlarmTest, emergencyLightsAlarmTest, emergencySirensAlarmTest, emergencyLightsFSTest, emergencySirensFSTest, fireSuppressionFSTest, emergencyServicesCallTestStatus;
     private JTextArea alarmCheckInfo;
     private JButton resetDoorStatus;
+    private JPanel cameraScreenJPanel2;
 
     //GUI Methods
-    // TODO: 11/08/2023 Go through "getMessage()" calls and replace with error messages where necessary
     // TODO: 11/08/2023 Update the camera image to include a grid reference (definitely)
-    // TODO: 11/08/2023 Look at swapping the images with the camera buttons (maybe)
 
     public SecurityGUI() {
         //Discovers all registered services
@@ -400,12 +403,107 @@ public class SecurityGUI extends JFrame {
                 System.out.println("Intercom Controls: Call Rejected");
             }
         });
+        intercomButton.addMouseListener(new MouseAdapter() {
+            //Stores the value to be sent to the server
+            int callTime = 0;
+            //Creates a "ScheduledExecutorService" called "timedExecutor" and creates a new size 1 thread pool for it to use
+            ScheduledExecutorService timedExecutor = Executors.newScheduledThreadPool(1);
 
-        intercomButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO Finish
-                // TODO: 11/08/2023 Server streaming RPC 
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                intercomStatus.setText("Status: Channel Open");
+                System.out.println("\nIntercom: Receiving Message");
+                //Executor that will increment the value stored in "callTime" by 1 every second
+                timedExecutor.scheduleAtFixedRate(timedTransmission, 0, 1, TimeUnit.SECONDS);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                //Shuts down "timedExecutor"
+                timedExecutor.shutdown();
+                intercomChannel();
+            }
+
+            //Simple runnable to be used in an executor service
+            Runnable timedTransmission = new Runnable() {
+                @Override
+                public void run() {
+                   callTime++;
+                }
+            };
+
+            public void intercomChannel() {
+                //Create a channel for the intercom
+                ManagedChannel intercomControlsChannel = ManagedChannelBuilder.forAddress(doorControllerService1Info.getHostAddresses()[0], doorControllerService1Info.getPort()).usePlaintext().build();
+
+                //Creates an asynchronous stub for the above channel to be used in the client-streaming gRPC
+                Service1Grpc.Service1Stub intercomControlAsyncStub = Service1Grpc.newStub(intercomControlsChannel);
+
+                //Prepare a response in the form a stream observer that processes the data streamed from the client
+                StreamObserver<OneWayCommunicationResponse> oneWayCommunicationResponseObserver = new StreamObserver<OneWayCommunicationResponse>() {
+                    @Override
+                    public void onNext(OneWayCommunicationResponse oneWayCommunicationResponse) {
+                        intercomStatus.setText("Status: " + oneWayCommunicationResponse.getChannelStatus());
+
+                        //Simulates delayed transmission
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //Prints an error message to the user and the console
+                        intercomStatus.setText("Error: Intercom Call Failed. Please Try Again");
+                        System.out.println(throwable.getMessage());
+                        throwable.printStackTrace();
+
+                        //Shuts down the channel
+                        intercomControlsChannel.shutdown();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        intercomStatus.setText("Status: Channel Closed");
+                        System.out.println("Intercom: Message Sent");
+
+                        //Shuts down the channel
+                        intercomControlsChannel.shutdown();
+                    }
+                };
+
+                //Preparing the request to be streamed. This uses a custom deadline to accommodate up to 60 second transmissions
+                StreamObserver<OneWayCommunicationRequest> oneWayCommunicationRequestObserver = intercomControlAsyncStub.withDeadlineAfter(61, TimeUnit.SECONDS).oneWayCommunication(oneWayCommunicationResponseObserver);
+
+                //Get the current context with cancellation
+                cancelRequest = Context.current().withCancellation();
+
+                try {
+                    System.out.println("Transmitting Message");
+                    //Making multiple requests using a for loop
+                    for (int i = 0; i < callTime; i++) {
+                        oneWayCommunicationRequestObserver.onNext(OneWayCommunicationRequest.newBuilder().setCallTime(i + 1).build());
+                    }
+                    System.out.println("Transmission Complete");
+
+                    //Delay between requests
+                    Thread.sleep(1000);
+
+                    //End the requests
+                    oneWayCommunicationRequestObserver.onCompleted();
+                } catch (RuntimeException re) {
+                    automatedCameraPosition.setText("Error: Intercom Call Failed. Please Try Again");
+                    System.out.println(re.getMessage());
+                    re.printStackTrace();
+                } catch (InterruptedException ie) {
+                    automatedCameraPosition.setText("Error: Intercom Call Failed. Please Try Again");
+                    System.out.println(ie.getMessage());
+                    ie.printStackTrace();
+                }
             }
         });
 
@@ -416,6 +514,8 @@ public class SecurityGUI extends JFrame {
                 automatedCameraID = "camera2";
                 cameraPositionDisplay.setText("Camera Position: " + camera1Position);
                 automatedCameraPosition.setText("Automated Camera: Camera 2, " + camera2Position);
+                cameraScreenJPanel2.setVisible(false);
+                cameraScreenJPanel.setVisible(true);
             }
         });
 
@@ -426,6 +526,8 @@ public class SecurityGUI extends JFrame {
                 automatedCameraID = "camera1";
                 cameraPositionDisplay.setText("Camera Position: " + camera2Position);
                 automatedCameraPosition.setText("Automated Camera: Camera 1, " + camera1Position);
+                cameraScreenJPanel.setVisible(false);
+                cameraScreenJPanel2.setVisible(true);
             }
         });
 
@@ -923,9 +1025,9 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    alarmActivatedAlarmTest.setText(sre.getMessage());
-                    emergencyLightsAlarmTest.setText(sre.getMessage());
-                    emergencySirensAlarmTest.setText(sre.getMessage());
+                    alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencySirensAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -950,9 +1052,9 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    alarmActivatedAlarmTest.setText(sre.getMessage());
-                    emergencyLightsAlarmTest.setText(sre.getMessage());
-                    emergencySirensAlarmTest.setText(sre.getMessage());
+                    alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencySirensAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -977,9 +1079,9 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencyLighting());
                     emergencySirensAlarmTest.setText(emergencyLightsAlarmTest.getText() + manualAlarmResponse.getActivateEmergencySirens());
                 } catch (StatusRuntimeException sre) {
-                    alarmActivatedAlarmTest.setText(sre.getMessage());
-                    emergencyLightsAlarmTest.setText(sre.getMessage());
-                    emergencySirensAlarmTest.setText(sre.getMessage());
+                    alarmActivatedAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencyLightsAlarmTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencySirensAlarmTest.setText("Error: Alarm Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -1004,9 +1106,9 @@ public class SecurityGUI extends JFrame {
                     emergencyLightsFSTest.setText(emergencyLightsFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                     emergencySirensFSTest.setText(emergencySirensFSTest.getText() + fireSuppressionResponse.getActivateEmergencyLighting());
                 } catch (StatusRuntimeException sre) {
-                    fireSuppressionFSTest.setText(sre.getMessage());
-                    emergencyLightsFSTest.setText(sre.getMessage());
-                    emergencySirensFSTest.setText(sre.getMessage());
+                    fireSuppressionFSTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencyLightsFSTest.setText("Error: Alarm Failed. Please Try Again");
+                    emergencySirensFSTest.setText("Error: Alarm Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -1054,7 +1156,7 @@ public class SecurityGUI extends JFrame {
                     EmergencyServicesCallResponse callEMSResponse = alarmControlsBlockingStub.withDeadlineAfter(DEADLINE, TimeUnit.SECONDS).emergencyServicesCall(callEMSRequest);
                     emergencyServicesCallTestStatus.setText(emergencyServicesCallTestStatus.getText() + callEMSResponse.getCallConfirmation());
                 } catch (StatusRuntimeException sre) {
-                    emergencyServicesCallTestStatus.setText(sre.getMessage());
+                    emergencyServicesCallTestStatus.setText("Error: Emergency Services Call Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -1090,7 +1192,7 @@ public class SecurityGUI extends JFrame {
                     }
 
                 } catch (StatusRuntimeException sre) {
-                    alarmCheckInfo.setText(sre.getMessage());
+                    alarmCheckInfo.setText("Error: Alarm Check Failed. Please Try Again");
                     sre.printStackTrace();
                     cancelRequest.cancel(sre.getCause());
                 }
@@ -1216,7 +1318,8 @@ public class SecurityGUI extends JFrame {
     }
 
     private void createUIComponents() {
-        String imageName = "Camera1B2.jpg";
+        String imageName = "Camera1.jpg";
+        String imageName2 = "Camera2.jpg";
         class ImagePanel extends JPanel {
             BufferedImage image;
             ImagePanel(String imageName) {
@@ -1234,5 +1337,7 @@ public class SecurityGUI extends JFrame {
             }
         }
         cameraScreenJPanel = new ImagePanel(imageName);
+        cameraScreenJPanel2 = new ImagePanel(imageName2);
+        cameraScreenJPanel2.setVisible(false);
     }
 }

@@ -1,12 +1,19 @@
 package DoorController;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.*;
+import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
+import static io.grpc.stub.ClientCalls.blockingUnaryCall;
+import static io.grpc.stub.ClientCalls.futureUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.*;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
  */
@@ -249,7 +256,7 @@ public final class Service1Grpc {
 
     /**
      * <pre>
-     *Sends a streamed message to the server when the user has the communication button held
+     *Builds a streamed message to be sent to the server when the user has the communication button held
      * </pre>
      */
     public io.grpc.stub.StreamObserver<DoorController.OneWayCommunicationRequest> oneWayCommunication(
@@ -362,7 +369,7 @@ public final class Service1Grpc {
 
     /**
      * <pre>
-     *Sends a streamed message to the server when the user has the communication button held
+     *Builds a streamed message to be sent to the server when the user has the communication button held
      * </pre>
      */
     public io.grpc.stub.StreamObserver<DoorController.OneWayCommunicationRequest> oneWayCommunication(

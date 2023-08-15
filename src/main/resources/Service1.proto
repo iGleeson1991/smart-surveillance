@@ -17,7 +17,7 @@ service Service1 {
   //Sends the receiving user's response to an intercom call
   rpc intercomAnswer(IntercomAnswerRequest) returns (IntercomAnswerResponse) {}
 
-  //Sends a streamed message to the server when the user has the communication button held
+  //Builds a streamed message to be sent to the server when the user has the communication button held
   rpc oneWayCommunication(stream OneWayCommunicationRequest) returns (OneWayCommunicationResponse) {}
 }
 
@@ -58,7 +58,7 @@ message IntercomAnswerResponse {
 }
 
 message OneWayCommunicationRequest {
-  bool buttonHeld = 1;
+  int32 callTime = 1;
 }
 
 message OneWayCommunicationResponse {

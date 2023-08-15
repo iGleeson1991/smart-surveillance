@@ -8,7 +8,7 @@ public interface OneWayCommunicationRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>bool buttonHeld = 1;</code>
+   * <code>int32 callTime = 1;</code>
    */
-  boolean getButtonHeld();
+  int getCallTime();
 }

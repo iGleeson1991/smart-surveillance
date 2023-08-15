@@ -82,20 +82,20 @@ public final class DoorControlsImpl {
       "\",\n\024IntercomCallResponse\022\024\n\014callResponse" +
       "\030\001 \001(\t\".\n\025IntercomAnswerRequest\022\025\n\ranswe" +
       "rRequest\030\001 \001(\t\"0\n\026IntercomAnswerResponse" +
-      "\022\026\n\016answerResponse\030\001 \001(\t\"0\n\032OneWayCommun" +
-      "icationRequest\022\022\n\nbuttonHeld\030\001 \001(\010\"4\n\033On" +
-      "eWayCommunicationResponse\022\025\n\rchannelStat" +
-      "us\030\001 \001(\t2\362\002\n\010Service1\022L\n\021scanSecurityBad" +
-      "ge\022\031.ScanSecurityBadgeRequest\032\032.ScanSecu" +
-      "rityBadgeResponse\"\000\022L\n\021securityCodeEntry" +
-      "\022\031.SecurityCodeEntryRequest\032\032.SecurityCo" +
-      "deEntryResponse\"\000\022/\n\014intercomCall\022\006.Empt" +
-      "y\032\025.IntercomCallResponse\"\000\022C\n\016intercomAn" +
-      "swer\022\026.IntercomAnswerRequest\032\027.IntercomA" +
-      "nswerResponse\"\000\022T\n\023oneWayCommunication\022\033" +
-      ".OneWayCommunicationRequest\032\034.OneWayComm" +
-      "unicationResponse\"\000(\001B$\n\016DoorControllerB" +
-      "\020DoorControlsImplP\001b\006proto3"
+      "\022\026\n\016answerResponse\030\001 \001(\t\".\n\032OneWayCommun" +
+      "icationRequest\022\020\n\010callTime\030\001 \001(\005\"4\n\033OneW" +
+      "ayCommunicationResponse\022\025\n\rchannelStatus" +
+      "\030\001 \001(\t2\362\002\n\010Service1\022L\n\021scanSecurityBadge" +
+      "\022\031.ScanSecurityBadgeRequest\032\032.ScanSecuri" +
+      "tyBadgeResponse\"\000\022L\n\021securityCodeEntry\022\031" +
+      ".SecurityCodeEntryRequest\032\032.SecurityCode" +
+      "EntryResponse\"\000\022/\n\014intercomCall\022\006.Empty\032" +
+      "\025.IntercomCallResponse\"\000\022C\n\016intercomAnsw" +
+      "er\022\026.IntercomAnswerRequest\032\027.IntercomAns" +
+      "werResponse\"\000\022T\n\023oneWayCommunication\022\033.O" +
+      "neWayCommunicationRequest\032\034.OneWayCommun" +
+      "icationResponse\"\000(\001B$\n\016DoorControllerB\020D" +
+      "oorControlsImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -162,7 +162,7 @@ public final class DoorControlsImpl {
     internal_static_OneWayCommunicationRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_OneWayCommunicationRequest_descriptor,
-        new java.lang.String[] { "ButtonHeld", });
+        new java.lang.String[] { "CallTime", });
     internal_static_OneWayCommunicationResponse_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_OneWayCommunicationResponse_fieldAccessorTable = new

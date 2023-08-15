@@ -141,7 +141,7 @@ public class Service1Server extends Service1ImplBase {
     }
 
     public void intercomCall(Empty callRequest, StreamObserver<IntercomCallResponse> callResponseObserver) {
-        System.out.println("\nIntercom Call: Requesting Call");
+        System.out.println("\nIntercom Call: Receiving Call");
         String responseMessage = "Calling...";
 
         System.out.println("Intercom Call: " + responseMessage);
@@ -174,18 +174,15 @@ public class Service1Server extends Service1ImplBase {
     }
 
     public StreamObserver<OneWayCommunicationRequest> oneWayCommunication(StreamObserver<OneWayCommunicationResponse> oneWayResponseObserver) {
+        System.out.println("\nOne Way Communication: Channel Opened");
+
         //Returns a new "StreamObserver" object of type "OneWayCommunicationRequest".
         return new StreamObserver<OneWayCommunicationRequest>() {
             String responseMessage = "";
             @Override
             public void onNext(OneWayCommunicationRequest oneWayRequest) {
-                System.out.println("\nOne Way Communication: Receiving Info: " + oneWayRequest);
-
-                if(oneWayRequest.getButtonHeld() == true) {
-                    responseMessage = "Communications Channel Open";
-                } else {
-                    responseMessage = "Communications Channel Closed";
-                }
+                System.out.println("One Way Communication: Receiving Transmission: " + oneWayRequest.getCallTime());
+                responseMessage = "Transmitting " + oneWayRequest.getCallTime() + " second message";
             }
 
             //Method will print any errors caught to the console.
@@ -200,7 +197,7 @@ public class Service1Server extends Service1ImplBase {
                 OneWayCommunicationResponse oneWayResponse = OneWayCommunicationResponse.newBuilder().setChannelStatus(responseMessage).build();
                 oneWayResponseObserver.onNext(oneWayResponse);
                 oneWayResponseObserver.onCompleted();
-                System.out.println("One Way Communication: Completed");
+                System.out.println("One Way Communication: Channel Closed");
             }
         };
     }
